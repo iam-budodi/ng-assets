@@ -1,37 +1,56 @@
 <mat-toolbar class="mat-elevation-z8">
-  <button mat-icon-button matTooltip="Menu" *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
-    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
-  </button>
-  <span>[Logo Placeholder]</span>
-  <span class="toolbar-item-spacer"></span>
+  <mat-toolbar-row>
+    <button
+      mat-icon-button
+      matTooltip="Menu"
+      *ngIf="sidenav.mode === 'over'"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+    </button>
+    <span>[Logo Placeholder]</span>
+    <!-- <span class="toolbar-item-spacer"></span> -->
+
+    <!--
   <button mat-icon-button matTooltip="Like">
     <mat-icon>favorite</mat-icon>
   </button>
   <button mat-icon-button matTooltip="Share">
     <mat-icon>share</mat-icon>
-  </button>
-  <button mat-icon-button matTooltip="Notifications">
-    <mat-icon>notifications</mat-icon>
-  </button>
-  <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
-    <button mat-menu-item routerLink="#">
-      <mat-icon>person</mat-icon>
-      <span>Profile</span>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-menu-item routerLink="#">
-      <mat-icon>exit_to_app</mat-icon>Logout
-    </button>
-  </mat-menu>
+  </button> -->
+
+    <div fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px" fxHide.xs>
+      <button mat-icon-button matTooltip="Notifications">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Login"
+        [matMenuTriggerFor]="userAccountMenu"
+      >
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+        <button mat-menu-item routerLink="#">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="#">
+          <mat-icon>exit_to_app</mat-icon>Logout
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+    <img
+      class="avatar mat-elevation-z8"
+      src="https://source.unsplash.com/c_GmwfHBDzk/200x200"
+    />
 
     <h4 class="name">Japhet Sebastian</h4>
     <p class="designation">IT Admin</p>
@@ -39,60 +58,29 @@
     <mat-divider></mat-divider>
 
     <mat-nav-list>
-      <a mat-list-item routerLink="#">
-        <mat-icon class="icon">dashboard</mat-icon>
-        <span class="label">Dashboard</span>
-      </a>
+      <div *ngFor="let route of routeLinks.slice(0, 2)">
+        <a mat-list-item routerLink="{{ route.link }}">
+          <mat-icon class="icon">{{ route.icon }}</mat-icon>
+          <span class="label">{{ route.name }}</span>
+        </a>
+      </div>
 
-      <a mat-list-item routerLink="#">
-        <mat-icon class="icon">dashboard</mat-icon>
-        <span class="label">Users</span>
-      </a>
-
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
+      <mat-expansion-panel
+        [class.mat-elevation-z0]="true"
+        *ngFor="let route of routeLinks.slice(2)"
+      >
         <mat-expansion-panel-header>
-          Asset Inventory
+          {{ route.header }}
         </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="#">
-            <mat-icon>apple</mat-icon><span class="label">Asset</span>
-          </a>
-          <a mat-list-item routerLink="#">
-            <mat-icon>android</mat-icon><span class="label">Category</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Asset Tracking
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="#">
-            <mat-icon>apple</mat-icon><span>Allocate Asset</span>
-          </a>
-          <a mat-list-item routerLink="#">
-            <mat-icon>android</mat-icon><span>Transfer Asset</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Employee
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="#">
-            <mat-icon>apple</mat-icon><span>Employee</span>
-          </a>
-          <a mat-list-item routerLink="#">
-            <mat-icon>android</mat-icon><span>Department</span>
+        <mat-nav-list *ngFor="let panel of route.nav">
+          <a mat-list-item routerLink="{{ panel.link }}">
+            <mat-icon class="icon">{{ panel.icon }}</mat-icon>
+            <span class="label">{{ panel.name }}</span>
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
     </mat-nav-list>
-
-
-
+<!--
     <button mat-button class="menu-button" routerLink="/home">
       <mat-icon>home</mat-icon>
       <span>Home</span>
@@ -104,10 +92,9 @@
     <button mat-button class="menu-button" routerLink="/about">
       <mat-icon>info</mat-icon>
       <span>About</span>
-    </button>
+    </button> -->
 
     <mat-divider></mat-divider>
-
     <button mat-button class="menu-button" routerLink="/help">
       <mat-icon>help</mat-icon>
       <span>Help</span>

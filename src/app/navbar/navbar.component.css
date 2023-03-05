@@ -22,9 +22,10 @@ mat-toolbar {
   color: white;
 }
 
-.toolbar-item-spacer {
+/* it works to push contets to the right */
+/* .toolbar-item-spacer {
   flex: 1 1 auto;
-}
+} */
 
 mat-sidenav-container,
 mat-sidenav-content,
@@ -34,7 +35,7 @@ mat-sidenav {
 
 mat-sidenav {
   margin: 16px;
-  width: 250px;
+  width: 280px;
   border-right: none;
   background: #002b5c;
   color: white;
@@ -42,9 +43,11 @@ mat-sidenav {
   padding: 16px;
   text-align: center;
 }
+
 mat-nav-list {
   text-align: start;
 }
+
 mat-expansion-panel {
   background: #002b5c;
   color: white;
@@ -56,9 +59,8 @@ mat-expansion-panel {
   vertical-align: middle;
 }
 
-a,
-mat-icon,
-span {
+mat-icon.icon,
+span.label {
   text-decoration: none;
   color: white;
 }
@@ -93,18 +95,18 @@ a:active {
 }
 
 .content {
-  height: calc(100vh - 98px);
+  /* height: calc(100vh - 98px); */
   border-radius: 10px;
   margin: 16px;
   margin-left: 32px;
 
   /* overflow: auto; */
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;*/
 
-  font-size: 2rem;
-  color: lightgray;
+  /* font-size: 2rem;
+  color: lightgray; */
 }
 
 mat-sidenav-container {
