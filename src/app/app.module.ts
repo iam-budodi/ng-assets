@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { LayoutModule } from '@angular/cdk/layout';
-import {NgChartsModule} from 'ng2-charts'
+import { NgChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,9 +26,26 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { TicketComponent } from './common/ticket/ticket.component';
 import { MiniCardComponent } from './mini-card/mini-card.component';
+import { TableComponent } from './common/table/table.component';
+import { DataPropertyGetterPipe } from './common/Model/data-property-getter.pipe';
+import { EmployeeComponent } from './employee/employee.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, DashboardComponent, CardComponent, StoreSessionsChartComponent, AnnualSalesChartComponent, SalesTrafficChartComponent, ProductSalesChartComponent, TicketComponent, MiniCardComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    DashboardComponent,
+    CardComponent,
+    StoreSessionsChartComponent,
+    AnnualSalesChartComponent,
+    SalesTrafficChartComponent,
+    ProductSalesChartComponent,
+    TicketComponent,
+    MiniCardComponent,
+    TableComponent,
+    DataPropertyGetterPipe,
+    EmployeeComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

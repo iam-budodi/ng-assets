@@ -1,0 +1,17 @@
+<div class="grid-container">
+  <mat-grid-list cols="{{ (cardLayout | async)?.columns }}" rowHeight="200px">
+
+
+    <mat-grid-tile
+      [colspan]="(cardLayout | async)?.table?.cols"
+      [rowspan]="(cardLayout | async)?.table?.rows"
+    >
+      <app-card title="Employees">
+        <app-table
+          [tableData]="employees"
+          [tableColumns]="employeeTableColumns"
+        ></app-table>
+      </app-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
