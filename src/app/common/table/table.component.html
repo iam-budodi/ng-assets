@@ -1,15 +1,13 @@
-<!-- <div class="mat-elevation-z8"> -->
 <ng-container>
   <!-- Filter -->
   <ng-container [matColumnDef]="this.rowActionIcon" *ngIf="isFilterable">
     <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="filter" />
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="search..." />
     </mat-form-field>
   </ng-container>
 
   <!-- Table -->
-  <!-- class="full-width-table" -->
   <table
     mat-table
     [dataSource]="tableDataSource"
@@ -18,19 +16,19 @@
     aria-label="Elements"
   >
     <!-- action column -->
-    <!-- <ng-container [matColumnDef]="rowActionIcon" *ngIf="rowActionIcon.length">
+    <ng-container *ngIf="rowActionIcon?.length" [matColumnDef]="rowActionIcon">
       <th mat-header-cell *matHeaderCellDef></th>
       <td
         mat-cell
         *matCellDef="let element"
         [id]="rowActionIcon"
-        (click)="(emitRowAction)"
+        (click)="emitRowAction(element)"
       >
         <button mat-button>
-          <mat-icon>remove_shopping_cart</mat-icon>
+          <mat-icon color="warn">{{ rowActionIcon }}</mat-icon>
         </button>
       </td>
-    </ng-container> -->
+    </ng-container>
 
     <ng-container
       *ngFor="let tableColumn of tableColumns"

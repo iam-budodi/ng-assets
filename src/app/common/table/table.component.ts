@@ -9,10 +9,8 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { ITableColumn } from '../Model/table-column.model';
-import { TableDataSource, TableItem } from './table-datasource';
-
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -47,7 +45,7 @@ export class TableComponent implements OnInit, AfterViewInit {
       (tableColumn: ITableColumn) => tableColumn.name
     );
     if (this.rowActionIcon) {
-      this.displayedColumns = [this.rowActionIcon, ...columnNames];
+      this.displayedColumns = [...columnNames, this.rowActionIcon];
     } else {
       this.displayedColumns = columnNames;
     }

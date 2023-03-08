@@ -16,6 +16,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+
+import { MatTabsModule } from '@angular/material/tabs';
 import { CardComponent } from './common/card/card.component';
 import { StoreSessionsChartComponent } from './charts/store-sessions-chart/store-sessions-chart.component';
 import { AnnualSalesChartComponent } from './charts/annual-sales-chart/annual-sales-chart.component';
@@ -62,6 +64,7 @@ import { EmployeeComponent } from './employee/employee.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

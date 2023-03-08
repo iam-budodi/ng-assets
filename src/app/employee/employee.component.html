@@ -1,7 +1,5 @@
 <div class="grid-container">
   <mat-grid-list cols="{{ (cardLayout | async)?.columns }}" rowHeight="200px">
-
-
     <mat-grid-tile
       [colspan]="(cardLayout | async)?.table?.cols"
       [rowspan]="(cardLayout | async)?.table?.rows"
@@ -10,6 +8,13 @@
         <app-table
           [tableData]="employees"
           [tableColumns]="employeeTableColumns"
+          [isFilterable]="true"
+          [isPageable]="true"
+          [paginationSizes]="[2, 4, 6]"
+          [defaultPageSize]="4"
+          (sort)="sortData($event)"
+          [rowActionIcon]="'delete'"
+          (rowAction)="removeEmployee($event)"
         ></app-table>
       </app-card>
     </mat-grid-tile>
