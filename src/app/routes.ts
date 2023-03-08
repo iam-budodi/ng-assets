@@ -5,4 +5,5 @@ import { EmployeeComponent } from './employee/employee.component';
 export const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'users', component: EmployeeComponent },
+
 ];

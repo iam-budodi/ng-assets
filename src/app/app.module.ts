@@ -31,6 +31,9 @@ import { MiniCardComponent } from './mini-card/mini-card.component';
 import { TableComponent } from './common/table/table.component';
 import { DataPropertyGetterPipe } from './common/Model/data-property-getter.pipe';
 import { EmployeeComponent } from './employee/employee.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,9 @@ import { EmployeeComponent } from './employee/employee.component';
     MatPaginatorModule,
     MatSortModule,
     MatTabsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
