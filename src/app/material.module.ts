@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LayoutModule } from '@angular/cdk/layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +18,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [],
@@ -31,6 +38,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatMenuModule,
     MatExpansionModule,
     MatTooltipModule,
+    LayoutModule,
+    FlexLayoutModule,
+    MatGridListModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressBarModule,
+    MatCardModule,
+    MatRadioModule,
   ],
   exports: [
     CommonModule,
@@ -47,6 +62,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatMenuModule,
     MatExpansionModule,
     MatTooltipModule,
+    LayoutModule,
+    FlexLayoutModule,
+    MatGridListModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressBarModule,
+    MatCardModule,
+    MatRadioModule,
   ],
 })
 export class MaterialModule {}

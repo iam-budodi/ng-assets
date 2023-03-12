@@ -1,25 +1,20 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { NavigationEnd, Router } from '@angular/router';
-import { delay, filter } from 'rxjs/operators';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit {
   // @Input() isExpanded: boolean | undefined;
   // @Output() toggleMenu = new EventEmitter();
 
@@ -43,7 +38,7 @@ export class NavbarComponent implements OnInit {
 
   routeLinks = [
     { link: 'dashboard', name: 'Dashboard', icon: 'dashboard' },
-    { link: 'users', name: 'Users', icon: 'people' },
+    { link: 'employees', name: 'Users', icon: 'people' },
     {
       header: 'Asset Inventory',
       nav: [
@@ -73,7 +68,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private observer: BreakpointObserver,
-    private router: Router,
+    // private router: Router,
     private cd: ChangeDetectorRef
   ) {}
   ngOnInit(): void {}

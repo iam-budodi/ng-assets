@@ -1,9 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ITableColumn } from '../common/Model/table-column.model';
-import { IEmployee } from './employee.model';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ITableColumn } from '../common/model/table-column.model';
+import { IEmployee } from '../common/model/employee.model';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { cardLayout } from '../shared/card.layout';
 import { Sort } from '@angular/material/sort';
+import { IDialog } from '../common/dialog/dialog.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../common/dialog/dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { EmployeeService } from './employee.service';
+import { EmployeeDialogComponent } from './employee-dialog/employee-dialog.component';
+import { FormComponent } from '../form/container/form/form.component';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-employee',
@@ -11,15 +19,47 @@ import { Sort } from '@angular/material/sort';
   styleUrls: ['./employee.component.css'],
 })
 export class EmployeeComponent implements OnInit {
+  @ViewChild(FormComponent) form!: FormComponent;
+  updateForm!: FormGroup;
   employees!: IEmployee[];
   employeeTableColumns!: ITableColumn[];
+  dialogMessage!: string;
 
   cardLayout = cardLayout(this.breakpointObserver);
-  constructor(private breakpointObserver: BreakpointObserver) {}
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private employeeService: EmployeeService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.employees = this.getEmployees();
+    this.employees = this.route.snapshot.data['employees'];
     this.initColumns();
+  }
+
+  initColumns(): void {
+    this.employeeTableColumns = this.employeeService.getTableColumns();
+  }
+
+  getEmployees(): IEmployee[] {
+    return this.employees;
+  }
+
+  deleteEmployee(employeeEvt: IEmployee): void {
+    // uncomment fo http
+    // this.employees = this.employeeService.deleteEmployee(employeeEvt);
+    this.employees = this.employees.filter(
+      (employee) => employee.id !== employeeEvt.id
+    );
+  }
+
+  updateEmployee(employeeFormValueEvt: IEmployee): void {
+
+    console.log(this.form.valid);
+
+    this.openDialog();
   }
 
   sortData(sortParameters: Sort): IEmployee[] | undefined | void {
@@ -37,75 +77,21 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  getEmployees(): IEmployee[] {
-    return [
-      {
-        id: 1,
-        firstName: 'Lulu',
-        lastName: 'Yahaya',
-        workId: 'UDSM-2023-1002',
-        address: 'Korogwe, Kimara',
-        age: 26,
+  openDialog(): void {
+    const dialogParams: IDialog = {
+      dialogHeader: 'Create Employees',
+      dialogContent: '{{ Next add Form for employee creation }}',
+      cancelButtonLabel: 'Cancel',
+      confirmButtonLabel: 'Submits',
+      callbackMethod: () => {
+        console.log('dialog');
       },
-      {
-        id: 2,
-        firstName: 'Habiba',
-        lastName: 'Yahaya',
-        workId: 'UDSM-2023-1001',
-        address: 'Santika, Mwenge',
-        age: 25,
-      },
-      {
-        id: 3,
-        firstName: 'Japhet',
-        lastName: 'Sebastian',
-        workId: 'UDSM-2023-1003',
-        address: 'Kibo, Kimara',
-        age: 30,
-      },
-      {
-        id: 4,
-        firstName: 'Lulu',
-        lastName: 'Yahaya',
-        workId: 'UDSM-2023-1002',
-        address: 'Korogwe, Kimara',
-        age: 26,
-      },
-      {
-        id: 5,
-        firstName: 'Habiba',
-        lastName: 'Yahaya',
-        workId: 'UDSM-2023-1001',
-        address: 'Santika, Mwenge',
-        age: 25,
-      },
-      {
-        id: 6,
-        firstName: 'Japhet',
-        lastName: 'Sebastian',
-        workId: 'UDSM-2023-1003',
-        address: 'Kibo, Kimara',
-        age: 30,
-      },
-    ];
-  }
+    };
 
-  removeEmployee(employeeEvt: IEmployee) {
-    console.log("Emitted event on click " + employeeEvt);
-
-    this.employees = this.employees.filter(
-      (employee) => employee.id !== employeeEvt.id
-    );
-  }
-
-  initColumns(): void {
-    this.employeeTableColumns = [
-      { name: ' ', dataKey: 'id', isSortable: true },
-      { name: 'First Name', dataKey: 'firstName', isSortable: true },
-      { name: 'Last Name', dataKey: 'lastName', isSortable: true },
-      { name: 'Work ID', dataKey: 'workId', isSortable: true },
-      { name: 'Address', dataKey: 'address', isSortable: false },
-      { name: 'Age', dataKey: 'age', isSortable: false },
-    ];
+    this.dialog.open(EmployeeDialogComponent, {
+      // width: '700px',
+      panelClass: 'dynamic-dialog',
+      data: dialogParams,
+    });
   }
 }

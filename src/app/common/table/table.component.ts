@@ -10,7 +10,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ITableColumn } from '../Model/table-column.model';
+import { ITableColumn } from '../model/table-column.model';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -27,12 +27,17 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() isSortable = false;
   @Input() isFilterable = false;
   @Input() tableColumns!: ITableColumn[];
-  @Input() rowActionIcon!: string;
+  // @Input() rowActionIcon!: string;
+  @Input() deleteActionIcon!: string;
+  @Input() updateActionIcon!: string;
   @Input() paginationSizes: number[] = [5, 10, 15];
   @Input() defaultPageSize = this.paginationSizes[1];
 
   @Output() sort: EventEmitter<Sort> = new EventEmitter();
-  @Output() rowAction: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() rowAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteAction: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() updateAction: EventEmitter<any> = new EventEmitter<any>();
 
   // setter is important to dynamically get changes from parent component
   @Input() set tableData(data: any[]) {
@@ -44,8 +49,13 @@ export class TableComponent implements OnInit, AfterViewInit {
     const columnNames = this.tableColumns.map(
       (tableColumn: ITableColumn) => tableColumn.name
     );
-    if (this.rowActionIcon) {
-      this.displayedColumns = [...columnNames, this.rowActionIcon];
+
+    if (this.deleteActionIcon) {
+      this.displayedColumns = [
+        ...columnNames,
+        this.deleteActionIcon,
+        this.updateActionIcon,
+      ];
     } else {
       this.displayedColumns = columnNames;
     }
@@ -75,7 +85,11 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.sort.emit(sortParameters);
   }
 
-  emitRowAction(row: any) {
-    this.rowAction.emit(row);
+  deleteRowAction(row: any) {
+    this.deleteAction.emit(row);
+  }
+
+  updateRowAction(row: any) {
+    this.updateAction.emit(row);
   }
 }
