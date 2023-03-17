@@ -18,7 +18,6 @@ import { MiniCardComponent } from './mini-card/mini-card.component';
 import { TableComponent } from './common/table/table.component';
 import { DataPropertyGetterPipe } from './common/model/data-property-getter.pipe';
 import { EmployeeComponent } from './employee/employee.component';
-import { DialogComponent } from './common/dialog/dialog.component';
 import { AddressComponent } from './common/address/address.component';
 import { FormModule } from './form/form.module';
 import { EmployeeService } from './employee/employee.service';
@@ -39,7 +38,6 @@ import { EmployeeDialogComponent } from './employee/employee-dialog/employee-dia
     TableComponent,
     DataPropertyGetterPipe,
     EmployeeComponent,
-    DialogComponent,
     AddressComponent,
     EmployeeDialogComponent,
   ],

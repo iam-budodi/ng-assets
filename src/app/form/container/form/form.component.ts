@@ -7,51 +7,55 @@ import {
   Output,
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { FieldConfig } from '../../model/field-confing.model';
 
 @Component({
   exportAs: 'dynamicForm',
   selector: 'dynamic-form',
   styleUrls: ['./form.component.css'],
-  template: `
-  <form
-    class="dynamic-form"
-    [formGroup]="form"
-    (submit)="submitHandler($event)"
-  >
-    <ng-container
-      *ngFor="let field of config;"
-      dynamicField
-      [config]="field"
-      [group]="form"
-    ></ng-container>
-  </form>`,
+  templateUrl: './form.component.html',
 })
 export class FormComponent implements OnInit, OnChanges {
   @Input() config!: FieldConfig[];
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() employeeAction: EventEmitter<any> = new EventEmitter<any>();
   form!: FormGroup;
 
-  get controls() {
-    return this.config.filter(({ type }) => type !== 'button');
+  get controls(): FieldConfig[] {
+    return this.config.filter(({ element }) => element !== 'button');
   }
 
-  get changes() {
+  get changes(): Observable<any> {
     return this.form.valueChanges;
   }
 
-  get valid() {
+  get valid(): boolean {
     return this.form.valid;
   }
 
-  get value() {
+  get value(): any {
     return this.form.value;
   }
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.form = this.createGroup();
+    this.form = this.createGroup(); //all the form fields ie input select etc
+  }
+
+  createGroup(): FormGroup {
+    const group = this.formBuilder.group({}); // initisl empty form
+    this.controls.forEach((control) =>
+      // initializes form fields controls (i.e firstname, lastname) with validators
+      group.addControl(control.name, this.createControl(control))
+    );
+    return group;
+  }
+
+  createControl(config: FieldConfig): AbstractControl<any, any> {
+    const { disabled, validation, value } = config;
+    return this.formBuilder.control({ disabled, value }, validation);
   }
 
   ngOnChanges(): void {
@@ -66,40 +70,29 @@ export class FormComponent implements OnInit, OnChanges {
       controlsConfig
         .filter((control) => !controls.includes(control))
         .forEach((name) => {
-          const config = this.config.find((control) => control.name === name) as FieldConfig;
+          const config = this.config.find(
+            (control) => control.name === name
+          ) as FieldConfig;
           this.form.addControl(name, this.createControl(config));
         });
     }
   }
 
-  createGroup(): FormGroup {
-    const group = this.formBuilder.group({});
-    this.controls.forEach((control) =>
-      group.addControl(control.name, this.createControl(control))
-    );
-
-    return group;
-  }
-
-  createControl(config: FieldConfig): AbstractControl<any, any> {
-    const { disabled, validation, value } = config;
-    return this.formBuilder.control({ disabled, value }, validation);
-  }
-
   submitHandler(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
+    // event.preventDefault();
+    // event.stopPropagation();
+
     this.submit.emit(this.value);
   }
 
   setDisabled(name: string, disable: boolean): void {
-    if(this.form.controls[name]) {
+    if (this.form.controls[name]) {
       const method = disable ? 'disable' : 'enable';
       this.form.controls[name][method]();
       return;
     }
 
-    this.config = this.config.map(item => {
+    this.config = this.config.map((item) => {
       if (item.name === name) {
         item.disabled = disable;
       }
@@ -107,7 +100,11 @@ export class FormComponent implements OnInit, OnChanges {
     });
   }
 
-  setValue (name: string, value: any) {
-    this.form.controls[name].setValue(value, {emitEvent: true});
+  setValue(name: string, value: any) {
+    this.form.controls[name].setValue(value, { emitEvent: true });
+  }
+
+  getAction(row: any) {
+    this.employeeAction.emit(row);
   }
 }

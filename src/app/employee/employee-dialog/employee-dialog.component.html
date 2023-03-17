@@ -13,11 +13,12 @@
     *ngIf="isAsyncOperationRunning$ | async"
   >
   </mat-progress-bar>
-  <h1 mat-dialog-title>{{ dialog.dialogHeader }}</h1>
+  <h1 mat-dialog-title *ngIf="data.id">Edit Employee</h1>
+  <h1 mat-dialog-title *ngIf="!data.id">Create Employee</h1>
   <div mat-dialog-content>
 
     <div class="dialog">
-      <dynamic-form
+      <dynamic-form 
         [config]="config"
         #form="dynamicForm"
         (submit)="submit($event)"

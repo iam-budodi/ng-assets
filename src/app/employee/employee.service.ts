@@ -18,6 +18,10 @@ export class EmployeeService {
     return subject;
   }
 
+  findEmployee(id: number): IEmployee | undefined {
+    return EMPLOYEES.find((employee) => employee.id === id);
+  }
+
   saveEmployee(employeeEvt: IEmployee): void {
     employeeEvt.id = 10;
     EMPLOYEES.push(employeeEvt);
@@ -28,10 +32,14 @@ export class EmployeeService {
   }
 
   updateEmployee(employeeEvt: IEmployee): void {
+    console.log('In UPDATE service : ' + JSON.stringify(employeeEvt));
     let index = EMPLOYEES.findIndex(
       (employee) => (employee.id = employeeEvt.id)
     );
+    console.log('emp ID : ' + index);
     EMPLOYEES[index] = employeeEvt;
+
+    console.log('emp : ' + JSON.stringify(EMPLOYEES[index]));
   }
 
   getDialogForm(): FieldConfig[] {
@@ -54,44 +62,57 @@ export class EmployeeService {
   //   },
 const FORM: FieldConfig[] = [
   {
-    type: 'input',
-    label: 'First ame',
+    element: 'input',
+    name: 'id',
+    type: 'number',
+    placeholder: 'Enter id',
+    validation: [Validators.required, Validators.minLength(2)],
+  },
+  {
+    element: 'input',
+    label: 'First name',
     name: 'firstName',
+    type: 'text',
     placeholder: 'Enter first name',
     validation: [Validators.required, Validators.minLength(2)],
   },
   {
-    type: 'input',
+    element: 'input',
     label: 'Last name',
     name: 'lastName',
+    type: 'text',
     placeholder: 'Enter last name',
     validation: [Validators.required, Validators.minLength(2)],
   },
   {
-    type: 'input',
+    element: 'input',
     label: 'Work ID',
     name: 'workId',
+    type: 'text',
     placeholder: 'Enter ID',
     validation: [Validators.required, Validators.minLength(4)],
   },
   {
-    type: 'input',
+    element: 'input',
     label: 'Address',
     name: 'address',
+    type: 'text',
     placeholder: 'Enter Address',
     validation: [Validators.required, Validators.minLength(4)],
   },
   {
-    type: 'input',
+    element: 'input',
     label: 'Birth date',
     name: 'age',
+    type: 'number',
     placeholder: 'Enter birth date',
     validation: [Validators.required, Validators.min(1)],
   },
   {
     label: 'Submit',
     name: 'submit',
-    type: 'button',
+    type: 'submit',
+    element: 'button',
   },
 ];
 

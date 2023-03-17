@@ -6,7 +6,8 @@ export interface FieldConfig {
   name: string;
   options?: string[];
   placeholder?: string;
-  type: string;
+  type?: string;
+  element: string; // all elements TESTS ::::: New
   validation?: ValidatorFn[];
   value?: any;
 }

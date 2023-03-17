@@ -1,9 +1,18 @@
-import { ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-import { DialogComponent } from 'src/app/common/dialog/dialog.component';
-import { IDialog } from 'src/app/common/dialog/dialog.model';
+import { IDialog } from 'src/app/common/model/dialog.model';
 import { IEmployee } from 'src/app/common/model/employee.model';
 import { FormComponent } from 'src/app/form/container/form/form.component';
 import { FieldConfig } from 'src/app/form/model/field-confing.model';
@@ -14,32 +23,42 @@ import { EmployeeService } from '../employee.service';
   templateUrl: './employee-dialog.component.html',
   styleUrls: ['./employee-dialog.component.css'],
 })
-export class EmployeeDialogComponent {
+export class EmployeeDialogComponent implements OnInit, AfterViewInit {
   isAsyncOperationRunning$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
   @ViewChild(FormComponent) form!: FormComponent;
   config!: FieldConfig[];
+  // employee!: IEmployee;
 
   constructor(
     public dialogRef: MatDialogRef<EmployeeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialog: IDialog,
-    private employeeService: EmployeeService,
-    public matDialog: MatDialog,
-    private cd: ChangeDetectorRef
+    @Inject(MAT_DIALOG_DATA) public data: IEmployee,
+    private cd: ChangeDetectorRef,
+    private employeeService: EmployeeService
   ) {}
 
   ngOnInit(): void {
     this.config = this.employeeService.getDialogForm();
+    // this.form.co.patchValue(this.data); // error
   }
 
-  // in favor of this ::::::: submit(value: { [name: string]: any }): void {
-  submit(value: IEmployee): void {
+  submit(employee: IEmployee): void {
     this.isAsyncOperationRunning$.next(true);
     setTimeout(() => {
-      console.log(value); // put your logic here
-      // this.openDialog();
-      this.employeeService.saveEmployee(value);
-      this.closeDialog(); // reconsider this also
+      console.log('ID : ' + employee.id);
+
+      if (employee.id) {
+        console.log('IN UPDATE');
+        this.employeeService.updateEmployee(employee);
+        this.closeDialog()
+      }
+
+      // else {
+      //   console.log('IN SAVE');
+
+      //   this.employeeService.saveEmployee(employee);
+      // }
+      // this.closeDialog(); // reconsider this also
       this.isAsyncOperationRunning$.next(false);
     }, 1000);
   }
@@ -48,28 +67,11 @@ export class EmployeeDialogComponent {
     this.dialogRef.close();
   }
 
-  // for test, should not be here
-  openDialog(): void {
-    const dialogParams: IDialog = {
-      dialogHeader: 'Confirm!',
-      dialogContent: 'Continue adding more data?',
-      cancelButtonLabel: 'NO',
-      confirmButtonLabel: 'Yes',
-      callbackMethod: () => {
-        console.log('hello');
-      },
-    };
-
-    this.matDialog.open(DialogComponent, {
-      // width: '700px',
-      panelClass: 'dynamic-dialog',
-      data: dialogParams,
-    });
-  }
-
   ngAfterViewInit() {
     let previousValid = this.form.valid;
+    console.log('Ok : ' + previousValid);
     this.form.changes.subscribe(() => {
+      console.log('Ok2 : ' + this.form.valid);
       if (this.form.valid !== previousValid) {
         previousValid = this.form.valid;
         this.form.setDisabled('submit', !previousValid);
@@ -77,7 +79,14 @@ export class EmployeeDialogComponent {
     });
 
     this.form.setDisabled('submit', true);
-    // this.form.setValue('firstName', 'Japhet Motto');
+    // this.form.setDisabled('id', true);
+
+    if (this.data.id) {
+      Object.entries(this.data).forEach(([name, value]) => {
+        this.form.setValue(name, value);
+        console.log('KEY : ' + name + ' VAL : ' + value);
+      });
+    }
 
     this.cd.detectChanges();
   }

@@ -17,6 +17,6 @@ import { SelectComponent } from './form-element/select/select.component';
   ],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [FormComponent],
-  entryComponents: [ButtonComponent, InputComponent, SelectComponent],
+  // entryComponents: [ButtonComponent, InputComponent, SelectComponent],
 })
 export class FormModule {}

@@ -10,6 +10,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormComponent } from 'src/app/form/container/form/form.component';
 import { ITableColumn } from '../model/table-column.model';
 @Component({
   selector: 'app-table',
@@ -22,21 +23,19 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) matSort!: MatSort;
+  @ViewChild(FormComponent) employeeForm!: FormComponent;
 
   @Input() isPageable = false;
   @Input() isSortable = false;
   @Input() isFilterable = false;
   @Input() tableColumns!: ITableColumn[];
-  // @Input() rowActionIcon!: string;
   @Input() deleteActionIcon!: string;
   @Input() updateActionIcon!: string;
   @Input() paginationSizes: number[] = [5, 10, 15];
-  @Input() defaultPageSize = this.paginationSizes[1];
+  @Input() defaultPageSize = this.paginationSizes[0];
 
   @Output() sort: EventEmitter<Sort> = new EventEmitter();
-  // @Output() rowAction: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteAction: EventEmitter<any> = new EventEmitter<any>();
-
   @Output() updateAction: EventEmitter<any> = new EventEmitter<any>();
 
   // setter is important to dynamically get changes from parent component
