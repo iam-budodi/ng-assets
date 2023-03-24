@@ -68,7 +68,7 @@ export class EmployeeComponent implements OnInit {
      dialogRef.afterClosed().subscribe({
        next: (val) => {
          if (val) {
-           this.getEmployees();
+           this.getEmployees;
          }
        },
      });
