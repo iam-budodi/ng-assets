@@ -11,7 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormComponent } from 'src/app/form/container/form/form.component';
-import { ITableColumn } from '../model/table-column.model';
+import { ITableColumn } from '../../employee/model/table-column.model';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -29,8 +29,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input() isSortable = false;
   @Input() isFilterable = false;
   @Input() tableColumns!: ITableColumn[];
-  @Input() deleteActionIcon!: string;
-  @Input() updateActionIcon!: string;
+  // @Input() deleteActionIcon!: string;
+  // @Input() updateActionIcon!: string;
+  @Input() actionIcons!: string;
   @Input() paginationSizes: number[] = [5, 10, 15];
   @Input() defaultPageSize = this.paginationSizes[0];
 
@@ -49,12 +50,15 @@ export class TableComponent implements OnInit, AfterViewInit {
       (tableColumn: ITableColumn) => tableColumn.name
     );
 
-    if (this.deleteActionIcon) {
-      this.displayedColumns = [
-        ...columnNames,
-        this.deleteActionIcon,
-        this.updateActionIcon,
-      ];
+    // if (this.deleteActionIcon) {
+    //   this.displayedColumns = [
+    //     ...columnNames,
+    //     this.deleteActionIcon,
+    //     this.updateActionIcon,
+    //   ];
+
+    if (this.actionIcons.length) {
+      this.displayedColumns = [...columnNames, this.actionIcons];
     } else {
       this.displayedColumns = columnNames;
     }

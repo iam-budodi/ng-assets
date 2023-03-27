@@ -3,8 +3,8 @@ import {
   ResolveFn
 } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { IEmployee } from '../common/model/employee.model';
 import { EmployeeService } from './employee.service';
+import { IEmployee } from './model/employee.model';
 
 export const employeeResolver: ResolveFn<IEmployee[]> = () => {
   return inject(EmployeeService)

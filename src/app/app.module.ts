@@ -5,50 +5,47 @@ import { NgChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MaterialModule } from './material.module';
 import { appRoutes } from './routes';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CardComponent } from './common/card/card.component';
-import { StoreSessionsChartComponent } from './charts/store-sessions-chart/store-sessions-chart.component';
-import { AnnualSalesChartComponent } from './charts/annual-sales-chart/annual-sales-chart.component';
-import { SalesTrafficChartComponent } from './charts/sales-traffic-chart/sales-traffic-chart.component';
-import { ProductSalesChartComponent } from './charts/product-sales-chart/product-sales-chart.component';
+import { StoreSessionsChartComponent } from './dashboard/charts/store-sessions-chart/store-sessions-chart.component';
+import { AnnualSalesChartComponent } from './dashboard/charts/annual-sales-chart/annual-sales-chart.component';
+import { SalesTrafficChartComponent } from './dashboard/charts/sales-traffic-chart/sales-traffic-chart.component';
+import { ProductSalesChartComponent } from './dashboard/charts/product-sales-chart/product-sales-chart.component';
 import { TicketComponent } from './common/ticket/ticket.component';
-import { MiniCardComponent } from './mini-card/mini-card.component';
-import { TableComponent } from './common/table/table.component';
-import { DataPropertyGetterPipe } from './common/model/data-property-getter.pipe';
-import { EmployeeComponent } from './employee/employee.component';
-import { AddressComponent } from './common/address/address.component';
+import { EmployeeComponent } from './employee-old/employee.component';
 import { FormModule } from './form/form.module';
-import { EmployeeService } from './employee/employee.service';
-import { EmployeeDialogComponent } from './employee/employee-dialog/employee-dialog.component';
+import { EmployeeService } from './employee-old/employee.service';
+import { EmployeeDialogComponent } from './employee-old/employee-dialog/employee-dialog.component';
+import { EmployeeDetailsComponent } from './employee-old/employee-details/employee-details.component';
+import { EmployeeModule } from './employee/employee.module';
+import { AssetModule } from './asset/asset.module';
+import { ProcureModule } from './procure/procure.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     DashboardComponent,
-    CardComponent,
     StoreSessionsChartComponent,
     AnnualSalesChartComponent,
     SalesTrafficChartComponent,
     ProductSalesChartComponent,
     TicketComponent,
-    MiniCardComponent,
-    TableComponent,
-    DataPropertyGetterPipe,
     EmployeeComponent,
-    AddressComponent,
     EmployeeDialogComponent,
+    EmployeeDetailsComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    EmployeeModule,
     NgChartsModule,
     FormModule,
     RouterModule.forRoot(appRoutes),
+    AssetModule,
+    ProcureModule,
   ],
+
   providers: [EmployeeService],
   bootstrap: [AppComponent],
 })

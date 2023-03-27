@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { IEmployee } from '../common/model/employee.model';
-import { ITableColumn } from '../common/model/table-column.model';
 import { FieldConfig } from '../form/model/field-confing.model';
+import { IEmployee } from './model/employee.model';
+import { ITableColumn } from './model/table-column.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +18,14 @@ export class EmployeeService {
     return subject;
   }
 
-  findEmployee(id: number): IEmployee | undefined {
+  getEmployee(id: number): IEmployee | undefined {
     return EMPLOYEES.find((employee) => employee.id === id);
   }
 
   saveEmployee(employeeEvt: IEmployee): void {
     employeeEvt.id = 10;
+    console.log('IN SVC CREATE : ' + JSON.stringify(employeeEvt));
+
     EMPLOYEES.push(employeeEvt);
   }
 
@@ -34,7 +36,7 @@ export class EmployeeService {
   updateEmployee(employeeEvt: IEmployee): void {
     console.log('In UPDATE service : ' + JSON.stringify(employeeEvt));
     let index = EMPLOYEES.findIndex(
-      (employee) => (employee.id = employeeEvt.id)
+      (employee) => employee.id == employeeEvt.id
     );
     console.log('emp ID : ' + index);
     EMPLOYEES[index] = employeeEvt;
@@ -42,8 +44,9 @@ export class EmployeeService {
     console.log('emp : ' + JSON.stringify(EMPLOYEES[index]));
   }
 
-  getDialogForm(): FieldConfig[] {
-    return FORM;
+  getDialogForm(employee: IEmployee): FieldConfig[] {
+    if (employee !== null && Object.keys(employee).includes('id')) return EDIT_FORM;
+    else return CREATE_FORM;
   }
 
   getTableColumns(): ITableColumn[] {
@@ -52,22 +55,15 @@ export class EmployeeService {
 }
 
 // look at this when you need a select
-  //  {
-  //     type: 'select',
-  //     label: 'Favourite Food',
-  //     name: 'food',
-  //     options: ['Pizza', 'Hot Dogs', 'Knakworstje', 'Coffee'],
-  //     placeholder: 'Select an option',
-  //     validation: [Validators.required],
-  //   },
-const FORM: FieldConfig[] = [
-  {
-    element: 'input',
-    name: 'id',
-    type: 'number',
-    placeholder: 'Enter id',
-    validation: [Validators.required, Validators.minLength(2)],
-  },
+//  {
+//     type: 'select',
+//     label: 'Favourite Food',
+//     name: 'food',
+//     options: ['Pizza', 'Hot Dogs', 'Knakworstje', 'Coffee'],
+//     placeholder: 'Select an option',
+//     validation: [Validators.required],
+//   },
+const CREATE_FORM: FieldConfig[] = [
   {
     element: 'input',
     label: 'First name',
@@ -114,6 +110,17 @@ const FORM: FieldConfig[] = [
     type: 'submit',
     element: 'button',
   },
+];
+
+const EDIT_FORM: FieldConfig[] = [
+  {
+    element: 'input',
+    name: 'id',
+    type: 'number',
+    placeholder: 'Enter id',
+    validation: [Validators.required, Validators.minLength(2)],
+  },
+  ...CREATE_FORM,
 ];
 
 const TABLE_COLUMNS: ITableColumn[] = [

@@ -79,8 +79,8 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   submitHandler(event: Event) {
-    // event.preventDefault();
-    // event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
     this.submit.emit(this.value);
   }

@@ -7,7 +7,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -38,7 +37,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   routeLinks = [
     { link: 'dashboard', name: 'Dashboard', icon: 'dashboard' },
-    { link: 'employees', name: 'Users', icon: 'people' },
+    { link: 'employees/lists', name: 'Users', icon: 'people' },
     {
       header: 'Asset Inventory',
       nav: [

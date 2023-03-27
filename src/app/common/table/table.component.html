@@ -1,12 +1,11 @@
 <ng-container>
   <!-- Filter -->
-  <ng-container [matColumnDef]="this.deleteActionIcon" *ngIf="isFilterable">
+  <ng-container [matColumnDef]="this.actionIcons" *ngIf="isFilterable">
     <mat-form-field>
       <mat-label>Search</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="search..." />
     </mat-form-field>
   </ng-container>
-
   <!-- Table -->
   <div class="table-responsive">
     <table
@@ -16,36 +15,40 @@
       (matSortChange)="sortTable($event)"
       aria-label="Elements"
     >
+    <!-- for routing to details view page -->
+      <ng-template #previewButton let-row="row">
+        <button
+          mat-button
+          matTooltip="{{ row.firstName | possessive }} details"
+          matTooltipPosition="right"
+          routerLink="{{ row.id }}"
+        >
+          <mat-icon>preview</mat-icon>
+        </button>
+      </ng-template>
+
       <!-- action column -->
-      <ng-container
-        *ngIf="deleteActionIcon?.length"
-        [matColumnDef]="deleteActionIcon"
-      >
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [id]="deleteActionIcon"
-          (click)="deleteRowAction(element)"
-        >
-          <button mat-button matTooltip="Delete" matTooltipPosition="right">
-            <mat-icon color="warn">{{ deleteActionIcon }}</mat-icon>
+      <ng-container *ngIf="actionIcons?.length" [matColumnDef]="actionIcons">
+        <th mat-header-cell *matHeaderCellDef>{{ actionIcons | titlecase }}</th>
+        <td mat-cell *matCellDef="let element" [id]="actionIcons">
+          <ng-container
+            *ngTemplateOutlet="previewButton; context: { row: element }"
+          ></ng-container>
+          <button
+            mat-button
+            matTooltip="Edit"
+            matTooltipPosition="right"
+            (click)="updateRowAction(element)"
+          >
+            <mat-icon color="primary">edit</mat-icon>
           </button>
-        </td>
-      </ng-container>
-      <ng-container
-        *ngIf="updateActionIcon?.length"
-        [matColumnDef]="updateActionIcon"
-      >
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td
-          mat-cell
-          *matCellDef="let element"
-          [id]="updateActionIcon"
-          (click)="updateRowAction(element)"
-        >
-          <button mat-button matTooltip="Update" matTooltipPosition="right">
-            <mat-icon color="primary">{{ updateActionIcon }}</mat-icon>
+          <button
+            mat-button
+            matTooltip="Delete"
+            matTooltipPosition="right"
+            (click)="deleteRowAction(element)"
+          >
+            <mat-icon color="warn">delete</mat-icon>
           </button>
         </td>
       </ng-container>
