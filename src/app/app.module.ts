@@ -35,9 +35,9 @@ import {EmployeeService} from "./employee/employee.service";
     EmployeeModule,
     NgChartsModule,
     FormModule,
-    RouterModule.forRoot(appRoutes),
     AssetModule,
     ProcureModule,
+    RouterModule.forRoot(appRoutes),
   ],
 
   providers: [EmployeeService],
