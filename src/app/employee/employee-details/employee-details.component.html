@@ -1,0 +1,51 @@
+<div>
+  <mat-toolbar class="mat-elevation-z6">
+    <mat-toolbar-row>
+      <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+        <ul
+          fxLayout
+          fxLayoutGap="20px"
+          class="alert alert-info navigation-items"
+        >
+          <li>
+            <a routerLink="/employees/lists">
+              <span class="link">Return to all employees</span>
+            </a>
+            <span class="label">
+              / {{ employee.firstName | titlecase }}
+              {{ employee.lastName | titlecase | possessive }} Details</span
+            >
+          </li>
+        </ul>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <!-- <br /> -->
+  <div class="container">
+    <h1 class="header">BASIC INFO</h1>
+    <div class="employee-info">
+      <div class="employee-detail">
+        <div class="label">First Name: </div>
+        <div class="value">{{ employee.firstName }}</div>
+      </div>
+      <div class="employee-detail">
+        <div class="label">Last Name: </div>
+        <div class="value">{{ employee.lastName }}</div>
+      </div>
+      <div class="employee-detail">
+        <div class="label">Age: </div>
+        <div class="value">{{ employee.age }}</div>
+      </div>
+      <div class="employee-detail">
+        <div class="label">Work ID: </div>
+        <div class="value">{{ employee.workId }}</div>
+      </div>
+      <div class="employee-detail">
+        <div class="label">Address: </div>
+        <div class="value">{{ employee.address }}</div>
+      </div>
+      <!-- Add more employee details as needed -->
+    </div>
+  </div>
+  <br />
+</div>
