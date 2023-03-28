@@ -28,7 +28,7 @@
       </ng-template>
 
       <!-- action column -->
-      <ng-container *ngIf="actionIcons?.length" [matColumnDef]="actionIcons">
+      <ng-container *ngIf="actionIcons?.length" [matColumnDef]="actionIcons" stickyEnd>
         <th mat-header-cell *matHeaderCellDef>{{ actionIcons | titlecase }}</th>
         <td mat-cell *matCellDef="let element" [id]="actionIcons">
           <ng-container

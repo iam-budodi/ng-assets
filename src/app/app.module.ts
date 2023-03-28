@@ -12,14 +12,11 @@ import { AnnualSalesChartComponent } from './dashboard/charts/annual-sales-chart
 import { SalesTrafficChartComponent } from './dashboard/charts/sales-traffic-chart/sales-traffic-chart.component';
 import { ProductSalesChartComponent } from './dashboard/charts/product-sales-chart/product-sales-chart.component';
 import { TicketComponent } from './common/ticket/ticket.component';
-import { EmployeeComponent } from './employee-old/employee.component';
 import { FormModule } from './form/form.module';
-import { EmployeeService } from './employee-old/employee.service';
-import { EmployeeDialogComponent } from './employee-old/employee-dialog/employee-dialog.component';
-import { EmployeeDetailsComponent } from './employee-old/employee-details/employee-details.component';
 import { EmployeeModule } from './employee/employee.module';
 import { AssetModule } from './asset/asset.module';
 import { ProcureModule } from './procure/procure.module';
+import {EmployeeService} from "./employee/employee.service";
 
 @NgModule({
   declarations: [
@@ -31,9 +28,6 @@ import { ProcureModule } from './procure/procure.module';
     SalesTrafficChartComponent,
     ProductSalesChartComponent,
     TicketComponent,
-    EmployeeComponent,
-    EmployeeDialogComponent,
-    EmployeeDetailsComponent,
   ],
   imports: [
     BrowserModule,

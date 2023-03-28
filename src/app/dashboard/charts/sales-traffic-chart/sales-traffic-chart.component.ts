@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ChartOptions, ChartType } from 'chart.js';
+import { ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-sales-traffic-chart',
