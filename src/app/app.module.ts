@@ -17,6 +17,8 @@ import { EmployeeModule } from './employee/employee.module';
 import { AssetModule } from './asset/asset.module';
 import { ProcureModule } from './procure/procure.module';
 import {EmployeeService} from "./employee/employee.service";
+import {ApiModule} from "./service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -32,11 +34,13 @@ import {EmployeeService} from "./employee/employee.service";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     EmployeeModule,
     NgChartsModule,
     FormModule,
     AssetModule,
     ProcureModule,
+    ApiModule,
     RouterModule.forRoot(appRoutes),
   ],
 

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EmployeeResolver } from './employee.resolver';
+import { EmployeeResolver } from './employees-list.resolver';
 
 describe('EmployeeResolver', () => {
   let resolver: EmployeeResolver;

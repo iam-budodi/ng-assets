@@ -20,6 +20,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [],
@@ -44,6 +45,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatPaginatorModule,
     MatSortModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatCardModule,
     MatRadioModule,
   ],
@@ -68,6 +70,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatPaginatorModule,
     MatSortModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatCardModule,
     MatRadioModule,
   ],

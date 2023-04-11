@@ -12,6 +12,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormComponent } from 'src/app/form/container/form/form.component';
 import { ITableColumn } from '../../employee/model/table-column.model';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -25,15 +26,13 @@ export class TableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: false }) matSort!: MatSort;
   @ViewChild(FormComponent) employeeForm!: FormComponent;
 
-  @Input() isPageable = false;
-  @Input() isSortable = false;
-  @Input() isFilterable = false;
+  @Input() isPageable: boolean = false;
+  @Input() isSortable: boolean = false;
+  @Input() isFilterable: boolean = false;
   @Input() tableColumns!: ITableColumn[];
-  // @Input() deleteActionIcon!: string;
-  // @Input() updateActionIcon!: string;
   @Input() actionIcons!: string;
   @Input() paginationSizes: number[] = [5, 10, 15];
-  @Input() defaultPageSize = this.paginationSizes[0];
+  @Input() defaultPageSize: number = this.paginationSizes[1];
 
   @Output() sort: EventEmitter<Sort> = new EventEmitter();
   @Output() deleteAction: EventEmitter<any> = new EventEmitter<any>();
@@ -46,16 +45,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit(): void {
-    const columnNames = this.tableColumns.map(
+    const columnNames: string[] = this.tableColumns.map(
       (tableColumn: ITableColumn) => tableColumn.name
     );
-
-    // if (this.deleteActionIcon) {
-    //   this.displayedColumns = [
-    //     ...columnNames,
-    //     this.deleteActionIcon,
-    //     this.updateActionIcon,
-    //   ];
 
     if (this.actionIcons.length) {
       this.displayedColumns = [...columnNames, this.actionIcons];
@@ -69,7 +61,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.tableDataSource.paginator = this.paginator;
   }
 
-  setTableDataSource(data: any) {
+  setTableDataSource(data: any): void {
     this.tableDataSource = new MatTableDataSource<any>(data);
     this.tableDataSource.paginator = this.paginator;
     this.tableDataSource.sort = this.matSort;
@@ -95,4 +87,9 @@ export class TableComponent implements OnInit, AfterViewInit {
   updateRowAction(row: any) {
     this.updateAction.emit(row);
   }
+
+  // onPageChange(event: any): void {
+  //   this.pageable.pageIndex = event.pageIndex;
+  //   this.pageable.pageSize = event.pageSize;
+  // }
 }

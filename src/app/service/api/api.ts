@@ -1,0 +1,17 @@
+export * from './categoryEndpoint.service';
+import { CategoryEndpointService } from './categoryEndpoint.service';
+export * from './computerEndpoint.service';
+import { ComputerEndpointService } from './computerEndpoint.service';
+export * from './departmentEndpoint.service';
+import { DepartmentEndpointService } from './departmentEndpoint.service';
+export * from './employeeEndpoint.service';
+import { EmployeeEndpointService } from './employeeEndpoint.service';
+export * from './itemResource.service';
+import { ItemResourceService } from './itemResource.service';
+export * from './microProfileHealth.service';
+import { MicroProfileHealthService } from './microProfileHealth.service';
+export * from './purchaseEndpoint.service';
+import { PurchaseEndpointService } from './purchaseEndpoint.service';
+export * from './supplierEndpoint.service';
+import { SupplierEndpointService } from './supplierEndpoint.service';
+export const APIS = [CategoryEndpointService, ComputerEndpointService, DepartmentEndpointService, EmployeeEndpointService, ItemResourceService, MicroProfileHealthService, PurchaseEndpointService, SupplierEndpointService];

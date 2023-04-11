@@ -15,8 +15,12 @@ import { ITableColumn } from '../model/table-column.model';
 })
 export class EmployeeListComponent implements OnInit {
   @ViewChild(FormComponent) form!: FormComponent;
-  employees!: IEmployee[];
   employeeTableColumns!: ITableColumn[];
+  employees!: IEmployee[];
+  totalCount: number = 0;
+  links!: string;
+  pageSizes: number[] = [5, 6, 10, 15];
+  defaultSize: number = this.pageSizes[1];
 
   constructor(
     private dialog: MatDialog,
@@ -26,7 +30,13 @@ export class EmployeeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initColumns();
-    this.employees = this.route.snapshot.data['employees'];
+    const { employees, totalCountHeader, linkHeader } = this.route.snapshot.data['employees'];
+    this.employees = employees;
+    this.totalCount = totalCountHeader;
+    this.links = linkHeader;
+    console.log("EMPLOYEES : " + JSON.stringify(this.employees));
+    console.log("TOTAL : " + this.totalCount);
+    console.log("LINKS : " + this.links);
   }
 
   initColumns(): void {
