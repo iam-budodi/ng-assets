@@ -1,14 +1,42 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { FieldConfig } from '../form/model/field-confing.model';
 import { IEmployee } from './model/employee.model';
 import { ITableColumn } from './model/table-column.model';
+import {Page, PageRequest} from "ngx-pagination-data-source";
+import {Employee, EmployeeEndpointService} from "../service";
+import {EmployeeQuery} from "./employee-list/employee-list.component";
+import {map} from "rxjs/operators";
+import {HttpResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
+
+  constructor(private employeeService: EmployeeEndpointService) {
+  }
+  page(request: PageRequest<Employee>, query: EmployeeQuery): Observable<Page<Employee>> {
+
+    request.size = 5;
+    return this.employeeService.restEmployeesGet(request.page, request.size, 'response')
+      .pipe(map((response: HttpResponse<Array<Employee>>) => {
+          const linkHeader: string | null = response.headers.get('Link');
+          const totalElements: string | null = response.headers.get('X-Total-Count');
+          const employees: Employee[] = response.body || [];
+
+          const pageData: Page<Employee> = {
+            content: employees,
+            totalElements: totalElements ? parseInt(totalElements, 10) : 0,
+            size: 5,
+            number: 0
+          }
+
+          return pageData;
+        }
+      ));
+  }
   getEmployees(): Observable<IEmployee[]> {
     let subject = new Subject<IEmployee[]>();
     setTimeout(() => {
@@ -126,9 +154,17 @@ const EDIT_FORM: FieldConfig[] = [
 const TABLE_COLUMNS: ITableColumn[] = [
   { name: ' ', dataKey: 'id', isSortable: true },
   { name: 'First Name', dataKey: 'firstName', isSortable: true },
+  { name: 'Middle Name', dataKey: 'middleName', isSortable: true },
   { name: 'Last Name', dataKey: 'lastName', isSortable: true },
+  { name: 'Gender', dataKey: 'gender', isSortable: true },
+  { name: 'Phone Number', dataKey: 'mobile', isSortable: true },
+  { name: 'Email', dataKey: 'email', isSortable: true },
   { name: 'Work ID', dataKey: 'workId', isSortable: true },
+  { name: 'Hire Date', dataKey: 'hireDate', isSortable: true },
+  { name: 'Experience', dataKey: 'timeOfService', isSortable: false },
+  { name: 'Department', dataKey: 'department', isSortable: true },
   { name: 'Address', dataKey: 'address', isSortable: false },
+  { name: 'DOB', dataKey: 'dateOfBirth', isSortable: false },
   { name: 'Age', dataKey: 'age', isSortable: false },
 ];
 

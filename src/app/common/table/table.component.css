@@ -1,6 +1,6 @@
  table {
   width: 100%;
-  padding: 30px;
+   margin-left: 10px;
 }
 
 /* for horizontally scrollable table */
@@ -36,7 +36,7 @@
 
 th,
 td {
-  padding: 10px !important;
+  padding: 5px !important;
 }
 
 mat-form-field {

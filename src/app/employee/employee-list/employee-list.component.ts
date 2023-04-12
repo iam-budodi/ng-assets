@@ -7,6 +7,13 @@ import { CreateUpdateComponent } from '../create-update/create-update.component'
 import { EmployeeService } from '../employee.service';
 import { IEmployee } from '../model/employee.model';
 import { ITableColumn } from '../model/table-column.model';
+import {Employee, EmployeeEndpointService} from "../../service";
+import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
+
+export interface EmployeeQuery {
+  search: string;
+  // Add date type when this works
+}
 
 @Component({
   selector: 'app-employee-list',
@@ -16,34 +23,41 @@ import { ITableColumn } from '../model/table-column.model';
 export class EmployeeListComponent implements OnInit {
   @ViewChild(FormComponent) form!: FormComponent;
   employeeTableColumns!: ITableColumn[];
-  employees!: IEmployee[];
-  totalCount: number = 0;
-  links!: string;
-  pageSizes: number[] = [5, 6, 10, 15];
-  defaultSize: number = this.pageSizes[1];
+  employees!: Employee[];
+  pageSizes: number[] = [5, 10, 15, 20, 50];
+  defaultSize: number = this.pageSizes[0];
+
+  tableData: PaginationDataSource<Employee, EmployeeQuery> = new PaginationDataSource<Employee, EmployeeQuery>(
+    (request: PageRequest<Employee>, query: EmployeeQuery) => this.employeeService.page(request, query),
+    {property: 'firstName', order: 'desc'},
+    {search: ''}
+  )
 
   constructor(
     private dialog: MatDialog,
     private employeeService: EmployeeService,
-    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.initColumns();
-    const { employees, totalCountHeader, linkHeader } = this.route.snapshot.data['employees'];
-    this.employees = employees;
-    this.totalCount = totalCountHeader;
-    this.links = linkHeader;
-    console.log("EMPLOYEES : " + JSON.stringify(this.employees));
-    console.log("TOTAL : " + this.totalCount);
-    console.log("LINKS : " + this.links);
-  }
 
-  initColumns(): void {
+  // WITH RESOLVER FUNCTION ALL THE COMMENTED OUT
+  // ngOnInit(): void {
+  //   this.initColumns();
+  //   const { employees, totalCountHeader, linkHeader } = this.route.snapshot.data['employees'];
+  //   this.employees = employees as Employee[];
+  //   this.totalCount = totalCountHeader as number;
+  //   this.tableData.data = this.employees;
+  //   this.tableData.totalCounts = this.totalCount;
+  //   this.links = linkHeader;
+  //   console.log("EMPLOYEES : " + JSON.stringify(this.tableData.data));
+  //   console.log("TOTAL : " + this.tableData.totalCounts);
+  //   console.log("LINKS : " + this.links);
+  // }
+
+  ngOnInit(): void {
     this.employeeTableColumns = this.employeeService.getTableColumns();
   }
 
-  getEmployees(): IEmployee[] {
+  getEmployees(): Employee[] {
     return this.employees;
   }
 
@@ -96,18 +110,4 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
-  sortData(sortParameters: Sort): IEmployee[] | undefined | void {
-    const keyName = sortParameters.active as keyof IEmployee;
-    if (sortParameters.direction === 'asc') {
-      this.employees = this.employees.sort((a: IEmployee, b: IEmployee) =>
-        (a[keyName] as string).localeCompare(b[keyName] as string)
-      );
-    } else if (sortParameters.direction === 'desc') {
-      this.employees = this.employees.sort((a: IEmployee, b: IEmployee) =>
-        (b[keyName] as string).localeCompare(a[keyName] as string)
-      );
-    } else {
-      return (this.employees = this.getEmployees());
-    }
-  }
 }

@@ -22,16 +22,11 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br />
-  <app-table
-    class="grid-container"
-    [tableData]="employees"
+  <app-table class="grid-container"
+    [tableEntries]="tableData"
     [tableColumns]="employeeTableColumns"
-    [isFilterable]="true"
-    [isPageable]="true"
     [paginationSizes]="pageSizes"
     [defaultPageSize]="defaultSize"
-    (sort)="sortData($event)"
-    [actionIcons]="'actions'"
     (updateAction)="updateEmployee($event)"
     (deleteAction)="deleteEmployee($event)"
   ></app-table>

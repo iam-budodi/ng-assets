@@ -1,11 +1,15 @@
 <ng-container>
+
+  <mat-spinner *ngIf="tableDataSource.loading$ | async" diameter="64" style="margin: 0 auto"></mat-spinner>
+
   <!-- Filter -->
-  <ng-container [matColumnDef]="this.actionIcons" *ngIf="isFilterable">
+  <ng-container [matColumnDef]="this.actionIcons">
     <mat-form-field>
       <mat-label>Search</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="search..." />
+      <input matInput  placeholder="search..." />
     </mat-form-field>
   </ng-container>
+
   <!-- Table -->
   <div class="table-responsive">
     <table
@@ -99,9 +103,12 @@
 
   <!-- pagination -->
   <mat-paginator
-    *ngIf="isPageable"
-    [pageSize]="defaultPageSize"
+    *ngIf="tableDataSource.page$ | async as page"
+    [length]="page.totalElements"
+    [pageSize]="page.size"
+    [pageIndex]="page.number"
     [pageSizeOptions]="paginationSizes"
+    (page)="tableDataSource.fetch($event.pageIndex, $event.pageSize)"
     showFirstLastButtons
   >
   </mat-paginator>
