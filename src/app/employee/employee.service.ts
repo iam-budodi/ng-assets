@@ -23,7 +23,7 @@ export class EmployeeService {
     const date: string = this.datePipe.transform(query.registration, 'yyyy-MM-dd')!;
     request.size = 5;
 
-    return this.employeeService.restEmployeesGet(date, request.page, query.search, request.size, 'response')
+    return this.employeeService.restEmployeesGet(date, request.sort?.order, request.page, request.sort?.property, query.search, request.size, 'response')
       .pipe(map((response: HttpResponse<Array<Employee>>) => {
           const linkHeader: string | null = response.headers.get('Link');
           const totalElements: string | null = response.headers.get('X-Total-Count');

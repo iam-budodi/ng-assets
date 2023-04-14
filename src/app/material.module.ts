@@ -24,6 +24,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatMomentDateModule, MomentDateAdapter} from "@angular/material-moment-adapter";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 export const MY_CUSTOM_DATE_FORMAT = {
   parse: {
@@ -66,7 +67,7 @@ export const MY_CUSTOM_DATE_FORMAT = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatNativeDateModule,
-
+    MatButtonToggleModule,
   ],
   exports: [
     CommonModule,
@@ -95,6 +96,7 @@ export const MY_CUSTOM_DATE_FORMAT = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatNativeDateModule,
+    MatButtonToggleModule,
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter},

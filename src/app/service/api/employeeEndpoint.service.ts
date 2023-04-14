@@ -63,7 +63,7 @@ export class EmployeeEndpointService {
 
     /**
      * Counts all employees in the database
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -99,7 +99,7 @@ export class EmployeeEndpointService {
 
     /**
      * Returns the scanned QR Code details
-     * 
+     *
      * @param employeeId Employee identifier
      * @param id Transfer or Allocation identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -145,7 +145,7 @@ export class EmployeeEndpointService {
 
     /**
      * Previews the QR Code image
-     * 
+     *
      * @param assetId Asset Identifier
      * @param employeeId Employee Identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -191,18 +191,22 @@ export class EmployeeEndpointService {
 
     /**
      * Retrieves all available employees from the database
-     * 
+     *
      * @param date Search date
+     * @param order Order direction
      * @param page Page index
+     * @param prop Order property
      * @param search Search string
      * @param size Page size
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
-    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
-    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
-    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    //public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
+    public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
+    public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
+    public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
 
 
 
@@ -212,8 +216,14 @@ export class EmployeeEndpointService {
         if (date !== undefined && date !== null) {
             queryParameters = queryParameters.set('date', <any>date);
         }
+        if (order !== undefined && order !== null) {
+            queryParameters = queryParameters.set('order', <any>order);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (prop !== undefined && prop !== null) {
+            queryParameters = queryParameters.set('prop', <any>prop);
         }
         if (search !== undefined && search !== null) {
             queryParameters = queryParameters.set('search', <any>search);
@@ -250,7 +260,7 @@ export class EmployeeEndpointService {
 
     /**
      * Retrieves details of all allocations per employee
-     * 
+     *
      * @param id Employee Identifier
      * @param status Parameter for querying status
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -299,8 +309,8 @@ export class EmployeeEndpointService {
 
     /**
      * Allocates an asset to employee
-     * 
-     * @param body 
+     *
+     * @param body
      * @param id Employee Identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -351,7 +361,7 @@ export class EmployeeEndpointService {
 
     /**
      * Deletes an existing employee
-     * 
+     *
      * @param id Employee identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -391,7 +401,7 @@ export class EmployeeEndpointService {
 
     /**
      * Returns the employee for a given identifier
-     * 
+     *
      * @param id Employee Identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -432,8 +442,8 @@ export class EmployeeEndpointService {
 
     /**
      * Updates an existing employee
-     * 
-     * @param body 
+     *
+     * @param body
      * @param id Employee identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -484,8 +494,8 @@ export class EmployeeEndpointService {
 
     /**
      * Transfers an asset to another employee
-     * 
-     * @param body 
+     *
+     * @param body
      * @param id Employee Identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -536,8 +546,8 @@ export class EmployeeEndpointService {
 
     /**
      * Creates a valid employee and stores it into the database
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

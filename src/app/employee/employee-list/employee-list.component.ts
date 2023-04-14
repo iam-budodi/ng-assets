@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Sort } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
 import { FormComponent } from 'src/app/form/container/form/form.component';
 import { CreateUpdateComponent } from '../create-update/create-update.component';
 import { EmployeeService } from '../employee.service';
 import { IEmployee } from '../model/employee.model';
 import { ITableColumn } from '../model/table-column.model';
-import {Employee, EmployeeEndpointService, LocalDate} from "../../service";
+import {Employee, LocalDate} from "../../service";
 import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 
 export interface EmployeeQuery {
@@ -29,7 +27,7 @@ export class EmployeeListComponent implements OnInit {
 
   tableData: PaginationDataSource<Employee, EmployeeQuery> = new PaginationDataSource<Employee, EmployeeQuery>(
     (request: PageRequest<Employee>, query: EmployeeQuery) => this.employeeService.page(request, query),
-    {property: 'firstName', order: 'desc'},
+    {property: 'firstName', order: 'asc'},
     {search: undefined!, registration: undefined!}
   )
 
