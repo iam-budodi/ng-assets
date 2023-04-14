@@ -1,16 +1,12 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { FormComponent } from 'src/app/form/container/form/form.component';
+import { Sort } from '@angular/material/sort';
 import { ITableColumn } from '../../employee/model/table-column.model';
 import {PaginationDataSource} from "ngx-pagination-data-source";
 import {Employee} from "../../service";
@@ -21,7 +17,7 @@ import {EmployeeQuery} from "../../employee/employee-list/employee-list.componen
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, AfterViewInit {
   public tableDataSource!: PaginationDataSource<Employee, EmployeeQuery>;
   public displayedColumns!: string[];
 
@@ -35,7 +31,7 @@ export class TableComponent implements OnInit {
   @Output() deleteAction: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateAction: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     const columnNames: string[] = this.tableColumns.map(
@@ -67,6 +63,10 @@ export class TableComponent implements OnInit {
 
   updateRowAction(row: any) {
     this.updateAction.emit(row);
+  }
+
+  ngAfterViewInit(): void {
+    this.cd.detectChanges();
   }
 
 }

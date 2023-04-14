@@ -22,6 +22,7 @@ import { AllocationStatus } from '../model/allocationStatus';
 import { Employee } from '../model/employee';
 import { InlineResponse200 } from '../model/inlineResponse200';
 import { InlineResponse2001 } from '../model/inlineResponse2001';
+import { LocalDate } from '../model/localDate';
 import { Transfer } from '../model/transfer';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -191,21 +192,31 @@ export class EmployeeEndpointService {
     /**
      * Retrieves all available employees from the database
      * 
+     * @param date Search date
      * @param page Page index
+     * @param search Search string
      * @param size Page size
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restEmployeesGet(page?: number, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
-    public restEmployeesGet(page?: number, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
-    public restEmployeesGet(page?: number, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
-    public restEmployeesGet(page?: number, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
+    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
+    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
+    public restEmployeesGet(date?: LocalDate, page?: number, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (date !== undefined && date !== null) {
+            queryParameters = queryParameters.set('date', <any>date);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (search !== undefined && search !== null) {
+            queryParameters = queryParameters.set('search', <any>search);
         }
         if (size !== undefined && size !== null) {
             queryParameters = queryParameters.set('size', <any>size);

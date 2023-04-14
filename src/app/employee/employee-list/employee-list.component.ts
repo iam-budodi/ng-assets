@@ -7,12 +7,12 @@ import { CreateUpdateComponent } from '../create-update/create-update.component'
 import { EmployeeService } from '../employee.service';
 import { IEmployee } from '../model/employee.model';
 import { ITableColumn } from '../model/table-column.model';
-import {Employee, EmployeeEndpointService} from "../../service";
+import {Employee, EmployeeEndpointService, LocalDate} from "../../service";
 import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 
 export interface EmployeeQuery {
   search: string;
-  // Add date type when this works
+  registration: LocalDate;
 }
 
 @Component({
@@ -30,7 +30,7 @@ export class EmployeeListComponent implements OnInit {
   tableData: PaginationDataSource<Employee, EmployeeQuery> = new PaginationDataSource<Employee, EmployeeQuery>(
     (request: PageRequest<Employee>, query: EmployeeQuery) => this.employeeService.page(request, query),
     {property: 'firstName', order: 'desc'},
-    {search: ''}
+    {search: undefined!, registration: undefined!}
   )
 
   constructor(

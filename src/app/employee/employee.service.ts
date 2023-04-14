@@ -9,18 +9,21 @@ import {Employee, EmployeeEndpointService} from "../service";
 import {EmployeeQuery} from "./employee-list/employee-list.component";
 import {map} from "rxjs/operators";
 import {HttpResponse} from "@angular/common/http";
+import {DatePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
 
-  constructor(private employeeService: EmployeeEndpointService) {
+  constructor(private employeeService: EmployeeEndpointService, private datePipe: DatePipe) {
   }
   page(request: PageRequest<Employee>, query: EmployeeQuery): Observable<Page<Employee>> {
 
+    const date: string = this.datePipe.transform(query.registration, 'yyyy-MM-dd')!;
     request.size = 5;
-    return this.employeeService.restEmployeesGet(request.page, request.size, 'response')
+
+    return this.employeeService.restEmployeesGet(date, request.page, query.search, request.size, 'response')
       .pipe(map((response: HttpResponse<Array<Employee>>) => {
           const linkHeader: string | null = response.headers.get('Link');
           const totalElements: string | null = response.headers.get('X-Total-Count');
@@ -37,6 +40,7 @@ export class EmployeeService {
         }
       ));
   }
+
   getEmployees(): Observable<IEmployee[]> {
     let subject = new Subject<IEmployee[]>();
     setTimeout(() => {

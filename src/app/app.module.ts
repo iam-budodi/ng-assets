@@ -44,7 +44,7 @@ import {HttpClientModule} from "@angular/common/http";
     RouterModule.forRoot(appRoutes),
   ],
 
-  providers: [EmployeeService],
+  providers: [EmployeeService,],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
