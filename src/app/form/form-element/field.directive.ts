@@ -33,7 +33,7 @@ export class FieldDirective implements Field, OnChanges, OnInit {
 
   ngOnInit(): void {
     if (!components[this.config.element]) {
-      const supportedTypes = Object.keys(components).join(', ');
+      const supportedTypes: string = Object.keys(components).join(', ');
       throw new Error(
         `You are trying to use an unsupported type (${this.config.element}). Supported types are: ${supportedTypes}`
       );

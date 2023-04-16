@@ -58,7 +58,7 @@ export class DepartmentEndpointService {
 
     /**
      * Counts all departments available in the database
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -94,20 +94,40 @@ export class DepartmentEndpointService {
 
     /**
      * Retrieves all available deparments from the database
-     * 
-     * @param name Department name query parameter
+     *
+     * @param order Order direction
+     * @param page Page index
+     * @param prop Order property
+     * @param search Search string
+     * @param size Page size
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restDepartmentsGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Department>>;
-    public restDepartmentsGet(name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Department>>>;
-    public restDepartmentsGet(name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Department>>>;
-    public restDepartmentsGet(name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    // public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Department>>;
+    public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Department>>>;
+    public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Department>>>;
+    public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (name !== undefined && name !== null) {
-            queryParameters = queryParameters.set('name', <any>name);
+        if (order !== undefined && order !== null) {
+            queryParameters = queryParameters.set('order', <any>order);
+        }
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (prop !== undefined && prop !== null) {
+            queryParameters = queryParameters.set('prop', <any>prop);
+        }
+        if (search !== undefined && search !== null) {
+            queryParameters = queryParameters.set('search', <any>search);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
         }
 
         let headers = this.defaultHeaders;
@@ -138,7 +158,7 @@ export class DepartmentEndpointService {
 
     /**
      * Deletes an existing department
-     * 
+     *
      * @param id Department identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -178,7 +198,7 @@ export class DepartmentEndpointService {
 
     /**
      * Retrieves all employees available in a specific deparment given an identifier
-     * 
+     *
      * @param id Department identifier
      * @param workid Employee work identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -227,7 +247,7 @@ export class DepartmentEndpointService {
 
     /**
      * Returns the department for a given identifier
-     * 
+     *
      * @param id Department identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -268,8 +288,8 @@ export class DepartmentEndpointService {
 
     /**
      * Updates an existing department
-     * 
-     * @param body 
+     *
+     * @param body
      * @param id Department identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -320,8 +340,8 @@ export class DepartmentEndpointService {
 
     /**
      * Creates a valid department and stores it into the database
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

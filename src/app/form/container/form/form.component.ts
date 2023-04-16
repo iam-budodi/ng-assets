@@ -9,6 +9,8 @@ import {
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldConfig } from '../../model/field-confing.model';
+import {Employee} from "../../../service";
+import {T} from "@angular/cdk/keycodes";
 
 @Component({
   exportAs: 'dynamicForm',
@@ -55,7 +57,7 @@ export class FormComponent implements OnInit, OnChanges {
 
   createControl(config: FieldConfig): AbstractControl<any, any> {
     const { disabled, validation, value } = config;
-    return this.formBuilder.control({ disabled, value }, validation);
+    return this.formBuilder.control({ disabled, value }, validation!);
   }
 
   ngOnChanges(): void {
@@ -102,9 +104,5 @@ export class FormComponent implements OnInit, OnChanges {
 
   setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, { emitEvent: true });
-  }
-
-  getAction(row: any) {
-    this.employeeAction.emit(row);
   }
 }

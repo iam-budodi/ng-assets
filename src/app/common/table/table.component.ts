@@ -9,8 +9,6 @@ import {
 import { Sort } from '@angular/material/sort';
 import { ITableColumn } from '../../employee/model/table-column.model';
 import {PaginationDataSource} from "ngx-pagination-data-source";
-import {Employee} from "../../service";
-import {EmployeeQuery} from "../../employee/employee-list/employee-list.component";
 
 @Component({
   selector: 'app-table',
@@ -18,14 +16,14 @@ import {EmployeeQuery} from "../../employee/employee-list/employee-list.componen
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit, AfterViewInit {
-  public tableDataSource!: PaginationDataSource<Employee, EmployeeQuery>;
+  public tableDataSource!: PaginationDataSource<any, any>;
   public displayedColumns!: string[];
 
   @Input() tableColumns!: ITableColumn[];
-  @Input() tableEntries!: PaginationDataSource<Employee, EmployeeQuery>;
+  @Input() tableEntries!: PaginationDataSource<any, any>;
   @Input() actionIcons: string = "actions";
-  @Input() paginationSizes: number[] = [5, 10, 15];
-  @Input() defaultPageSize: number = this.paginationSizes[1];
+  @Input() paginationSizes: number[] = [5, 10, 15, 50];
+  @Input() defaultPageSize: number = this.paginationSizes[2];
 
   @Output() sort: EventEmitter<Sort> = new EventEmitter();
   @Output() deleteAction: EventEmitter<any> = new EventEmitter<any>();

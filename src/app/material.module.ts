@@ -23,7 +23,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
-import {MatMomentDateModule, MomentDateAdapter} from "@angular/material-moment-adapter";
+import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 export const MY_CUSTOM_DATE_FORMAT = {
@@ -65,7 +65,6 @@ export const MY_CUSTOM_DATE_FORMAT = {
     MatCardModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatMomentDateModule,
     MatNativeDateModule,
     MatButtonToggleModule,
   ],
@@ -94,7 +93,6 @@ export const MY_CUSTOM_DATE_FORMAT = {
     MatCardModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatMomentDateModule,
     MatNativeDateModule,
     MatButtonToggleModule,
   ],

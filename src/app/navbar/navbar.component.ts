@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   routeLinks = [
     { link: 'dashboard', name: 'Dashboard', icon: 'dashboard' },
-    { link: 'employees/lists', name: 'Users', icon: 'people' },
+    { link: 'user', name: 'Users', icon: 'people' },
     {
       header: 'Asset Inventory',
       nav: [
@@ -59,8 +59,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     {
       header: 'Employee',
       nav: [
-        { link: 'employees', name: 'Employees', icon: 'group' },
-        { link: 'departments', name: 'Departments', icon: 'account_balance' },
+        { link: 'api/employees', name: 'Employees', icon: 'group' },
+        { link: 'api/departments', name: 'Departments', icon: 'account_balance' },
       ],
     },
   ];

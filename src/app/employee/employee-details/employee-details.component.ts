@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {IEmployee} from "../model/employee.model";
 import {EmployeeService} from "../employee.service";
 import {ActivatedRoute, Params} from "@angular/router";
 
@@ -9,7 +8,7 @@ import {ActivatedRoute, Params} from "@angular/router";
   styleUrls: ['./employee-details.component.css']
 })
 export class EmployeeDetailsComponent implements OnInit {
-  employee!: IEmployee;
+  employee!: any;
 
   constructor(
     private employeeService: EmployeeService,

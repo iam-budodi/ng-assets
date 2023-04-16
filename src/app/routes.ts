@@ -4,7 +4,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 export const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {
-    path: 'employees',
+    path: 'api',
     loadChildren: () =>
       import('./employee/employee.module').then((m) => m.EmployeeModule),
   },

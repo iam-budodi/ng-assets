@@ -1,34 +1,35 @@
-import { ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { FormComponent } from 'src/app/form/container/form/form.component';
 import { FieldConfig } from 'src/app/form/model/field-confing.model';
 import { EmployeeService } from '../employee.service';
-import { IEmployee } from '../model/employee.model';
+import {DialogService} from "../../dialog/dialog.service";
 
 @Component({
   selector: 'app-create-update',
   templateUrl: './create-update.component.html',
   styleUrls: ['./create-update.component.css'],
 })
-export class CreateUpdateComponent {
+export class CreateUpdateComponent implements OnInit, AfterViewInit {
   isAsyncOperationRunning$: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
   @ViewChild(FormComponent) form!: FormComponent;
   config!: FieldConfig[];
 
   constructor(
-    public dialogRef: MatDialogRef<CreateUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IEmployee,
+    // public dialogRef: MatDialogRef<CreateUpdateComponent>,
+    // @Inject(MAT_DIALOG_DATA) public data: IEmployee,
+    private dialogService: DialogService,
     private employeeService: EmployeeService,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.config = this.employeeService.getDialogForm(this.data);
+    // this.config = this.employeeService.getDialogForm(); // THIS WHOLE CLASS IS USELESS
   }
 
-  submit(employee: IEmployee): void {
+  submit(employee: any): void {
     this.isAsyncOperationRunning$.next(true);
     setTimeout(() => {
       console.log('ID : ' + employee.id);
@@ -45,7 +46,7 @@ export class CreateUpdateComponent {
       } else {
         console.log('CREATE NEW EMPLOYEE : ' + JSON.stringify(employee));
 
-        this.employeeService.saveEmployee(employee);
+        this.employeeService.createEmployee(employee);
         // this.closeDialog();
         // return;
       }
@@ -55,7 +56,7 @@ export class CreateUpdateComponent {
   }
 
   closeDialog(): void {
-    this.dialogRef.close();
+    // this.dialogRef.close();
   }
 
   ngAfterViewInit() {
@@ -70,14 +71,15 @@ export class CreateUpdateComponent {
     });
 
     this.form.setDisabled('submit', true);
+    this.form.setValue('name', 'japheth');
 
-    if (this.data.id) {
-      Object.entries(this.data).forEach(([name, value]) => {
-        this.form.setValue(name, value);
-        // console.log('KEY : ' + name + ' VAL : ' + value);
-      });
-      // this.form.setDisabled('id', true);
-    }
+    // if (this.data.id) {
+    //   Object.entries(this.data).forEach(([name, value]) => {
+    //     this.form.setValue(name, value);
+    //     // console.log('KEY : ' + name + ' VAL : ' + value);
+    //   });
+    //   // this.form.setDisabled('id', true);
+    // }
 
     this.cd.detectChanges();
   }

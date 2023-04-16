@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 
-export type Gender = 'MALE' | 'FEMALE' | 'OTHER';
+export type Gender = 'M' | 'F';
 
 export const Gender = {
-    MALE: 'MALE' as Gender,
-    FEMALE: 'FEMALE' as Gender,
-    OTHER: 'OTHER' as Gender
+    M: 'M' as Gender,
+    F: 'F' as Gender
 };

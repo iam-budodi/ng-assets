@@ -1,0 +1,23 @@
+<div>
+  <button [disabled]="isAsyncOperationRunning$ | async" class="close" mat-dialog-close="true" mat-icon-button>
+    <mat-icon>clear</mat-icon>
+  </button>
+
+  <mat-progress-bar
+    *ngIf="isAsyncOperationRunning$ | async"
+    mode="indeterminate"
+  >
+  </mat-progress-bar>
+
+  <h2 mat-dialog-title>{{title}}</h2>
+  <div class="dialog">
+    <dynamic-form
+      #form="dynamicForm"
+      (submit)="submit($event)"
+      [config]="config"
+    >
+    </dynamic-form>
+    {{ form.valid }}
+    {{ form.value | json }}
+  </div>
+</div>

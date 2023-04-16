@@ -12,6 +12,11 @@ import { FormModule } from '../form/form.module';
 import { CardComponent } from '../common/card/card.component';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { EmployeeDialogComponent } from './employee-dialog/employee-dialog.component';
+import { DepartmentComponent } from './department/department.component';
+import { DepartmentDialogComponent } from './department/department-dialog/department-dialog.component';
+import { DepartmentListComponent } from './department/department-list/department-list.component';
+import {DepartmentService} from "./department/department.service";
 
 @NgModule({
   declarations: [
@@ -22,6 +27,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     DataPropertyGetterPipe,
     CreateUpdateComponent,
     EmployeeDetailsComponent,
+    EmployeeDialogComponent,
+    DepartmentComponent,
+    DepartmentDialogComponent,
+    DepartmentListComponent,
   ],
     imports: [
         CommonModule,
@@ -39,6 +48,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     DataPropertyGetterPipe,
     CardComponent,
   ],
-  providers: [DatePipe]
+  providers: [DatePipe, DepartmentService]
 })
 export class EmployeeModule {}

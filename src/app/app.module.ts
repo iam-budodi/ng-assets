@@ -19,6 +19,8 @@ import { ProcureModule } from './procure/procure.module';
 import {EmployeeService} from "./employee/employee.service";
 import {ApiModule} from "./service";
 import {HttpClientModule} from "@angular/common/http";
+import { DialogComponent } from './dialog/dialog.component';
+import {DialogService} from "./dialog/dialog.service";
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import {HttpClientModule} from "@angular/common/http";
     SalesTrafficChartComponent,
     ProductSalesChartComponent,
     TicketComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import {HttpClientModule} from "@angular/common/http";
     RouterModule.forRoot(appRoutes),
   ],
 
-  providers: [EmployeeService,],
+  providers: [EmployeeService, DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
