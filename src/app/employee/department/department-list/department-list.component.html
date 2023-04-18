@@ -2,28 +2,31 @@
   <mat-toolbar class="mat-elevation-z6">
     <mat-toolbar-row>
       <button
-        type="button"
-        button="submit"
-        mat-raised-button
-        class="button"
         (click)="createDepartment()"
+        button="submit"
+        class="button"
+        mat-raised-button
+        type="button"
       >
-        <mat-icon>person_add</mat-icon> <span class="label">{{ addDeptButtonLabel }}</span>
+        <mat-icon>person_add</mat-icon>
+        <span class="label">{{ addDeptButtonLabel }}</span>
       </button>
 
-      <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-        <ul fxLayout fxLayoutGap="20px" class="alert alert-info navigation-items">
+      <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end">
+        <ul class="alert alert-info navigation-items" fxLayout fxLayoutGap="20px">
           <li>
-            <a routerLink="/dashboard"> <span class="link">Dashboard</span> </a>
+            <a routerLink="/dashboard">
+              <span class="link" matTooltip="Click to return to dashboard">Dashboard</span>
+            </a>
             <span class="label"> / {{ pageTitle }}</span>
           </li>
         </ul>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <br />
-  <app-table class="grid-container"
+  <br/>
+  <app-table [tableColumns]="departmentTableColumns"
              [tableEntries]="tableData"
-             [tableColumns]="departmentTableColumns"
+             class="grid-container"
   ></app-table>
 </div>

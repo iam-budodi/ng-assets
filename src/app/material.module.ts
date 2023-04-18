@@ -25,6 +25,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {DynamicFormsMaterialUIModule} from "@ng-dynamic-forms/ui-material";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export const MY_CUSTOM_DATE_FORMAT = {
   parse: {
@@ -67,6 +69,7 @@ export const MY_CUSTOM_DATE_FORMAT = {
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonToggleModule,
+    DynamicFormsMaterialUIModule,
   ],
   exports: [
     CommonModule,
@@ -95,8 +98,10 @@ export const MY_CUSTOM_DATE_FORMAT = {
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonToggleModule,
+    DynamicFormsMaterialUIModule,
   ],
   providers: [
+    MatSnackBar,
     {provide: DateAdapter, useClass: MomentDateAdapter},
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB',},
     {

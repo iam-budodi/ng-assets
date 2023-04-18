@@ -1,82 +1,85 @@
-import {FieldConfig} from "../../../form/model/field-confing.model";
-import {Validators} from "@angular/forms";
 import {ITableColumn} from "../../model/table-column.model";
 
-const FORM: FieldConfig[] = [
-  {
-    element: 'input',
-    label: 'Department Name',
-    name: 'name',
-    type: 'text',
-    placeholder: 'Department Name',
-    validation: [Validators.required, Validators.minLength(2)],
-  },
-  {
-    element: 'input',
-    label: 'Department Code',
-    name: 'code',
-    type: 'text',
-    placeholder: 'Department Code',
-    validation: [Validators.required, Validators.minLength(2)],
-  },
-  {
-    element: 'input',
-    label: 'Work ID',
-    name: 'workId',
-    type: 'text',
-    placeholder: 'Enter ID',
-    validation: [Validators.required, Validators.minLength(4)],
-  },
-  {
-    element: 'input',
-    label: 'Location',
-    name: 'location',
-    type: 'text',
-    placeholder: 'Department Address',
-    validation: [Validators.required, Validators.minLength(4)],
-  },
-  {
-    element: 'input',
-    label: 'Description',
-    name: 'description',
-    type: 'text',
-    placeholder: 'Summary about dept',
-    validation: [Validators.required, Validators.min(1)],
-  }
-];
+import {DynamicFormGroupModel, DynamicFormModel, DynamicInputModel,} from "@ng-dynamic-forms/core";
+import {BehaviorSubject} from "rxjs";
 
-export const CREATE_DEPT_FORM: FieldConfig[] = [
-  ...FORM,
-  {
-    label: 'Create',
-    name: 'submit',
-    type: 'submit',
-    element: 'button',
-  },
-];
+export const COUNTRY_AUTOCOMPLETE_LIST: string[] = [
+  "Tanzania"
+]
 
-export const EDIT_DEPT_FORM: FieldConfig[] = [
-  {
-    element: 'input',
-    name: 'id',
-    type: 'number',
-    placeholder: 'Department id',
-    validation: [Validators.required, Validators.minLength(2)],
-  },
-  ...FORM,
-  {
-    label: 'Create',
-    name: 'submit',
-    type: 'submit',
-    element: 'button',
-  },
+export const MATERIAL_DEPT_FORM_MODEL: DynamicFormModel = [
+  new DynamicInputModel({
+    id: "name",
+    maxLength: 50,
+    placeholder: "Department Name",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    }
+  }),
+  new DynamicInputModel({
+    id: "code",
+    maxLength: 10,
+    placeholder: "Department Code",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "description",
+    placeholder: "Description",
+    maxLength: 400
+  }),
+  new DynamicFormGroupModel({
+    id: "location",
+    group: [
+      new DynamicInputModel({
+        id: "street",
+        placeholder: "Street Name"
+      }),
+      new DynamicInputModel({
+        id: "ward",
+        placeholder: "Ward"
+      }),
+      new DynamicInputModel({
+        id: "district",
+        placeholder: "District",
+      }),
+      new DynamicInputModel({
+        id: "postalCode",
+        placeholder: "Postal Code"
+      }),
+      new DynamicInputModel({
+        id: "city",
+        placeholder: "City"
+      }),
+      new DynamicInputModel({
+        id: "country",
+        hint: "Autocomplete",
+        placeholder: "Country",
+        list: new BehaviorSubject(COUNTRY_AUTOCOMPLETE_LIST)
+      })
+    ]
+  })
 ];
-
 
 export const DEPARTMENT_TABLE_COLUMNS: ITableColumn[] = [
-  {name: ' ', dataKey: 'id', isSortable: true},
-  {name: 'Department Name', dataKey: 'name', isSortable: true},
-  {name: 'Department code', dataKey: 'code', isSortable: false},
-  {name: 'Department location', dataKey: 'location', isSortable: true},
-  {name: 'Last Name', dataKey: 'description', isSortable: false},
+  {name: '#', dataKey: 'id', isSortable: true},
+  {name: 'Name', dataKey: 'name', isSortable: true},
+  {name: 'Code', dataKey: 'code', isSortable: false},
+  {name: 'Street', dataKey: 'location.street', isSortable: true},
+  {name: 'Ward', dataKey: 'location.ward', isSortable: true},
+  {name: 'District', dataKey: 'location.district', isSortable: true},
+  {name: 'PostalCode', dataKey: 'location.postalCode', isSortable: true},
+  {name: 'City', dataKey: 'location.city', isSortable: true},
+  {name: 'Country', dataKey: 'location.country', isSortable: true},
+  {name: 'Description', dataKey: 'description', isSortable: false},
 ];

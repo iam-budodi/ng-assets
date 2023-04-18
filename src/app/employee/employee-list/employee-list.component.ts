@@ -6,7 +6,7 @@ import {Employee, LocalDate} from "../../service";
 import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {EmployeeDialogComponent} from "../employee-dialog/employee-dialog.component";
 import {DialogService} from "../../dialog/dialog.service";
-import {EmployeeDialog} from "../model/employee-dialog.model";
+import {DialogData} from "../model/dialog-data.model";
 import {Query} from "../../shared/query.model";
 
 // fall back for search queries
@@ -26,7 +26,7 @@ export class EmployeeListComponent implements OnInit {
   employees!: Employee[];
   pageSizes: number[] = [5, 10, 15, 20, 50];
   defaultSize: number = this.pageSizes[0];
-  dialogValue: EmployeeDialog = { mode: 'create' };
+  dialogValue: DialogData<Employee> = { mode: 'create' };
 
   tableData: PaginationDataSource<Employee, Query<LocalDate>> = new PaginationDataSource<Employee, Query<LocalDate>>(
     (request: PageRequest<Employee>, query: Query<LocalDate>) => this.employeeService.page(request, query),

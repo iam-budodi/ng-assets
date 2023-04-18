@@ -1,1 +1,51 @@
-<p>department-dialog works!</p>
+<div>
+<button [disabled]="isAsyncOperationRunning$ | async" class="close" mat-dialog-close="true" mat-icon-button>
+  <mat-icon>clear</mat-icon>
+</button>
+
+<mat-progress-bar
+  *ngIf="isAsyncOperationRunning$ | async"
+  mode="indeterminate"
+>
+</mat-progress-bar>
+
+
+<h2 mat-dialog-title style="margin-left: 4rem;">{{ title }}</h2>
+<div class="content-margin" style="width: 75%;">
+  <mat-card appearance="outlined" style="padding: 20px 0;">
+
+    <form [formGroup]="formGroup" style="width: 90%; margin: 0 auto">
+      <dynamic-material-form
+        [group]="formGroup"
+        [layout]="formLayout"
+        [model]="formModel"
+        (blur)="onBlur($event)"
+        (change)="onChange($event)"
+        (focus)="onFocus($event)"
+        (matEvent)="onMatEvent($event)"
+      ></dynamic-material-form>
+
+      <button
+        class="save"
+        [disabled]="formGroup.invalid"
+        (click)="save()"
+      >
+        Save
+      </button>
+    </form>
+
+
+
+  </mat-card>
+
+<!--  <button-->
+<!--    class="save"-->
+<!--    [disabled]="formGroup.invalid"-->
+<!--    (click)="save()"-->
+<!--  >-->
+<!--    Save-->
+<!--  </button>-->
+  <pre>{{ formGroup.value | json }}</pre>
+
+</div>
+</div>

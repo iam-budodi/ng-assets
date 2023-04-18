@@ -71,7 +71,7 @@ export const EDIT_FORM: FieldConfig[] = [
   },
 ];
 
-// look at this when you need a select
+// look at this when you need a selectcd
 //  {
 //     type: 'select',
 //     label: 'Favourite Food',

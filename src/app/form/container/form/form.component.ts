@@ -9,8 +9,6 @@ import {
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FieldConfig } from '../../model/field-confing.model';
-import {Employee} from "../../../service";
-import {T} from "@angular/cdk/keycodes";
 
 @Component({
   exportAs: 'dynamicForm',
@@ -105,4 +103,5 @@ export class FormComponent implements OnInit, OnChanges {
   setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, { emitEvent: true });
   }
+
 }

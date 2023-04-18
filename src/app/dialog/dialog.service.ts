@@ -15,7 +15,7 @@ interface MediumConfType {
 })
 export class DialogService {
   private conf = {autoFocus: true};
-  private mediumConf: MediumConfType = {height: 'auto', width: '70%', ...this.conf};
+  private mediumConf: MediumConfType = {height: 'auto', width: '50%', ...this.conf};
 
   constructor(public dialog: MatDialog) {
   }
