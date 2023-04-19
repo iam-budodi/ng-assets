@@ -1,14 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { FieldConfig } from '../../model/field-confing.model';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output,} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {FieldConfig} from '../../model/field-confing.model';
 
 @Component({
   exportAs: 'dynamicForm',
@@ -22,8 +15,11 @@ export class FormComponent implements OnInit, OnChanges {
   @Output() employeeAction: EventEmitter<any> = new EventEmitter<any>();
   form!: FormGroup;
 
+  constructor(private formBuilder: FormBuilder) {
+  }
+
   get controls(): FieldConfig[] {
-    return this.config.filter(({ element }) => element !== 'button');
+    return this.config.filter(({element}) => element !== 'button');
   }
 
   get changes(): Observable<any> {
@@ -37,8 +33,6 @@ export class FormComponent implements OnInit, OnChanges {
   get value(): any {
     return this.form.value;
   }
-
-  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.form = this.createGroup(); //all the form fields ie input select etc
@@ -54,8 +48,8 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   createControl(config: FieldConfig): AbstractControl<any, any> {
-    const { disabled, validation, value } = config;
-    return this.formBuilder.control({ disabled, value }, validation!);
+    const {disabled, validation, value} = config;
+    return this.formBuilder.control({disabled, value}, validation!);
   }
 
   ngOnChanges(): void {
@@ -101,7 +95,7 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   setValue(name: string, value: any) {
-    this.form.controls[name].setValue(value, { emitEvent: true });
+    this.form.controls[name].setValue(value, {emitEvent: true});
   }
 
 }

@@ -1,12 +1,12 @@
 <div class="chartContainer">
   <canvas
-    baseChart
     [datasets]="pieChartData"
     [labels]="pieChartLabels"
-    [type]="'pie'"
+    [legend]="pieChartLegend"
     [options]="pieChartOptions"
     [plugins]="pieChartPlugins"
-    [legend]="pieChartLegend"
+    [type]="'pie'"
+    baseChart
   >
   </canvas>
 </div>

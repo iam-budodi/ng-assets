@@ -1,13 +1,13 @@
 <mat-toolbar class="mat-elevation-z8">
   <mat-toolbar-row>
     <button
+      (click)="sidenav.toggle()"
+      *ngIf="sidenav.mode === 'over'"
       mat-icon-button
       matTooltip="Menu"
-      *ngIf="sidenav.mode === 'over'"
-      (click)="sidenav.toggle()"
     >
-      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
-      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+      <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>
+      <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
     </button>
     <span>[Logo Placeholder]</span>
     <!-- <span class="toolbar-item-spacer"></span> -->
@@ -20,14 +20,14 @@
     <mat-icon>share</mat-icon>
   </button> -->
 
-    <div fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px" fxHide.xs>
+    <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px">
       <button mat-icon-button matTooltip="Notifications">
         <mat-icon>notifications</mat-icon>
       </button>
       <button
+        [matMenuTriggerFor]="userAccountMenu"
         mat-icon-button
         matTooltip="Login"
-        [matMenuTriggerFor]="userAccountMenu"
       >
         <mat-icon>account_circle</mat-icon>
       </button>
@@ -38,7 +38,8 @@
         </button>
         <mat-divider></mat-divider>
         <button mat-menu-item routerLink="#">
-          <mat-icon>exit_to_app</mat-icon>Logout
+          <mat-icon>exit_to_app</mat-icon>
+          Logout
         </button>
       </mat-menu>
     </div>
@@ -66,8 +67,8 @@
       </div>
 
       <mat-expansion-panel
-        [class.mat-elevation-z0]="true"
         *ngFor="let route of routeLinks.slice(2)"
+        [class.mat-elevation-z0]="true"
       >
         <mat-expansion-panel-header>
           {{ route.header }}
@@ -80,22 +81,22 @@
         </mat-nav-list>
       </mat-expansion-panel>
     </mat-nav-list>
-<!--
-    <button mat-button class="menu-button" routerLink="/home">
-      <mat-icon>home</mat-icon>
-      <span>Home</span>
-    </button>
-    <button mat-button class="menu-button" routerLink="/profile">
-      <mat-icon>person</mat-icon>
-      <span>Profile</span>
-    </button>
-    <button mat-button class="menu-button" routerLink="/about">
-      <mat-icon>info</mat-icon>
-      <span>About</span>
-    </button> -->
+    <!--
+        <button mat-button class="menu-button" routerLink="/home">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+        <button mat-button class="menu-button" routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-button class="menu-button" routerLink="/about">
+          <mat-icon>info</mat-icon>
+          <span>About</span>
+        </button> -->
 
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" routerLink="/help">
+    <button class="menu-button" mat-button routerLink="/help">
       <mat-icon>help</mat-icon>
       <span>Help</span>
     </button>

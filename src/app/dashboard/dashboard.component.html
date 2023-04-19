@@ -8,7 +8,9 @@
       [rowspan]="(cardLayout | async)?.minCard?.rows"
     >
       <app-card title="Card {{ i }}"
-        ><div>Mini Card Content Here</div></app-card
+      >
+        <div>Mini Card Content Here</div>
+      </app-card
       >
       <!-- <app-mini-card [icon]="mc.icon" [title]="mc.title" [value]="mc.value" [color]="mc.color" [isIncrease]="mc.isIncrease" duration="since last month" [percentValue]="mc.percentValue" [isCurrency]="mc. isCurrency"></app-mini-card> -->
     </mat-grid-tile>

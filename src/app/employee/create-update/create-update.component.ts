@@ -1,9 +1,8 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, ViewChild} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
-import { FormComponent } from 'src/app/form/container/form/form.component';
-import { FieldConfig } from 'src/app/form/model/field-confing.model';
-import { EmployeeService } from '../employee.service';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {FormComponent} from 'src/app/form/container/form/form.component';
+import {FieldConfig} from 'src/app/form/model/field-confing.model';
+import {EmployeeService} from '../employee.service';
 import {DialogService} from "../../dialog/dialog.service";
 
 @Component({
@@ -23,7 +22,8 @@ export class CreateUpdateComponent implements OnInit, AfterViewInit {
     private dialogService: DialogService,
     private employeeService: EmployeeService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     // this.config = this.employeeService.getDialogForm(); // THIS WHOLE CLASS IS USELESS

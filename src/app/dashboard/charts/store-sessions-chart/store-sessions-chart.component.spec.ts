@@ -1,7 +1,7 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgChartsModule } from 'ng2-charts';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {NgChartsModule} from 'ng2-charts';
 
-import { StoreSessionsChartComponent } from './store-sessions-chart.component';
+import {StoreSessionsChartComponent} from './store-sessions-chart.component';
 
 describe('StoreSessionsChartComponent', () => {
   let component: StoreSessionsChartComponent;
@@ -9,8 +9,8 @@ describe('StoreSessionsChartComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StoreSessionsChartComponent ],
-      imports: [ NgChartsModule ]
+      declarations: [StoreSessionsChartComponent],
+      imports: [NgChartsModule]
     }).compileComponents();
   }));
 

@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Allocation } from './allocation';
-import { Transfer } from './transfer';
+import {Allocation} from './allocation';
+import {Transfer} from './transfer';
 
 export type InlineResponse2001 = Allocation | Transfer;

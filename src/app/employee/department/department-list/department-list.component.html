@@ -25,7 +25,9 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br/>
-  <app-table [tableColumns]="departmentTableColumns"
+  <app-table (deleteAction)="deleteDepartment($event)"
+             (updateAction)="updateDepartment($event)"
+             [tableColumns]="departmentTableColumns"
              [tableEntries]="tableData"
              class="grid-container"
   ></app-table>

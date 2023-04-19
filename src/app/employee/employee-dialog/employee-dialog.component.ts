@@ -6,8 +6,6 @@ import {BehaviorSubject} from "rxjs";
 import {EmployeeService} from "../employee.service";
 import {CREATE_FORM} from "../model/form-config";
 import {Employee} from "../../service";
-import {HttpResponse} from "@angular/common/http";
-import {DialogService} from "../../dialog/dialog.service";
 import {formChangesControl} from "../../shared/utils";
 
 @Component({
@@ -27,7 +25,8 @@ export class EmployeeDialogComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef,
     private employeeService: EmployeeService,
     private dialog: MatDialog,
-  ) {}
+  ) {
+  }
 
   // public employee = this.data.data;
 
@@ -59,8 +58,8 @@ export class EmployeeDialogComponent implements OnInit, AfterViewInit {
           console.log("SUCCESSFUL CREATED!!")
           this.dialog.closeAll();
         }
-    }
-       // HttpResponse<string>
+      }
+      // HttpResponse<string>
     )
 
     // setTimeout(() => {

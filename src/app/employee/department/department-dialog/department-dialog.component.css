@@ -20,6 +20,29 @@
   color: white;
 }
 
+.delete {
+  background-color: transparent;
+  height: 50px;
+  width: 150px;
+  color: #e74c3c;
+  margin-left: 20px;
+  text-decoration: none;
+  text-align: center;
+  border: 2px solid #e74c3c;
+  border-radius: 4px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delete:hover {
+  background-color: #e74c3c;
+  color: #fff;
+  cursor: pointer;
+}
+
 .save {
   background-color: #007bff;
   height: 50px;

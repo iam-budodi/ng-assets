@@ -1,5 +1,5 @@
-import { FormGroup } from "@angular/forms";
-import { FieldConfig } from "./field-confing.model";
+import {FormGroup} from "@angular/forms";
+import {FieldConfig} from "./field-confing.model";
 
 export interface Field {
   config: FieldConfig;

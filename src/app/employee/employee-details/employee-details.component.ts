@@ -13,7 +13,8 @@ export class EmployeeDetailsComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {

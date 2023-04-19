@@ -13,6 +13,6 @@
 export type Gender = 'M' | 'F';
 
 export const Gender = {
-    M: 'M' as Gender,
-    F: 'F' as Gender
+  M: 'M' as Gender,
+  F: 'F' as Gender
 };

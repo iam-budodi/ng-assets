@@ -1,21 +1,21 @@
-<form class="dynamic-form" [formGroup]="form" (submit)="submitHandler($event)">
+<form (submit)="submitHandler($event)" [formGroup]="form" class="dynamic-form">
   <ng-container
     *ngFor="let field of config"
-    dynamicField
     [config]="field"
-    [group]="form"
     [formGroup]="form"
+    [group]="form"
+    dynamicField
 
   >
   </ng-container>
 
-<!--  <ng-container-->
-<!--    *ngFor="let field of config"-->
-<!--    dynamicField-->
-<!--    [config]="field"-->
-<!--    [group]="form"-->
-<!--    [formGroup]="form"-->
+  <!--  <ng-container-->
+  <!--    *ngFor="let field of config"-->
+  <!--    dynamicField-->
+  <!--    [config]="field"-->
+  <!--    [group]="form"-->
+  <!--    [formGroup]="form"-->
 
-<!--  >-->
-<!--  </ng-container>-->
+  <!--  >-->
+  <!--  </ng-container>-->
 </form>

@@ -1,4 +1,4 @@
-import { PossessivePipe } from './possessive.pipe';
+import {PossessivePipe} from './possessive.pipe';
 
 describe('PossessivePipe', () => {
   it('create an instance', () => {

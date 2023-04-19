@@ -1,6 +1,11 @@
 import {ITableColumn} from "../../model/table-column.model";
 
-import {DynamicFormGroupModel, DynamicFormModel, DynamicInputModel,} from "@ng-dynamic-forms/core";
+import {
+  DynamicFormGroupModel,
+  DynamicFormModel,
+  DynamicInputModel,
+  DynamicTextAreaModel,
+} from "@ng-dynamic-forms/core";
 import {BehaviorSubject} from "rxjs";
 
 export const COUNTRY_AUTOCOMPLETE_LIST: string[] = [
@@ -11,7 +16,7 @@ export const MATERIAL_DEPT_FORM_MODEL: DynamicFormModel = [
   new DynamicInputModel({
     id: "name",
     maxLength: 50,
-    placeholder: "Department Name",
+    label: "Department Name",
     validators: {
       required: null
     },
@@ -22,7 +27,7 @@ export const MATERIAL_DEPT_FORM_MODEL: DynamicFormModel = [
   new DynamicInputModel({
     id: "code",
     maxLength: 10,
-    placeholder: "Department Code",
+    label: "Department Code",
     validators: {
       required: null
     },
@@ -33,9 +38,9 @@ export const MATERIAL_DEPT_FORM_MODEL: DynamicFormModel = [
       color: "accent"
     }
   }),
-  new DynamicInputModel({
+  new DynamicTextAreaModel({
     id: "description",
-    placeholder: "Description",
+    label: "Description",
     maxLength: 400
   }),
   new DynamicFormGroupModel({
@@ -43,28 +48,28 @@ export const MATERIAL_DEPT_FORM_MODEL: DynamicFormModel = [
     group: [
       new DynamicInputModel({
         id: "street",
-        placeholder: "Street Name"
+        label: "Street Name"
       }),
       new DynamicInputModel({
         id: "ward",
-        placeholder: "Ward"
+        label: "Ward"
       }),
       new DynamicInputModel({
         id: "district",
-        placeholder: "District",
+        label: "District",
       }),
       new DynamicInputModel({
         id: "postalCode",
-        placeholder: "Postal Code"
+        label: "Postal Code"
       }),
       new DynamicInputModel({
         id: "city",
-        placeholder: "City"
+        label: "City"
       }),
       new DynamicInputModel({
         id: "country",
         hint: "Autocomplete",
-        placeholder: "Country",
+        label: "Country",
         list: new BehaviorSubject(COUNTRY_AUTOCOMPLETE_LIST)
       })
     ]

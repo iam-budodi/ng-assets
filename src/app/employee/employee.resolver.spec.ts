@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { EmployeeResolver } from './employees-list.resolver';
+import {EmployeeResolver} from './employees-list.resolver';
 
 describe('EmployeeResolver', () => {
   let resolver: EmployeeResolver;

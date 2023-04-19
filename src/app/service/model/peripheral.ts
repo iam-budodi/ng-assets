@@ -13,9 +13,9 @@
 export type Peripheral = 'KEYBOARD' | 'MOUSE' | 'MONITOR' | 'ADAPTER' | 'COOLING_PAD';
 
 export const Peripheral = {
-    KEYBOARD: 'KEYBOARD' as Peripheral,
-    MOUSE: 'MOUSE' as Peripheral,
-    MONITOR: 'MONITOR' as Peripheral,
-    ADAPTER: 'ADAPTER' as Peripheral,
-    COOLINGPAD: 'COOLING_PAD' as Peripheral
+  KEYBOARD: 'KEYBOARD' as Peripheral,
+  MOUSE: 'MOUSE' as Peripheral,
+  MONITOR: 'MONITOR' as Peripheral,
+  ADAPTER: 'ADAPTER' as Peripheral,
+  COOLINGPAD: 'COOLING_PAD' as Peripheral
 };

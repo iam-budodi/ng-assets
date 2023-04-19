@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
+import {Component} from '@angular/core';
+import {ChartConfiguration, ChartOptions} from 'chart.js';
 
 @Component({
   selector: 'app-annual-sales-chart',
@@ -24,5 +24,7 @@ export class AnnualSalesChartComponent {
     responsive: false,
   };
   public lineChartLegend = true;
-  constructor() {}
+
+  constructor() {
+  }
 }

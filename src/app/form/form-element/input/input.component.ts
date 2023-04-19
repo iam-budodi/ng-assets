@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FieldConfig } from '../../model/field-confing.model';
-import { Field } from '../../model/field.model';
+import {Component} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {FieldConfig} from '../../model/field-confing.model';
+import {Field} from '../../model/field.model';
 
 @Component({
   selector: 'form-input',

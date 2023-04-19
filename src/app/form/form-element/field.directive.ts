@@ -1,18 +1,10 @@
-import {
-  ComponentRef,
-  Directive,
-  Input,
-  OnChanges,
-  OnInit,
-  Type,
-  ViewContainerRef,
-} from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FieldConfig } from '../model/field-confing.model';
-import { Field } from '../model/field.model';
-import { ButtonComponent } from './button/button.component';
-import { InputComponent } from './input/input.component';
-import { SelectComponent } from './select/select.component';
+import {ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef,} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {FieldConfig} from '../model/field-confing.model';
+import {Field} from '../model/field.model';
+import {ButtonComponent} from './button/button.component';
+import {InputComponent} from './input/input.component';
+import {SelectComponent} from './select/select.component';
 
 @Directive({
   selector: '[dynamicField]',
@@ -22,7 +14,8 @@ export class FieldDirective implements Field, OnChanges, OnInit {
   @Input() group!: FormGroup<any>;
   component!: ComponentRef<Field>;
 
-  constructor(private container: ViewContainerRef) {}
+  constructor(private container: ViewContainerRef) {
+  }
 
   ngOnChanges(): void {
     if (this.component) {

@@ -1,13 +1,6 @@
-import {
-  AfterViewInit, ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { Sort } from '@angular/material/sort';
-import { ITableColumn } from '../../employee/model/table-column.model';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output,} from '@angular/core';
+import {Sort} from '@angular/material/sort';
+import {ITableColumn} from '../../employee/model/table-column.model';
 import {PaginationDataSource} from "ngx-pagination-data-source";
 
 @Component({
@@ -29,7 +22,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() deleteAction: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateAction: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef) {
+  }
 
   ngOnInit(): void {
     const columnNames: string[] = this.tableColumns.map(

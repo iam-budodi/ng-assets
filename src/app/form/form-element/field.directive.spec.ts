@@ -1,4 +1,4 @@
-import { FieldDirective } from './field.directive';
+import {FieldDirective} from './field.directive';
 
 describe('FieldDirective', () => {
   it('should create an instance', () => {

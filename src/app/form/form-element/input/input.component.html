@@ -1,9 +1,9 @@
-<div class="dynamic-field form-input" [formGroup]="group">
+<div [formGroup]="group" class="dynamic-field form-input">
   <div>
     <label>{{ config.label }}</label>
     <input
-      [attr.type]="config.type"
       [attr.placeholder]="config.placeholder"
+      [attr.type]="config.type"
       [formControlName]="config.name"
     />
   </div>

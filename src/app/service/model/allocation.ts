@@ -9,20 +9,20 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { AllocationStatus } from './allocationStatus';
-import { Asset } from './asset';
-import { Employee } from './employee';
-import { Instant } from './instant';
+import {AllocationStatus} from './allocationStatus';
+import {Asset} from './asset';
+import {Employee} from './employee';
+import {Instant} from './instant';
 
 /**
  * Allocation representation
  */
-export interface Allocation { 
-    id?: number;
-    allocationDate?: Instant;
-    deallocationDate?: Instant;
-    allocationRemark?: string;
-    status?: Array<AllocationStatus>;
-    employee?: Employee;
-    asset?: Asset;
+export interface Allocation {
+  id?: number;
+  allocationDate?: Instant;
+  deallocationDate?: Instant;
+  allocationRemark?: string;
+  status?: Array<AllocationStatus>;
+  employee?: Employee;
+  asset?: Asset;
 }

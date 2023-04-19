@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormComponent } from 'src/app/form/container/form/form.component';
-import { EmployeeService } from '../employee.service';
-import { ITableColumn } from '../model/table-column.model';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormComponent} from 'src/app/form/container/form/form.component';
+import {EmployeeService} from '../employee.service';
+import {ITableColumn} from '../model/table-column.model';
 import {Employee, LocalDate} from "../../service";
 import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {EmployeeDialogComponent} from "../employee-dialog/employee-dialog.component";
@@ -26,7 +26,7 @@ export class EmployeeListComponent implements OnInit {
   employees!: Employee[];
   pageSizes: number[] = [5, 10, 15, 20, 50];
   defaultSize: number = this.pageSizes[0];
-  dialogValue: DialogData<Employee> = { mode: 'create' };
+  dialogValue: DialogData<Employee> = {mode: 'create'};
 
   tableData: PaginationDataSource<Employee, Query<LocalDate>> = new PaginationDataSource<Employee, Query<LocalDate>>(
     (request: PageRequest<Employee>, query: Query<LocalDate>) => this.employeeService.page(request, query),
@@ -38,7 +38,8 @@ export class EmployeeListComponent implements OnInit {
     // private dialog: MatDialog,
     private dialogService: DialogService,
     private employeeService: EmployeeService,
-  ) {}
+  ) {
+  }
 
 
   // WITH RESOLVER FUNCTION ALL THE COMMENTED OUT
@@ -78,6 +79,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   updateEmployee(employee: any): void {
+    console.log(JSON.stringify(employee))
     // const dialogRef = this.dialog.open(CreateUpdateComponent, {
     //   data: employee,
     // });
@@ -93,6 +95,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployee(employeeEvt: any): void {
+    console.log(employeeEvt + ' OR JUST IN CASE : ' + JSON.stringify(employeeEvt))
     // uncomment for http
     // this.employees = this.employeeService.deleteEmployee(employeeEvt);
     this.employees = this.employees.filter(

@@ -2,17 +2,18 @@
   <mat-toolbar class="mat-elevation-z6">
     <mat-toolbar-row>
       <button
-        type="button"
-        button="submit"
-        mat-raised-button
-        class="button"
         (click)="createEmployee()"
+        button="submit"
+        class="button"
+        mat-raised-button
+        type="button"
       >
-        <mat-icon>person_add</mat-icon> <span class="label">Add Employee</span>
+        <mat-icon>person_add</mat-icon>
+        <span class="label">Add Employee</span>
       </button>
 
-      <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
-        <ul fxLayout fxLayoutGap="20px" class="alert alert-info navigation-items">
+      <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end">
+        <ul class="alert alert-info navigation-items" fxLayout fxLayoutGap="20px">
           <li>
             <a routerLink="/dashboard"> <span class="link">Dashboard</span> </a>
             <span class="label"> / Employees Information</span>
@@ -21,13 +22,13 @@
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-  <br />
-  <app-table class="grid-container"
-    [tableEntries]="tableData"
-    [tableColumns]="employeeTableColumns"
-    [paginationSizes]="pageSizes"
-    [defaultPageSize]="defaultSize"
-    (updateAction)="updateEmployee($event)"
-    (deleteAction)="deleteEmployee($event)"
+  <br/>
+  <app-table (deleteAction)="deleteEmployee($event)"
+             (updateAction)="updateEmployee($event)"
+             [defaultPageSize]="defaultSize"
+             [paginationSizes]="pageSizes"
+             [tableColumns]="employeeTableColumns"
+             [tableEntries]="tableData"
+             class="grid-container"
   ></app-table>
 </div>

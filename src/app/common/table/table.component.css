@@ -1,6 +1,6 @@
- table {
+table {
   width: 100%;
-   margin-left: 10px;
+  margin-left: 10px;
 }
 
 /* for horizontally scrollable table */
@@ -9,6 +9,7 @@
   width: 100%;
   overflow-x: auto;
 }
+
 .mat-table {
   width: 100%;
   max-width: 100%;
