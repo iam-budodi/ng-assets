@@ -17,20 +17,24 @@ import {DepartmentComponent} from './department/department.component';
 import {DepartmentDialogComponent} from './department/department-dialog/department-dialog.component';
 import {DepartmentListComponent} from './department/department-list/department-list.component';
 import {DepartmentService} from "./department/department.service";
+import {EmployeeService} from "./employee.service";
 
+const sharedComponent = [
+  TableComponent,
+  PossessivePipe,
+  DataPropertyGetterPipe,
+  CardComponent,
+]
 @NgModule({
   declarations: [
-    CardComponent,
     EmployeeListComponent,
-    TableComponent,
-    PossessivePipe,
-    DataPropertyGetterPipe,
     CreateUpdateComponent,
     EmployeeDetailsComponent,
     EmployeeDialogComponent,
     DepartmentComponent,
     DepartmentDialogComponent,
     DepartmentListComponent,
+    ...sharedComponent,
   ],
   imports: [
     CommonModule,
@@ -41,14 +45,8 @@ import {DepartmentService} from "./department/department.service";
     FormsModule,
   ],
 
-  exports: [
-    MaterialModule,
-    TableComponent,
-    PossessivePipe,
-    DataPropertyGetterPipe,
-    CardComponent,
-  ],
-  providers: [DatePipe, DepartmentService]
+  exports: [MaterialModule, ...sharedComponent],
+  providers: [EmployeeService, DatePipe, DepartmentService]
 })
 export class EmployeeModule {
 }

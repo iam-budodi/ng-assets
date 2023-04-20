@@ -289,3 +289,21 @@ dynamic-primeng-form-control div.order-1{
 .ui-fluid .ui-button.ui-calendar-button {
   width: 2em;
 }
+
+
+.success-snackbar {
+  /*background-color: rgb(29, 102, 29);*/
+  --mdc-snackbar-container-color: rgb(29, 102, 29);
+  --mat-mdc-snack-bar-button-color: white;
+  --mdc-snackbar-supporting-text-color: lightgreen;
+  /*color: lightgreen;*/
+}
+
+.success-snackbar.mat-simple-snackbar-action {
+  color: white;
+}
+
+.failure-snackbar {
+  background-color: rgb(153, 50, 50);
+  color: lightgoldenrodyellow;
+}

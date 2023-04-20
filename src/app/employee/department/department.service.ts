@@ -49,24 +49,24 @@ export class DepartmentService {
   }
 
   updateDepartment(department: Department): Observable<HttpResponse<string>> {
-    return this.departmentService.restDepartmentsIdPut(department, department.id!, 'response')
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-            let errorMessage: string;
-            if (error.error instanceof ErrorEvent) {
-              // A client-side or network error occurred. Handle it accordingly.
-              errorMessage = `An error occurred: ${error.error.message}`;
-            } else if (error.status === 409) {
-              // Bad request error (e.g. validation error)
-              errorMessage = `Conflict request: ${error.error}`;
-            } else {
-              // Other backend errors
-              errorMessage = `Failed to update department: ${error.error}`;
-            }
-            return throwError(() => errorMessage);
-          }
-        )
-      );
+    return this.departmentService.restDepartmentsIdPut(department, 20000, 'response')
+      // .pipe(
+      //   catchError((error: HttpErrorResponse) => {
+      //       let errorMessage: string;
+      //       if (error.error instanceof ErrorEvent) {
+      //         // A client-side or network error occurred. Handle it accordingly.
+      //         errorMessage = `An error occurred: ${error.error.message}`;
+      //       } else if (error.status === 409) {
+      //         // Bad request error (e.g. validation error)
+      //         errorMessage = `Conflict request: ${error.error}`;
+      //       } else {
+      //         // Other backend errors
+      //         errorMessage = `Failed to update department: ${error.error}`;
+      //       }
+      //       return throwError(() => errorMessage);
+      //     }
+      //   )
+      // );
   }
 
   deleteDepartment(department: Department): Observable<HttpResponse<string>> {

@@ -5,7 +5,7 @@ import {ITableColumn} from '../model/table-column.model';
 import {Employee, LocalDate} from "../../service";
 import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {EmployeeDialogComponent} from "../employee-dialog/employee-dialog.component";
-import {DialogService} from "../../dialog/dialog.service";
+import {DialogService} from "../../shared/dialog/dialog.service";
 import {DialogData} from "../model/dialog-data.model";
 import {Query} from "../../shared/query.model";
 

@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {Department} from "../../../service";
+import {Department, DepartmentEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {
   DynamicFormControlEvent,
@@ -10,9 +10,9 @@ import {
 } from "@ng-dynamic-forms/core";
 import {MATERIAL_DEPT_FORM_MODEL} from "../model/dept-form.config";
 import {MATERIAL_DEPT_FORM_LAYOUT} from "../model/dept-form.layout";
-import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
-import {DepartmentService} from "../department.service";
+import {HttpResponse} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: "dynamic-material-sample-form",
@@ -33,9 +33,11 @@ export class DepartmentDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<DepartmentDialogComponent>,
     private formService: DynamicFormService,
-    private departmentService: DepartmentService,
+    private departmentService: DepartmentEndpointService,
+    // private departmentService: DepartmentService,
   ) {
   }
 
@@ -62,7 +64,7 @@ export class DepartmentDialogComponent implements OnInit {
   }
 
   save(): void {
-    this.isAsyncOperationRunning$.next(true);
+    // this.isAsyncOperationRunning$.next(true);
     this.apiMethodsCall();
   }
 
@@ -91,26 +93,12 @@ export class DepartmentDialogComponent implements OnInit {
     }
   }
 
-  closeDialog(): void {
-    this.dialogRef.close();
-    this.formGroup.reset();
-  }
-
   callCreateApiService() {
-    this.departmentService.createDepartment(this.formGroup.value).subscribe({
-        next: (response: HttpResponse<string>) => {
+    return this.departmentService.restDepartmentsPost(this.formGroup.value, 'response').subscribe({
+        next: (response: HttpResponse<string>): void => {
           if (response.status === 201) {
-            console.log("SUCCESSFULLY CREATED!!");
-            this.dialogRef.close();
+            this.dialogRef.close('success');
           }
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(`Error creating department: ${error.message}`);
-          // Display a message to the user
-          this.dialogRef.close();
-        },
-        complete: () => {
-          this.isAsyncOperationRunning$.next(false);
         }
       }
     );
@@ -118,43 +106,29 @@ export class DepartmentDialogComponent implements OnInit {
 
   callUpdateApiService() {
     this.formGroup.value.id = this.department.id;
-    this.departmentService.updateDepartment(this.formGroup.value).subscribe({
-        next: (response: HttpResponse<string>) => {
+    this.departmentService.restDepartmentsIdPut(this.formGroup.value, this.department.id!, 'response').subscribe({
+        next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
-            console.log("SUCCESSFULLY UPDATED!!");
-            // this.formGroup.reset();
             this.dialogRef.close('success');
           }
         },
-        error: (error: HttpErrorResponse) => {
-          console.log(`Error updating department: ${error.message}`);
-          // Display a message to the user
-          this.dialogRef.close();
-        },
-        complete: () => {
-          this.isAsyncOperationRunning$.next(false);
-        }
       }
     );
   }
 
   callDeleteApiService() {
-    this.departmentService.deleteDepartment(this.department).subscribe({
-        next: (response: HttpResponse<string>) => {
+    return this.departmentService.restDepartmentsIdDelete(this.department.id!, 'response').subscribe({
+        next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
-            console.log("SUCCESSFULLY DELETED!!");
             this.dialogRef.close('success');
           }
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(`Error deleting department: ${error.message}`);
-          // Display a message to the user
-          this.dialogRef.close();
-        },
-        complete: () => {
-          this.isAsyncOperationRunning$.next(false);
         }
       }
     );
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+    this.formGroup.reset();
   }
 }

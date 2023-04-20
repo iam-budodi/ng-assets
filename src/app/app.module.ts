@@ -16,11 +16,10 @@ import {FormModule} from './form/form.module';
 import {EmployeeModule} from './employee/employee.module';
 import {AssetModule} from './asset/asset.module';
 import {ProcureModule} from './procure/procure.module';
-import {EmployeeService} from "./employee/employee.service";
 import {ApiModule} from "./service";
 import {HttpClientModule} from "@angular/common/http";
-import {DialogComponent} from './dialog/dialog.component';
-import {DialogService} from "./dialog/dialog.service";
+import {SharedModule} from "./shared/shared.module";
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,6 @@ import {DialogService} from "./dialog/dialog.service";
     SalesTrafficChartComponent,
     ProductSalesChartComponent,
     TicketComponent,
-    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,10 +42,12 @@ import {DialogService} from "./dialog/dialog.service";
     AssetModule,
     ProcureModule,
     ApiModule,
+    CoreModule,
+    SharedModule,
     RouterModule.forRoot(appRoutes),
   ],
 
-  providers: [EmployeeService, DialogService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {
