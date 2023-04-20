@@ -7,17 +7,13 @@ import {DataPropertyGetterPipe} from '../shared/data-property-getter.pipe';
 import {PossessivePipe} from '../shared/possessive.pipe';
 import {RouterModule} from '@angular/router';
 import {employeeRoutes} from './employee.routes';
-import {CreateUpdateComponent} from './create-update/create-update.component';
 import {FormModule} from '../form/form.module';
 import {CardComponent} from '../common/card/card.component';
 import {EmployeeDetailsComponent} from './employee-details/employee-details.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EmployeeDialogComponent} from './employee-dialog/employee-dialog.component';
-import {DepartmentComponent} from './department/department.component';
 import {DepartmentDialogComponent} from './department/department-dialog/department-dialog.component';
 import {DepartmentListComponent} from './department/department-list/department-list.component';
-import {DepartmentService} from "./department/department.service";
-import {EmployeeService} from "./employee.service";
 
 const sharedComponent = [
   TableComponent,
@@ -28,10 +24,8 @@ const sharedComponent = [
 @NgModule({
   declarations: [
     EmployeeListComponent,
-    CreateUpdateComponent,
     EmployeeDetailsComponent,
     EmployeeDialogComponent,
-    DepartmentComponent,
     DepartmentDialogComponent,
     DepartmentListComponent,
     ...sharedComponent,
@@ -46,7 +40,7 @@ const sharedComponent = [
   ],
 
   exports: [MaterialModule, ...sharedComponent],
-  providers: [EmployeeService, DatePipe, DepartmentService]
+  providers: [DatePipe]
 })
 export class EmployeeModule {
 }

@@ -1,82 +1,262 @@
 import {FieldConfig} from "../../form/model/field-confing.model";
 import {Validators} from "@angular/forms";
+import {DynamicFormGroupModel, DynamicFormModel, DynamicInputModel, DynamicTextAreaModel} from "@ng-dynamic-forms/core";
+import {BehaviorSubject} from "rxjs";
+import {COUNTRY_AUTOCOMPLETE_LIST} from "../department/model/dept-form.config";
+import {ITableColumn} from "./table-column.model";
 
-const FORM: FieldConfig[] = [
-  {
-    element: 'input',
-    label: 'First name',
-    name: 'firstName',
-    type: 'text',
-    placeholder: 'Enter first name',
-    validation: [Validators.required, Validators.minLength(2)],
-  },
-  {
-    element: 'input',
-    label: 'Last name',
-    name: 'lastName',
-    type: 'text',
-    placeholder: 'Enter last name',
-    validation: [Validators.required, Validators.minLength(2)],
-  },
-  {
-    element: 'input',
-    label: 'Work ID',
-    name: 'workId',
-    type: 'text',
-    placeholder: 'Enter ID',
-    validation: [Validators.required, Validators.minLength(4)],
-  },
-  {
-    element: 'input',
-    label: 'Address',
-    name: 'address',
-    type: 'text',
-    placeholder: 'Enter Address',
-    validation: [Validators.required, Validators.minLength(4)],
-  },
-  {
-    element: 'input',
-    label: 'Birth date',
-    name: 'age',
-    type: 'number',
-    placeholder: 'Enter birth date',
-    validation: [Validators.required, Validators.min(1)],
-  }
+
+export const GENDER: string[] = [
+  "M", "F"
+]
+
+export const JOB_STATUS: string[] = [
+  "M", "F"
+]
+
+export const MATERIAL_EMPLOYEE_FORM_MODEL: DynamicFormModel = [
+  new DynamicInputModel({
+    id: "firstName",
+    minLength: 3,
+    maxLength: 32,
+    label: "Firstname",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    }
+  }),
+  new DynamicInputModel({
+    id: "middleName",
+    minLength: 3,
+    maxLength: 32,
+    label: "Middlename",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    }
+  }),
+  new DynamicInputModel({
+    id: "lastName",
+    minLength: 3,
+    maxLength: 32,
+    label: "Lastname",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "gender",
+    minLength: 1,
+    maxLength: 1,
+    label: "Lastname",
+    list: new BehaviorSubject(GENDER),
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "dateOfBirth",
+    label: "DOB",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "email",
+    maxLength: 64,
+    label: "Email",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "mobile",
+    minLength: 9,
+    maxLength: 13,
+    label: "Phone",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "workId",
+    minLength: 9,
+    maxLength: 13,
+    label: "Work ID",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "hireDate",
+    minLength: 9,
+    maxLength: 13,
+    label: "Hired",
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicInputModel({
+    id: "status",
+    minLength: 9,
+    maxLength: 13,
+    label: "Job Status",
+    list: new BehaviorSubject(JOB_STATUS),
+    validators: {
+      required: null
+    },
+    errorMessages: {
+      required: "Field is required"
+    },
+    additional: {
+      color: "accent"
+    }
+  }),
+  new DynamicFormGroupModel({
+    id: "department",
+    group: [
+      new DynamicInputModel({
+        id: "name",
+        minLength: 9,
+        maxLength: 13,
+        label: "Department",
+        validators: {
+          required: null
+        },
+        errorMessages: {
+          required: "Field is required"
+        },
+        additional: {
+          color: "accent"
+        }
+      }),
+      // new DynamicInputModel({
+      //   id: "age",
+      //   label: "Age",
+      //   validators: {
+      //     required: null
+      //   },
+      //   errorMessages: {
+      //     required: "Field is required"
+      //   },
+      //   additional: {
+      //     color: "accent"
+      //   }
+      // }),
+      // new DynamicInputModel({
+      //   id: "timeOfService",
+      //   minLength: 9,
+      //   maxLength: 13,
+      //   label: "Years of Experience",
+      //   validators: {
+      //     required: null
+      //   },
+      //   errorMessages: {
+      //     required: "Field is required"
+      //   },
+      //   additional: {
+      //     color: "accent"
+      //   }
+      // }),
+    ]
+  }),
+  new DynamicFormGroupModel({
+    id: "location",
+    group: [
+      new DynamicInputModel({
+        id: "street",
+        label: "Street Name"
+      }),
+      new DynamicInputModel({
+        id: "ward",
+        label: "Ward"
+      }),
+      new DynamicInputModel({
+        id: "district",
+        label: "District",
+      }),
+      new DynamicInputModel({
+        id: "postalCode",
+        label: "Postal Code"
+      }),
+      new DynamicInputModel({
+        id: "city",
+        label: "City"
+      }),
+      new DynamicInputModel({
+        id: "country",
+        hint: "Autocomplete",
+        label: "Country",
+        list: new BehaviorSubject(COUNTRY_AUTOCOMPLETE_LIST)
+      })
+    ]
+  })
 ];
 
-export const CREATE_FORM: FieldConfig[] = [
-  ...FORM,
-  {
-    label: 'Create',
-    name: 'submit',
-    type: 'submit',
-    element: 'button',
-  },
+
+export const EMPLOYEE_TABLE_COLUMNS: ITableColumn[] = [
+  {name: '#', dataKey: 'id', isSortable: true},
+  {name: 'Firstname', dataKey: 'firstName', isSortable: true},
+  {name: 'Middle Name', dataKey: 'middleName', isSortable: true},
+  {name: 'Lastname', dataKey: 'lastName', isSortable: true},
+  {name: 'Gender', dataKey: 'gender', isSortable: true},
+  {name: 'DoB', dataKey: 'dateOfBirth', isSortable: false},
+  {name: 'Age', dataKey: 'age', isSortable: false},
+  {name: 'Email', dataKey: 'email', isSortable: true},
+  {name: 'Phone number', dataKey: 'mobile', isSortable: true},
+  {name: 'Work ID', dataKey: 'workId', isSortable: true},
+  {name: 'Hired', dataKey: 'hireDate', isSortable: true},
+  {name: 'Job Status', dataKey: 'status', isSortable: true},
+  {name: 'YoE', dataKey: 'timeOfService', isSortable: false},
+  {name: 'Department', dataKey: 'department.name', isSortable: true},
+  {name: 'Street', dataKey: 'address.street', isSortable: false},
+  {name: 'Ward', dataKey: 'address.ward', isSortable: false},
+  {name: 'District', dataKey: 'address.district', isSortable: false},
 ];
 
-export const EDIT_FORM: FieldConfig[] = [
-  {
-    element: 'input',
-    name: 'id',
-    type: 'number',
-    placeholder: 'Enter id',
-    validation: [Validators.required, Validators.minLength(2)],
-  },
-  ...FORM,
-  {
-    label: 'Create',
-    name: 'submit',
-    type: 'submit',
-    element: 'button',
-  },
-];
-
-// look at this when you need a selectcd
-//  {
-//     type: 'select',
-//     label: 'Favourite Food',
-//     name: 'food',
-//     options: ['Pizza', 'Hot Dogs', 'Knakworstje', 'Coffee'],
-//     placeholder: 'Select an option',
-//     validation: [Validators.required],
-//   },

@@ -1,19 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormComponent} from 'src/app/form/container/form/form.component';
-import {EmployeeService} from '../employee.service';
+import {Component, OnInit} from '@angular/core';
 import {ITableColumn} from '../model/table-column.model';
-import {Employee, LocalDate} from "../../service";
-import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
-import {EmployeeDialogComponent} from "../employee-dialog/employee-dialog.component";
+import {Employee, EmployeeEndpointService, LocalDate} from "../../service";
+import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {DialogService} from "../../shared/dialog/dialog.service";
 import {DialogData} from "../model/dialog-data.model";
 import {Query} from "../../shared/query.model";
-
-// fall back for search queries
-// export interface EmployeeQuery {
-//   search: string;
-//   registration: LocalDate;
-// }
+import {EMPLOYEE_TABLE_COLUMNS} from "../model/form-config";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import {HttpResponse} from "@angular/common/http";
+import {httpGetAllHandler} from "../../shared/utils";
+import {DatePipe} from "@angular/common";
+import {EmployeeDialogComponent} from "../employee-dialog/employee-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-employee-list',
@@ -21,23 +20,18 @@ import {Query} from "../../shared/query.model";
   styleUrls: ['./employee-list.component.css'],
 })
 export class EmployeeListComponent implements OnInit {
-  @ViewChild(FormComponent) form!: FormComponent;
   employeeTableColumns!: ITableColumn[];
-  employees!: Employee[];
+  dialogValue: DialogData<Employee> = {mode: 'create'};
+  initialPage: number = 0;
+  tableData!: PaginationDataSource<Employee, Query<LocalDate>>;
   pageSizes: number[] = [5, 10, 15, 20, 50];
   defaultSize: number = this.pageSizes[0];
-  dialogValue: DialogData<Employee> = {mode: 'create'};
-
-  tableData: PaginationDataSource<Employee, Query<LocalDate>> = new PaginationDataSource<Employee, Query<LocalDate>>(
-    (request: PageRequest<Employee>, query: Query<LocalDate>) => this.employeeService.page(request, query),
-    {property: 'firstName', order: 'asc'},
-    {search: undefined!, registration: undefined!}
-  )
 
   constructor(
-    // private dialog: MatDialog,
+    private datePipe: DatePipe,
+    private snackBar: MatSnackBar,
     private dialogService: DialogService,
-    private employeeService: EmployeeService,
+    private employeeService: EmployeeEndpointService
   ) {
   }
 
@@ -57,54 +51,81 @@ export class EmployeeListComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.employeeTableColumns = this.employeeService.getTableColumns();
+    this.employeeTableColumns = EMPLOYEE_TABLE_COLUMNS;
+    this.tableData = new PaginationDataSource<Employee, Query<LocalDate>>(
+      (request: PageRequest<Employee>, query: Query<LocalDate>) => this.getEmployees(request, query),
+      {property: 'firstName', order: 'asc'},
+      {search: undefined!, registration: undefined!}
+    )
   }
 
-  // getEmployees(): Employee[] {
-  //   return this.employees;
-  // }
+  getEmployees(request: PageRequest<Employee>, query: Query<LocalDate>): Observable<Page<Employee>> {
 
-  createEmployee() {
-    this.openEmployeeDialog().afterClosed().subscribe(result => console.log(result));
-    // this.getEmployees();
-    console.log('THE END!!');
+    (request.size === 20) ? request.size = 5 : request.size;
+    const date: string = this.datePipe.transform(query.registration, 'yyyy-MM-dd')!;
 
-    // dialogRef.afterClosed().subscribe({
-    //   next: (val) => {
-    //     if (val) {
-    //       this.getEmployees();
-    //     }
-    //   },
-    // });
+    return this.employeeService
+      .restEmployeesGet(date, request.sort?.order, request.page, request.sort?.property, query.search, request.size, 'response')
+      .pipe(map((response: HttpResponse<Array<Employee>>) => {
+            return httpGetAllHandler<Employee>(response);
+          }
+        )
+      );
   }
 
-  updateEmployee(employee: any): void {
-    console.log(JSON.stringify(employee))
-    // const dialogRef = this.dialog.open(CreateUpdateComponent, {
-    //   data: employee,
-    // });
-    // dialogRef.afterClosed().subscribe({
-    //   next: (val) => {
-    //     if (val) {
-    //       console.log('SUBSCRIBING!!!!!!!!!!!!!');
-    //
-    //       this.getEmployees();
-    //     }
-    //   },
-    // });
-  }
-
-  deleteEmployee(employeeEvt: any): void {
-    console.log(employeeEvt + ' OR JUST IN CASE : ' + JSON.stringify(employeeEvt))
-    // uncomment for http
-    // this.employees = this.employeeService.deleteEmployee(employeeEvt);
-    this.employees = this.employees.filter(
-      (employee) => employee.id !== employeeEvt.id
+  createEmployee = () => {
+    this.dialogValue = {mode: 'create'};
+    this.openEmployeeDialog(this.dialogValue).afterClosed().subscribe(result => {
+        if (result === 'success') {
+          this.reloadDataOnChanges();
+          this.snackBar.open(`Successfully created employee`, 'Close', {
+              duration: 5000,
+              panelClass: 'success-snackbar'
+            }
+          );
+        }
+      }
     );
+  };
+
+  updateEmployee = (employee: Employee): void => {
+    this.dialogValue = {mode: 'edit', dataObject: employee};
+    this.openEmployeeDialog(this.dialogValue).afterClosed().subscribe(result => {
+        if (result === 'success') {
+          this.reloadDataOnChanges();
+          this.snackBar.open(`Successfully updated employee`, 'Close', {
+              duration: 5000,
+              panelClass: 'success-snackbar',
+            }
+          );
+        }
+      }
+    );
+  };
+
+  deleteEmployee = (employee: Employee) => {
+    this.dialogValue = {mode: 'delete', dataObject: employee};
+    this.openEmployeeDialog(this.dialogValue).afterClosed().subscribe(result => {
+        if (result === 'success') {
+          this.reloadDataOnChanges();
+          this.snackBar.open(`Successfully deleted employee`, 'Close', {
+              duration: 5000,
+              // verticalPosition: 'top',
+              panelClass: 'success-snackbar'
+            }
+          );
+        }
+      }
+    );
+  };
+
+  // Remember this when  allocation on same screen
+  reloadDataOnChanges(): void {
+    this.tableData.fetch(this.initialPage);
   }
 
-  openEmployeeDialog() {
-    return this.dialogService.open(EmployeeDialogComponent, this.dialogValue);
+  openEmployeeDialog(dialogValue: DialogData<Employee>) {
+    return this.dialogService.open(EmployeeDialogComponent, dialogValue);
   }
 
 }

@@ -30,7 +30,6 @@ export class DepartmentListComponent implements OnInit {
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
     private departmentService: DepartmentEndpointService,
-    // private departmentService: DepartmentService,
   ) {
   }
 

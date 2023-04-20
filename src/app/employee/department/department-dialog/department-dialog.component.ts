@@ -12,7 +12,6 @@ import {MATERIAL_DEPT_FORM_MODEL} from "../model/dept-form.config";
 import {MATERIAL_DEPT_FORM_LAYOUT} from "../model/dept-form.layout";
 import {HttpResponse} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: "dynamic-material-sample-form",
@@ -28,16 +27,14 @@ export class DepartmentDialogComponent implements OnInit {
   confirmText!: string;
 
   formModel: DynamicFormControlModel[] = MATERIAL_DEPT_FORM_MODEL;
-  formGroup: FormGroup<any> = this.formService.createFormGroup(this.formModel);
+  formGroup: FormGroup = this.formService.createFormGroup(this.formModel);
   formLayout: DynamicFormLayout = MATERIAL_DEPT_FORM_LAYOUT;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<DepartmentDialogComponent>,
     private formService: DynamicFormService,
     private departmentService: DepartmentEndpointService,
-    // private departmentService: DepartmentService,
   ) {
   }
 

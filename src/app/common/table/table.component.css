@@ -27,7 +27,7 @@ table {
 .mat-header-cell {
   word-wrap: initial;
   display: table-cell;
-  padding: 0px 5px;
+  padding: 0 2px;
   line-break: unset;
   width: auto;
   white-space: nowrap;
@@ -37,7 +37,8 @@ table {
 
 th,
 td {
-  padding: 5px !important;
+  /*margin: 0 1000px !important;*/
+  padding: 2px !important;
 }
 
 mat-form-field {

@@ -2,7 +2,6 @@ import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@a
 import {BehaviorSubject} from 'rxjs';
 import {FormComponent} from 'src/app/form/container/form/form.component';
 import {FieldConfig} from 'src/app/form/model/field-confing.model';
-import {EmployeeService} from '../employee.service';
 import {DialogService} from "../../shared/dialog/dialog.service";
 
 @Component({

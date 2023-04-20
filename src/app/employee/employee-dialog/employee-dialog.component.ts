@@ -1,93 +1,112 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormComponent} from "../../form/container/form/form.component";
 import {FieldConfig} from "../../form/model/field-confing.model";
 import {BehaviorSubject} from "rxjs";
-import {EmployeeService} from "../employee.service";
-import {CREATE_FORM} from "../model/form-config";
-import {Employee} from "../../service";
-import {formChangesControl} from "../../shared/utils";
+import {MATERIAL_EMPLOYEE_FORM_MODEL} from "../model/form-config";
+import {Employee, EmployeeEndpointService} from "../../service";
+import {DynamicFormControlModel, DynamicFormLayout, DynamicFormService} from "@ng-dynamic-forms/core";
+import {FormGroup} from "@angular/forms";
+import {MATERIAL_EMPLOYEE_FORM_LAYOUT} from "../model/employee-form.layout";
+import {DepartmentDialogComponent} from "../department/department-dialog/department-dialog.component";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-employee-dialog',
   templateUrl: './employee-dialog.component.html',
   styleUrls: ['./employee-dialog.component.css']
 })
-export class EmployeeDialogComponent implements OnInit, AfterViewInit {
+export class EmployeeDialogComponent implements OnInit {
   isAsyncOperationRunning$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   @ViewChild(FormComponent) form!: FormComponent;
   config!: FieldConfig[];
   title!: string;
-  updatedEmployee!: Employee;
+  employee!: Employee;
+  operation!: string;
+  confirmText!: string;
+
+  formModel: DynamicFormControlModel[] = MATERIAL_EMPLOYEE_FORM_MODEL;
+  formGroup: FormGroup = this.formService.createFormGroup(this.formModel);
+  formLayout: DynamicFormLayout = MATERIAL_EMPLOYEE_FORM_LAYOUT;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any, //: EmployeeDialog,
-    private cd: ChangeDetectorRef,
-    private employeeService: EmployeeService,
-    private dialog: MatDialog,
+    private dialogRef: MatDialogRef<DepartmentDialogComponent>,
+    private formService: DynamicFormService,
+    private employeeService: EmployeeEndpointService,
   ) {
   }
 
-  // public employee = this.data.data;
-
   ngOnInit(): void {
-    this.config = CREATE_FORM;
+    this.initDepartmentModeAndData();
+    this.selectEmployeeDialogModeAndOps();
+  }
 
-    console.log('PASSED DIALOG VAL: ' + this.data.data.mode)
-    if (this.data.data.mode === 'create') {
-      this.title = 'Create Employee';
-    } else if (this.data.data.mode === 'create') {
-      this.title = 'Update Employee';
-      this.updatedEmployee = this.data.data.employee;
-      console.log("UPDATED EMPLOYEE : " + JSON.stringify(this.updatedEmployee))
-    } else if (this.data.mode === 'confirm') {
-      this.title = 'Confirm Action';
-      // this.form.disable();
-    } else if (this.data.mode === 'alert') {
-      this.title = 'Alert';
-      // this.form.
+  save(): void {
+    this.apiMethodsCall();
+  }
+
+  initDepartmentModeAndData(): void {
+    const {mode, dataObject} = this.data.data;
+    this.operation = mode;
+    this.employee = dataObject;
+  }
+
+  selectEmployeeDialogModeAndOps(): void {
+    this.title = this.operation === 'create' ? 'Create Employee' : this.operation === 'delete' ? 'Remove Employee' : 'Edit Employee';
+    if (this.operation === 'edit') {
+      this.formGroup.patchValue(this.employee);
+    } else if (this.operation === 'delete') {
+      this.confirmText = `<em><strong>${this.employee.firstName} ${this.employee.lastName}</strong></em> will be permanently deleted, Do you want to roceed?`
     }
   }
 
-  submit(employee: Employee): void {
-    console.log("FROM FORM SUBMIT : " + JSON.stringify(employee));
-
-    this.isAsyncOperationRunning$.next(true);
-    this.employeeService.createEmployee(employee).subscribe(response => {
-        if (response.status === 201) {
-          console.log("SUCCESSFUL CREATED!!")
-          this.dialog.closeAll();
-        }
-      }
-      // HttpResponse<string>
-    )
-
-    // setTimeout(() => {
-    //   console.log('ID : ' + employee.id);
-    //
-    //   if (
-    //     typeof employee === 'object' &&
-    //     employee !== null &&
-    //     Object.keys(employee).includes('id')
-    //   ) {
-    //     console.log('To be UPDATED : ');
-    //     this.employeeService.updateEmployee(employee);
-    //     this.closeDialog();
-    //     return;
-    //   } else {
-    //     console.log('CREATE NEW EMPLOYEE : ' + JSON.stringify(employee));
-    //
-    //     this.employeeService.saveEmployee(employee);
-    //     // this.closeDialog();
-    //     // return;
-    //   }
-    //   // this.closeDialog(); // reconsider this also
-    //   this.isAsyncOperationRunning$.next(false);
-    // }, 1000);
+  apiMethodsCall(): void {
+    if (this.operation === 'create') {
+      this.callCreateApiService();
+    } else if (this.operation === 'edit') {
+      this.callUpdateApiService();
+    } else if (this.operation === 'delete') {
+      this.callDeleteApiService();
+    }
   }
 
-  ngAfterViewInit(): void {
-    formChangesControl(this.form, this.updatedEmployee);
-    this.cd.detectChanges();
+  callCreateApiService() {
+    return this.employeeService.restEmployeesPost(this.formGroup.value, 'response').subscribe({
+        next: (response: HttpResponse<string>): void => {
+          if (response.status === 201) {
+            this.dialogRef.close('success');
+          }
+        }
+      }
+    );
+  }
+
+  callUpdateApiService() {
+    this.formGroup.value.id = this.employee.id;
+    this.employeeService.restEmployeesIdPut(this.formGroup.value, this.employee.id!, 'response').subscribe({
+        next: (response: HttpResponse<string>): void => {
+          if (response.status === 204) {
+            this.dialogRef.close('success');
+          }
+        },
+      }
+    );
+  }
+
+  callDeleteApiService() {
+    return this.employeeService.restEmployeesIdDelete(this.employee.id!, 'response').subscribe({
+        next: (response: HttpResponse<string>): void => {
+          if (response.status === 204) {
+            this.dialogRef.close('success');
+          }
+        }
+      }
+    );
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+    this.formGroup.reset();
   }
 }

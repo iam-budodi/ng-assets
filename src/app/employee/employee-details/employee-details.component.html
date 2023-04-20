@@ -8,10 +8,10 @@
           fxLayoutGap="20px"
         >
           <li>
-            <a routerLink="/employees/lists">
+            <a routerLink="api/employees">
               <span class="link">Return to all employees</span>
             </a>
-            <span class="label">
+            <span class="label" *ngIf="employee">
               / {{ employee.firstName | titlecase }}
               {{ employee.lastName | titlecase | possessive }} Details</span
             >

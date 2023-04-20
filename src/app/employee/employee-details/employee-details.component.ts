@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {EmployeeService} from "../employee.service";
 import {ActivatedRoute, Params} from "@angular/router";
+import {Employee, EmployeeEndpointService} from "../../service";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-employee-details',
@@ -8,18 +9,28 @@ import {ActivatedRoute, Params} from "@angular/router";
   styleUrls: ['./employee-details.component.css']
 })
 export class EmployeeDetailsComponent implements OnInit {
-  employee!: any;
+  employee!: Employee;
 
   constructor(
-    private employeeService: EmployeeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private employeeService: EmployeeEndpointService
   ) {
   }
 
   ngOnInit(): void {
-    this.route.params.forEach((params: Params) => {
-      this.employee = this.employeeService.getEmployee(+params['id'])!;
+    this.route.data.forEach((data) => {
+      this.employee = data['employee'];
     });
+    // console.log(JSON.stringify(this.employee));
+  }
+
+  getEmployee(id: number) {
+    this.employeeService.restEmployeesIdGet(id, 'response').subscribe({
+      next: (response: HttpResponse<Employee>): void => {
+          this.employee = response.body!;
+        }
+      }
+    );
   }
 
 }

@@ -26,12 +26,16 @@ export const formChangesControl: (form: FormComponent, valueObject: any) => void
 export const httpGetAllHandler = <T>(response: HttpResponse<Array<T>>): Page<T> => {
   const linkHeader: string | null = response.headers.get('Link');
   const totalElements: string | null = response.headers.get('X-Total-Count');
-  const employees: T[] = response.body || [];
+  const body: T[] = response.body || [];
 
   return {
-    content: employees,
+    content: body,
     totalElements: totalElements ? parseInt(totalElements, 10) : 0,
     size: 5,
     number: 0
   };
+}
+
+export const httpIdGetHandler = <T>(response: HttpResponse<T>): T => {
+  return response.body!;
 }
