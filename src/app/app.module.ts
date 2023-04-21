@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {NgChartsModule} from 'ng2-charts';
 import {AppComponent} from './app.component';
@@ -12,7 +13,6 @@ import {AnnualSalesChartComponent} from './dashboard/charts/annual-sales-chart/a
 import {SalesTrafficChartComponent} from './dashboard/charts/sales-traffic-chart/sales-traffic-chart.component';
 import {ProductSalesChartComponent} from './dashboard/charts/product-sales-chart/product-sales-chart.component';
 import {TicketComponent} from './common/ticket/ticket.component';
-import {FormModule} from './form/form.module';
 import {EmployeeModule} from './employee/employee.module';
 import {AssetModule} from './asset/asset.module';
 import {ProcureModule} from './procure/procure.module';
@@ -34,11 +34,11 @@ import { CoreModule } from './core/core.module';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     EmployeeModule,
     NgChartsModule,
-    FormModule,
     AssetModule,
     ProcureModule,
     ApiModule,

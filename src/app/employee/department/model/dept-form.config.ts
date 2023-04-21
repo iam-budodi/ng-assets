@@ -13,35 +13,40 @@ export const COUNTRY_AUTOCOMPLETE_LIST: string[] = [
 ]
 
 export const MATERIAL_DEPT_FORM_MODEL: DynamicFormModel = [
-  new DynamicInputModel({
-    id: "name",
-    maxLength: 50,
-    label: "Department Name",
-    validators: {
-      required: null
-    },
-    errorMessages: {
-      required: "Field is required"
-    }
-  }),
-  new DynamicInputModel({
-    id: "code",
-    maxLength: 10,
-    label: "Department Code",
-    validators: {
-      required: null
-    },
-    errorMessages: {
-      required: "Field is required"
-    },
-    additional: {
-      color: "accent"
-    }
-  }),
-  new DynamicTextAreaModel({
-    id: "description",
-    label: "Description",
-    maxLength: 400
+  new DynamicFormGroupModel({
+    id: "department",
+    group: [
+      new DynamicInputModel({
+        id: "name",
+        maxLength: 50,
+        label: "Department Name",
+        validators: {
+          required: null
+        },
+        errorMessages: {
+          required: "Field is required"
+        }
+      }),
+      new DynamicInputModel({
+        id: "code",
+        maxLength: 10,
+        label: "Department Code",
+        validators: {
+          required: null
+        },
+        errorMessages: {
+          required: "Field is required"
+        },
+        additional: {
+          color: "accent"
+        }
+      }),
+      new DynamicTextAreaModel({
+        id: "description",
+        label: "Description",
+        maxLength: 400
+      }),
+    ]
   }),
   new DynamicFormGroupModel({
     id: "location",

@@ -1,6 +1,12 @@
 import {FieldConfig} from "../../form/model/field-confing.model";
 import {Validators} from "@angular/forms";
-import {DynamicFormGroupModel, DynamicFormModel, DynamicInputModel, DynamicTextAreaModel} from "@ng-dynamic-forms/core";
+import {
+  DynamicDatePickerModel,
+  DynamicFormGroupModel,
+  DynamicFormModel,
+  DynamicInputModel,
+  DynamicTextAreaModel
+} from "@ng-dynamic-forms/core";
 import {BehaviorSubject} from "rxjs";
 import {COUNTRY_AUTOCOMPLETE_LIST} from "../department/model/dept-form.config";
 import {ITableColumn} from "./table-column.model";
@@ -70,18 +76,15 @@ export const MATERIAL_EMPLOYEE_FORM_MODEL: DynamicFormModel = [
       color: "accent"
     }
   }),
-  new DynamicInputModel({
+  new DynamicDatePickerModel({
     id: "dateOfBirth",
-    label: "DOB",
+    label: "Date of Birth",
     validators: {
       required: null
     },
     errorMessages: {
       required: "Field is required"
     },
-    additional: {
-      color: "accent"
-    }
   }),
   new DynamicInputModel({
     id: "email",
@@ -127,10 +130,8 @@ export const MATERIAL_EMPLOYEE_FORM_MODEL: DynamicFormModel = [
       color: "accent"
     }
   }),
-  new DynamicInputModel({
+  new DynamicDatePickerModel({
     id: "hireDate",
-    minLength: 9,
-    maxLength: 13,
     label: "Hired",
     validators: {
       required: null
@@ -138,9 +139,6 @@ export const MATERIAL_EMPLOYEE_FORM_MODEL: DynamicFormModel = [
     errorMessages: {
       required: "Field is required"
     },
-    additional: {
-      color: "accent"
-    }
   }),
   new DynamicInputModel({
     id: "status",

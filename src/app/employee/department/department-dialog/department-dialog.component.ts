@@ -5,7 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {
   DynamicFormControlEvent,
   DynamicFormControlModel,
-  DynamicFormLayout,
+  DynamicFormLayout, DynamicFormModel,
   DynamicFormService
 } from "@ng-dynamic-forms/core";
 import {MATERIAL_DEPT_FORM_MODEL} from "../model/dept-form.config";
@@ -26,8 +26,10 @@ export class DepartmentDialogComponent implements OnInit {
   operationMode!: string;
   confirmText!: string;
 
-  formModel: DynamicFormControlModel[] = MATERIAL_DEPT_FORM_MODEL;
-  formGroup: FormGroup = this.formService.createFormGroup(this.formModel);
+  // formModel: DynamicFormControlModel[] = MATERIAL_DEPT_FORM_MODEL; // it started here
+  // formGroup: FormGroup = this.formService.createFormGroup(this.formModel);
+  formModel: DynamicFormModel = MATERIAL_DEPT_FORM_MODEL;
+  formGroup!: FormGroup;
   formLayout: DynamicFormLayout = MATERIAL_DEPT_FORM_LAYOUT;
 
   constructor(
@@ -56,6 +58,7 @@ export class DepartmentDialogComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.formGroup = this.formService.createFormGroup(this.formModel);
     this.initModeAndData();
     this.selectDialogModeAndOps();
   }

@@ -225,6 +225,11 @@ mat-slide-toggle {
   display: inline-block !important;
 }
 
+mat-form-field {
+  /*width: 500px;*/
+  /*margin-right: 20px;*/
+}
+
 mat-form-field.mat-mdc-form-field-type-mat-chip-list {
   width: 100%;
 }
