@@ -11,7 +11,6 @@ import {
 import {MATERIAL_DEPT_FORM_MODEL} from "../model/dept-form.config";
 import {MATERIAL_DEPT_FORM_LAYOUT} from "../model/dept-form.layout";
 import {HttpResponse} from "@angular/common/http";
-import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: "dynamic-material-sample-form",
@@ -29,7 +28,7 @@ export class DepartmentDialogComponent implements OnInit {
   // formModel: DynamicFormControlModel[] = MATERIAL_DEPT_FORM_MODEL; // it started here
   // formGroup: FormGroup = this.formService.createFormGroup(this.formModel);
   formModel: DynamicFormModel = MATERIAL_DEPT_FORM_MODEL;
-  formGroup!: FormGroup;
+  formGroup!: any; //: FormGroup;
   formLayout: DynamicFormLayout = MATERIAL_DEPT_FORM_LAYOUT;
 
   constructor(

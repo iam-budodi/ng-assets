@@ -1,11 +1,8 @@
-import {FieldConfig} from "../../form/model/field-confing.model";
-import {Validators} from "@angular/forms";
 import {
   DynamicDatePickerModel,
   DynamicFormGroupModel,
   DynamicFormModel,
   DynamicInputModel,
-  DynamicTextAreaModel
 } from "@ng-dynamic-forms/core";
 import {BehaviorSubject} from "rxjs";
 import {COUNTRY_AUTOCOMPLETE_LIST} from "../department/model/dept-form.config";
