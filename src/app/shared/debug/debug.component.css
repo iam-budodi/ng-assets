@@ -1,0 +1,12 @@
+:host {
+  margin: 20px;
+}
+
+.mat-expansion-panel-header {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.mat-expansion-panel-header.mat-expanded:focus,
+.mat-expansion-panel-header.mat-expanded:hover {
+  background: rgba(0, 0, 0, 0.03);
+}

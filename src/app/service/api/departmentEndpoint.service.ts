@@ -10,387 +10,380 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {Department} from '../model/department';
-import {Employee} from '../model/employee';
+import { Department } from '../model/department';
+import { DepartmentSelectOptions } from '../model/departmentSelectOptions';
+import { Employee } from '../model/employee';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
 export class DepartmentEndpointService {
 
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  protected basePath = 'http://localhost:8802';
+    protected basePath = 'http://localhost:8802';
+    public defaultHeaders = new HttpHeaders();
+    public configuration = new Configuration();
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-    if (basePath) {
-      this.basePath = basePath;
-    }
-    if (configuration) {
-      this.configuration = configuration;
-      this.basePath = basePath || configuration.basePath || this.basePath;
-    }
-  }
-
-  /**
-   * Counts all departments available in the database
-   *
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restDepartmentsCountGet(observe?: 'body', reportProgress?: boolean): Observable<number>;
-
-  public restDepartmentsCountGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-
-  public restDepartmentsCountGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-
-  public restDepartmentsCountGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+        if (basePath) {
+            this.basePath = basePath;
+        }
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = basePath || configuration.basePath || this.basePath;
+        }
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<number>('get', `${this.basePath}/rest/departments/count`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Retrieves all available deparments from the database
-   *
-   * @param order Order direction
-   * @param page Page index
-   * @param prop Order property
-   * @param search Search string
-   * @param size Page size
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  // public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Department>>;
-  public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Department>>>;
-
-  public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Department>>>;
-
-  public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-
-    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-    if (order !== undefined && order !== null) {
-      queryParameters = queryParameters.set('order', <any>order);
-    }
-    if (page !== undefined && page !== null) {
-      queryParameters = queryParameters.set('page', <any>page);
-    }
-    if (prop !== undefined && prop !== null) {
-      queryParameters = queryParameters.set('prop', <any>prop);
-    }
-    if (search !== undefined && search !== null) {
-      queryParameters = queryParameters.set('search', <any>search);
-    }
-    if (size !== undefined && size !== null) {
-      queryParameters = queryParameters.set('size', <any>size);
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<Array<Department>>('get', `${this.basePath}/rest/departments`,
-      {
-        params: queryParameters,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Deletes an existing department
-   *
-   * @param id Department identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restDepartmentsIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-
-  public restDepartmentsIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-
-  public restDepartmentsIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-
-  public restDepartmentsIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdDelete.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<any>('delete', `${this.basePath}/rest/departments/${encodeURIComponent(String(id))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Retrieves all employees available in a specific deparment given an identifier
-   *
-   * @param id Department identifier
-   * @param workid Employee work identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
-
-  public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
-
-  public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
-
-  public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdEmployeesGet.');
+    /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (const consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
-    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-    if (workid !== undefined && workid !== null) {
-      queryParameters = queryParameters.set('workid', <any>workid);
+    /**
+     * Retrieves all available deparments from the database
+     *
+     * @param order Order direction
+     * @param page Page index
+     * @param prop Order property
+     * @param search Search string
+     * @param size Page size
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    // public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Department>>;
+    public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Department>>>;
+    public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Department>>>;
+    public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (order !== undefined && order !== null) {
+            queryParameters = queryParameters.set('order', <any>order);
+        }
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (prop !== undefined && prop !== null) {
+            queryParameters = queryParameters.set('prop', <any>prop);
+        }
+        if (search !== undefined && search !== null) {
+            queryParameters = queryParameters.set('search', <any>search);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<Department>>('get',`${this.basePath}/rest/departments`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Deletes an existing department
+     *
+     * @param id Department identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restDepartmentsIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public restDepartmentsIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public restDepartmentsIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public restDepartmentsIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/rest/departments/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Retrieves all employees available in a specific deparment given an identifier
+     *
+     * @param id Department identifier
+     * @param workid Employee work identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
+    public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
+    public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
+    public restDepartmentsIdEmployeesGet(id: number, workid?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<Array<Employee>>('get', `${this.basePath}/rest/departments/${encodeURIComponent(String(id))}/employees`,
-      {
-        params: queryParameters,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdEmployeesGet.');
+        }
 
-  /**
-   * Returns the department for a given identifier
-   *
-   * @param id Department identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restDepartmentsIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Department>;
 
-  public restDepartmentsIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Department>>;
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (workid !== undefined && workid !== null) {
+            queryParameters = queryParameters.set('workid', <any>workid);
+        }
 
-  public restDepartmentsIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Department>>;
+        let headers = this.defaultHeaders;
 
-  public restDepartmentsIdGet(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdGet.');
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<Employee>>('get',`${this.basePath}/rest/departments/${encodeURIComponent(String(id))}/employees`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Returns the department for a given identifier
+     *
+     * @param id Department identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restDepartmentsIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Department>;
+    public restDepartmentsIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Department>>;
+    public restDepartmentsIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Department>>;
+    public restDepartmentsIdGet(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Department>('get',`${this.basePath}/rest/departments/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Updates an existing department
+     *
+     * @param body
+     * @param id Department identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restDepartmentsIdPut(body: Department, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public restDepartmentsIdPut(body: Department, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public restDepartmentsIdPut(body: Department, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public restDepartmentsIdPut(body: Department, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<Department>('get', `${this.basePath}/rest/departments/${encodeURIComponent(String(id))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restDepartmentsIdPut.');
+        }
 
-  /**
-   * Updates an existing department
-   *
-   * @param body
-   * @param id Department identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restDepartmentsIdPut(body: Department, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdPut.');
+        }
 
-  public restDepartmentsIdPut(body: Department, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+        let headers = this.defaultHeaders;
 
-  public restDepartmentsIdPut(body: Department, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public restDepartmentsIdPut(body: Department, id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restDepartmentsIdPut.');
+        return this.httpClient.request<any>('put',`${this.basePath}/rest/departments/${encodeURIComponent(String(id))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restDepartmentsIdPut.');
+    /**
+     * Creates a valid department and stores it into the database
+     *
+     * @param body
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restDepartmentsPost(body: Department, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public restDepartmentsPost(body: Department, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public restDepartmentsPost(body: Department, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public restDepartmentsPost(body: Department, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restDepartmentsPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<string>('post',`${this.basePath}/rest/departments`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Fetch only department ID and name for all departments available to be used for client side selection options
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restDepartmentsSelectGet(observe?: 'body', reportProgress?: boolean): Observable<Array<DepartmentSelectOptions>>;
+    public restDepartmentsSelectGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DepartmentSelectOptions>>>;
+    public restDepartmentsSelectGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DepartmentSelectOptions>>>;
+    public restDepartmentsSelectGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<DepartmentSelectOptions>>('get',`${this.basePath}/rest/departments/select`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<any>('put', `${this.basePath}/rest/departments/${encodeURIComponent(String(id))}`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Creates a valid department and stores it into the database
-   *
-   * @param body
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restDepartmentsPost(body: Department, observe?: 'body', reportProgress?: boolean): Observable<string>;
-
-  public restDepartmentsPost(body: Department, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-
-  public restDepartmentsPost(body: Department, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-
-  public restDepartmentsPost(body: Department, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restDepartmentsPost.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<string>('post', `${this.basePath}/rest/departments`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
-    }
-    return false;
-  }
 
 }

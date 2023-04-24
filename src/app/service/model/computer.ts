@@ -9,29 +9,29 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {Category} from './category';
-import {Peripheral} from './peripheral';
-import {Purchase} from './purchase';
-import {QRCode} from './qRCode';
+import { Category } from './category';
+import { Peripheral } from './peripheral';
+import { Purchase } from './purchase';
+import { QRCode } from './qRCode';
 
 /**
  * Computer representation
  */
-export interface Computer {
-  id?: number;
-  brand: string;
-  model: string;
-  modelNumber: string;
-  serialNumber: string;
-  manufacturer: string;
-  category?: Category;
-  label?: QRCode;
-  purchase: Purchase;
-  processor: string;
-  memory: number;
-  storage: number;
-  operatingSystem?: string;
-  displaySize: number;
-  graphicsCard?: number;
-  peripherals: Array<Peripheral>;
+export interface Computer { 
+    id?: number;
+    brand: string;
+    model: string;
+    modelNumber: string;
+    serialNumber: string;
+    manufacturer: string;
+    category?: Category;
+    label?: QRCode;
+    purchase: Purchase;
+    processor: string;
+    memory: number;
+    storage: number;
+    operatingSystem?: string;
+    displaySize: number;
+    graphicsCard?: number;
+    peripherals: Array<Peripheral>;
 }

@@ -5,6 +5,7 @@ export * from './asset';
 export * from './category';
 export * from './computer';
 export * from './department';
+export * from './departmentSelectOptions';
 export * from './employee';
 export * from './employmentStatus';
 export * from './gender';

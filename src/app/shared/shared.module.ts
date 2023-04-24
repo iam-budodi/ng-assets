@@ -8,17 +8,19 @@ import {LoadingDialogService} from "./loading/loading-dialog.service";
 import {DialogService} from "./dialog/dialog.service";
 import {DialogComponent} from "./dialog/dialog.component";
 import {MaterialModule} from "../material.module";
+import { DebugComponent } from './debug/debug.component';
+import {ConfirmDialogService} from "./dialog/confirm-dialog.service";
 
 const sharedComponents = [DialogComponent, LoadingDialogComponent, ErrorDialogComponent];
 
 @NgModule({
-  declarations: [...sharedComponents],
+  declarations: [...sharedComponents, DebugComponent],
   imports: [
     CommonModule,
     RouterModule,
     MaterialModule
   ],
-  exports: [...sharedComponents],
-  providers: [DialogService, ErrorDialogService, LoadingDialogService]
+  exports: [...sharedComponents, DebugComponent],
+  providers: [DialogService, ConfirmDialogService, ErrorDialogService, LoadingDialogService]
 })
 export class SharedModule { }

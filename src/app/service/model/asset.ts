@@ -9,21 +9,21 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {Category} from './category';
-import {Purchase} from './purchase';
-import {QRCode} from './qRCode';
+import { Category } from './category';
+import { Purchase } from './purchase';
+import { QRCode } from './qRCode';
 
 /**
  * Asset representation
  */
-export interface Asset {
-  id?: number;
-  brand: string;
-  model: string;
-  modelNumber: string;
-  serialNumber: string;
-  manufacturer: string;
-  category?: Category;
-  label?: QRCode;
-  purchase: Purchase;
+export interface Asset { 
+    id?: number;
+    brand: string;
+    model: string;
+    modelNumber: string;
+    serialNumber: string;
+    manufacturer: string;
+    category?: Category;
+    label?: QRCode;
+    purchase: Purchase;
 }

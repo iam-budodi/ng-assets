@@ -1,86 +1,185 @@
 import {ITableColumn} from "../../model/table-column.model";
+import {FormlyFieldConfig} from "@ngx-formly/core";
 
-import {
-  DynamicFormGroupModel,
-  DynamicFormModel,
-  DynamicInputModel,
-  DynamicTextAreaModel,
-} from "@ng-dynamic-forms/core";
-import {BehaviorSubject} from "rxjs";
 
-export const COUNTRY_AUTOCOMPLETE_LIST: string[] = [
-  "Tanzania"
-]
+const formlyRow = (fieldConfig: FormlyFieldConfig[]) => {
+  return {
+    fieldGroupClassName: 'display-flex',
+    fieldGroup: fieldConfig
+  };
+};
 
-export const MATERIAL_DEPT_FORM_MODEL: DynamicFormModel = [
-  new DynamicFormGroupModel({
-    id: "department",
-    group: [
-      new DynamicInputModel({
-        id: "name",
-        maxLength: 50,
-        label: "Department Name",
-        validators: {
-          required: null
-        },
-        errorMessages: {
-          required: "Field is required"
-        }
-      }),
-      new DynamicInputModel({
-        id: "code",
+export const DEPARTMENT_FORM_FIELD: FormlyFieldConfig[] = [
+  {
+    key: 'id'
+  },
+  formlyRow([
+    {
+      key: 'name',
+      type: 'input',
+      className: 'flex-3',
+      props: {
+        label: 'Department Name',
+        placeholder: 'Enter name',
+        required: true,
+        minLength: 2,
+        maxLength: 64
+      }
+    },
+    {
+      key: 'code',
+      type: 'input',
+      className: 'flex-3',
+      props: {
+        label: 'Department Code',
+        placeholder: 'Enter code',
+        required: false,
+        minLength: 2,
         maxLength: 10,
-        label: "Department Code",
-        validators: {
-          required: null
-        },
-        errorMessages: {
-          required: "Field is required"
-        },
-        additional: {
-          color: "accent"
+      }
+    },
+  ]),
+  formlyRow([
+    {
+      key: 'description',
+      type: 'textarea',
+      className: 'flex-6',
+      props: {
+        label: 'Description',
+        placeholder: 'Enter description (Optional)',
+        required: false,
+        minLength: 1,
+        maxLength: 400,
+        rows: 2
+      }
+    }
+  ]),
+  {
+    key: 'location',
+    wrappers: ['panel'],
+    props: {
+      label: 'Address'
+    },
+    fieldGroupClassName: 'display-flex',
+    fieldGroup: [
+      {
+        key: 'id'
+      },
+      {
+        key: 'country',
+        type: 'select',
+        className: 'flex-2',
+        props: {
+          label: 'Country',
+          // options: this.formlyService.getCountries(),
+          options: [
+            {
+              value: null,
+              label: ' -- '
+            },
+            {
+              value: 'Tanzania',
+              label: 'Tanzania'
+            }
+          ],
+          required: true,
+          minLength: 2,
+          maxLength: 32,
         }
-      }),
-      new DynamicTextAreaModel({
-        id: "description",
-        label: "Description",
-        maxLength: 400
-      }),
-    ]
-  }),
-  new DynamicFormGroupModel({
-    id: "location",
-    group: [
-      new DynamicInputModel({
-        id: "street",
-        label: "Street Name"
-      }),
-      new DynamicInputModel({
-        id: "ward",
-        label: "Ward"
-      }),
-      new DynamicInputModel({
-        id: "district",
-        label: "District",
-      }),
-      new DynamicInputModel({
-        id: "postalCode",
-        label: "Postal Code"
-      }),
-      new DynamicInputModel({
-        id: "city",
-        label: "City"
-      }),
-      new DynamicInputModel({
-        id: "country",
-        hint: "Autocomplete",
-        label: "Country",
-        list: new BehaviorSubject(COUNTRY_AUTOCOMPLETE_LIST)
-      })
-    ]
-  })
-];
+      },
+      {
+        key: 'city',
+        type: 'select',
+        className: 'flex-2',
+        props: {
+          label: 'City',
+          // options: this.formlyService.getCities(),
+          options: [
+            {
+              value: null,
+              label: ' -- '
+            },
+            {
+              value: 'Dar es Salaam',
+              label: 'Dar es Salaam'
+            },
+            {
+              value: 'Iringa',
+              label: 'Mbeya'
+            },
+            {
+              value: 'Iringa',
+              label: 'Iringa'
+            }
+          ],
+          valueProp: 'value',
+          labelProp: 'label',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      },
+      {
+        key: 'district',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          label: 'District',
+          placeholder: 'Enter district',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      },
 
+      {
+        key: 'postalCode',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          type: 'number',
+          label: 'Postal Code',
+          required: false,
+          max: 99999,
+          min: 0,
+          pattern: '\\d{5}'
+        },
+        validation: {
+          messages: {
+            pattern: (error: any, field: FormlyFieldConfig) => `"${field.formControl?.value}" is not a valid ${field.props?.label}`,
+          }
+        }
+      },
+      {
+        key: 'ward',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          label: 'Ward',
+          placeholder: 'Enter ward',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      },
+      {
+        key: 'street',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          label: 'Street',
+          placeholder: 'Enter street name',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      }
+
+
+    ]
+  },
+
+]
 export const DEPARTMENT_TABLE_COLUMNS: ITableColumn[] = [
   {name: '#', dataKey: 'id', isSortable: true},
   {name: 'Name', dataKey: 'name', isSortable: true},

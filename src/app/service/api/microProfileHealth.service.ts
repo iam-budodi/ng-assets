@@ -10,198 +10,193 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {HealthCheckResponse} from '../model/healthCheckResponse';
+import { HealthCheckResponse } from '../model/healthCheckResponse';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
 export class MicroProfileHealthService {
 
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  protected basePath = 'http://localhost:8802';
+    protected basePath = 'http://localhost:8802';
+    public defaultHeaders = new HttpHeaders();
+    public configuration = new Configuration();
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-    if (basePath) {
-      this.basePath = basePath;
-    }
-    if (configuration) {
-      this.configuration = configuration;
-      this.basePath = basePath || configuration.basePath || this.basePath;
-    }
-  }
-
-  /**
-   * The Liveness check of this application
-   * Check the liveness of the application
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public microprofileHealthLiveness(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
-
-  public microprofileHealthLiveness(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
-
-  public microprofileHealthLiveness(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
-
-  public microprofileHealthLiveness(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+        if (basePath) {
+            this.basePath = basePath;
+        }
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = basePath || configuration.basePath || this.basePath;
+        }
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<HealthCheckResponse>('get', `${this.basePath}/rest/q/health/live`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * The Readiness check of this application
-   * Check the readiness of the application
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public microprofileHealthReadiness(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
-
-  public microprofileHealthReadiness(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
-
-  public microprofileHealthReadiness(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
-
-  public microprofileHealthReadiness(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (const consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
 
-    return this.httpClient.request<HealthCheckResponse>('get', `${this.basePath}/rest/q/health/ready`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+    /**
+     * The Liveness check of this application
+     * Check the liveness of the application
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public microprofileHealthLiveness(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
+    public microprofileHealthLiveness(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
+    public microprofileHealthLiveness(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
+    public microprofileHealthLiveness(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-  /**
-   * An aggregated view of the Liveness, Readiness and Startup of this application
-   * Check the health of the application
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public microprofileHealthRoot(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
+        let headers = this.defaultHeaders;
 
-  public microprofileHealthRoot(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public microprofileHealthRoot(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
 
-  public microprofileHealthRoot(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        return this.httpClient.request<HealthCheckResponse>('get',`${this.basePath}/rest/q/health/live`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * The Readiness check of this application
+     * Check the readiness of the application
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public microprofileHealthReadiness(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
+    public microprofileHealthReadiness(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
+    public microprofileHealthReadiness(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
+    public microprofileHealthReadiness(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<HealthCheckResponse>('get', `${this.basePath}/rest/q/health`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        let headers = this.defaultHeaders;
 
-  /**
-   * The Startup check of this application
-   * Check the startup of the application
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public microprofileHealthStartup(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public microprofileHealthStartup(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
 
-  public microprofileHealthStartup(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
-
-  public microprofileHealthStartup(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        return this.httpClient.request<HealthCheckResponse>('get',`${this.basePath}/rest/q/health/ready`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * An aggregated view of the Liveness, Readiness and Startup of this application
+     * Check the health of the application
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public microprofileHealthRoot(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
+    public microprofileHealthRoot(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
+    public microprofileHealthRoot(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
+    public microprofileHealthRoot(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<HealthCheckResponse>('get', `${this.basePath}/rest/q/health/started`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        let headers = this.defaultHeaders;
 
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<HealthCheckResponse>('get',`${this.basePath}/rest/q/health`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
-    return false;
-  }
+
+    /**
+     * The Startup check of this application
+     * Check the startup of the application
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public microprofileHealthStartup(observe?: 'body', reportProgress?: boolean): Observable<HealthCheckResponse>;
+    public microprofileHealthStartup(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HealthCheckResponse>>;
+    public microprofileHealthStartup(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HealthCheckResponse>>;
+    public microprofileHealthStartup(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<HealthCheckResponse>('get',`${this.basePath}/rest/q/health/started`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
 }

@@ -1,70 +1,45 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {Component, Inject, OnInit} from '@angular/core';
 import {Department, DepartmentEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {
-  DynamicFormControlEvent,
-  DynamicFormControlModel,
-  DynamicFormLayout, DynamicFormModel,
-  DynamicFormService
-} from "@ng-dynamic-forms/core";
-import {MATERIAL_DEPT_FORM_MODEL} from "../model/dept-form.config";
-import {MATERIAL_DEPT_FORM_LAYOUT} from "../model/dept-form.layout";
 import {HttpResponse} from "@angular/common/http";
+import {FormGroup} from "@angular/forms";
+import {FormlyFieldConfig} from "@ngx-formly/core";
+import {DEPARTMENT_FORM_FIELD} from "../model/dept-form.config";
+
 
 @Component({
-  selector: "dynamic-material-sample-form",
+  selector: "app-department-dialog",
   templateUrl: './department-dialog.component.html',
   styleUrls: ['./department-dialog.component.css'],
-  encapsulation: ViewEncapsulation.None
 })
 export class DepartmentDialogComponent implements OnInit {
-  isAsyncOperationRunning$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  title!: string;
-  department!: Department;
+  form: FormGroup = new FormGroup({});
+  fields: FormlyFieldConfig[] = DEPARTMENT_FORM_FIELD;
+  department: Department = {code: "", description: "", id: 0, location: undefined, name: ""};
+  submitLabel: string = 'Create';
   operationMode!: string;
+  title!: string;
   confirmText!: string;
-
-  // formModel: DynamicFormControlModel[] = MATERIAL_DEPT_FORM_MODEL; // it started here
-  // formGroup: FormGroup = this.formService.createFormGroup(this.formModel);
-  formModel: DynamicFormModel = MATERIAL_DEPT_FORM_MODEL;
-  formGroup!: any; //: FormGroup;
-  formLayout: DynamicFormLayout = MATERIAL_DEPT_FORM_LAYOUT;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<DepartmentDialogComponent>,
-    private formService: DynamicFormService,
     private departmentService: DepartmentEndpointService,
   ) {
   }
-
-  onBlur($event: DynamicFormControlEvent) {
-    console.log(`Material blur event on: ${$event.model.id}: `, $event);
-  }
-
-  onChange($event: DynamicFormControlEvent) {
-    console.log(`Material change event on: ${$event.model.id}: `, $event);
-  }
-
-  onFocus($event: DynamicFormControlEvent) {
-    console.log(`Material focus event on: ${$event.model.id}: `, $event);
-  }
-
-  onMatEvent($event: DynamicFormControlEvent) {
-    console.log(`Material ${$event.type} event on: ${$event.model.id}: `, $event);
-  }
-
-
   ngOnInit(): void {
-    this.formGroup = this.formService.createFormGroup(this.formModel);
     this.initModeAndData();
     this.selectDialogModeAndOps();
   }
 
-  save(): void {
-    // this.isAsyncOperationRunning$.next(true);
-    this.apiMethodsCall();
+  onSubmit({valid, value}: { valid: boolean, value: Department }): void {
+    // if (this.operationMode === 'delete' && (value.constructor === Object && Object.keys(value).length === 0)) {
+    //   value = this.department;
+    //   console.log('CHECKED IF : ' + JSON.stringify(valid) + ' IN IF : ' + JSON.stringify(value) )
+    // }
+    value = this.operationMode === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.department : value;
+    console.log('MODE : ' + this.operationMode + ' VALID: ' + JSON.stringify(valid) + ' VAL: ' + JSON.stringify(value) )
+    this.apiMethodsCall(value);
   }
 
   initModeAndData(): void {
@@ -76,24 +51,27 @@ export class DepartmentDialogComponent implements OnInit {
   selectDialogModeAndOps(): void {
     this.title = this.operationMode === 'create' ? 'Create Department' : this.operationMode === 'delete' ? 'Remove Department' : 'Edit Department';
     if (this.operationMode === 'edit') {
-      this.formGroup.patchValue(this.department);
+      this.submitLabel = 'Update';
+      this.form.patchValue(this.department);
     } else if (this.operationMode === 'delete') {
-      this.confirmText = `Are you sure you want to delete the <em><strong>${this.department.name}</strong></em> department?`
+      console.log('DELETE VAL : ' + JSON.stringify(this.department));
+      this.submitLabel = 'Delete';
+      this.confirmText = `Are you sure you want to delete the <em><strong>${this.department.name}</strong></em> department?`;
     }
   }
 
-  apiMethodsCall(): void {
+  apiMethodsCall(department: Department): void {
     if (this.operationMode === 'create') {
-      this.callCreateApiService();
+      this.callCreateApiService(department);
     } else if (this.operationMode === 'edit') {
-      this.callUpdateApiService();
+      this.callUpdateApiService(department);
     } else if (this.operationMode === 'delete') {
-      this.callDeleteApiService();
+      this.callDeleteApiService(department);
     }
   }
 
-  callCreateApiService() {
-    return this.departmentService.restDepartmentsPost(this.formGroup.value, 'response').subscribe({
+  callCreateApiService(department: Department) {
+    return this.departmentService.restDepartmentsPost(department, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 201) {
             this.dialogRef.close('success');
@@ -103,9 +81,8 @@ export class DepartmentDialogComponent implements OnInit {
     );
   }
 
-  callUpdateApiService() {
-    this.formGroup.value.id = this.department.id;
-    this.departmentService.restDepartmentsIdPut(this.formGroup.value, this.department.id!, 'response').subscribe({
+  callUpdateApiService(department: Department) {
+    this.departmentService.restDepartmentsIdPut(department, this.department.id!, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
             this.dialogRef.close('success');
@@ -115,8 +92,8 @@ export class DepartmentDialogComponent implements OnInit {
     );
   }
 
-  callDeleteApiService() {
-    return this.departmentService.restDepartmentsIdDelete(this.department.id!, 'response').subscribe({
+  callDeleteApiService(department: Department) {
+    return this.departmentService.restDepartmentsIdDelete(department.id!, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
             this.dialogRef.close('success');
@@ -124,10 +101,5 @@ export class DepartmentDialogComponent implements OnInit {
         }
       }
     );
-  }
-
-  closeDialog(): void {
-    this.dialogRef.close();
-    this.formGroup.reset();
   }
 }

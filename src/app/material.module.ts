@@ -22,12 +22,39 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
-import {MomentDateAdapter} from "@angular/material-moment-adapter";
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {DynamicFormsMaterialUIModule} from "@ng-dynamic-forms/ui-material";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatTabsModule} from "@angular/material/tabs";
 
+
+export const sharedComponent = [
+  MatSidenavModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatListModule,
+  MatCardModule,
+  MatButtonModule,
+  MatTableModule,
+  MatDialogModule,
+  MatInputModule,
+  MatSelectModule,
+  MatMenuModule,
+  MatExpansionModule,
+  MatTooltipModule,
+  FlexLayoutModule,
+  MatGridListModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatCardModule,
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatButtonToggleModule,
+  MatTabsModule,
+]
 export const MY_CUSTOM_DATE_FORMAT = {
   parse: {
     dateInput: 'YYYY-MM-DD'
@@ -42,67 +69,11 @@ export const MY_CUSTOM_DATE_FORMAT = {
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTableModule,
-    MatDialogModule,
-    MatInputModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    LayoutModule,
-    FlexLayoutModule,
-    MatGridListModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonToggleModule,
-    DynamicFormsMaterialUIModule,
-  ],
-  exports: [
-    CommonModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTableModule,
-    MatDialogModule,
-    MatInputModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    LayoutModule,
-    FlexLayoutModule,
-    MatGridListModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonToggleModule,
-    DynamicFormsMaterialUIModule,
-  ],
+  imports: [CommonModule, LayoutModule, ...sharedComponent],
+  exports: [...sharedComponent],
   providers: [
     MatSnackBar,
-    {provide: DateAdapter, useClass: MomentDateAdapter},
+    // {provide: DateAdapter, useClass: MomentDateAdapter},
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB',},
     {
       provide: MAT_DATE_FORMATS,

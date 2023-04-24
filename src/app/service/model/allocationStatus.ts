@@ -13,9 +13,9 @@
 export type AllocationStatus = 'ALLOCATED' | 'DEALLOCATED' | 'TRANSFERED' | 'RETIRED' | 'RETURNED';
 
 export const AllocationStatus = {
-  ALLOCATED: 'ALLOCATED' as AllocationStatus,
-  DEALLOCATED: 'DEALLOCATED' as AllocationStatus,
-  TRANSFERED: 'TRANSFERED' as AllocationStatus,
-  RETIRED: 'RETIRED' as AllocationStatus,
-  RETURNED: 'RETURNED' as AllocationStatus
+    ALLOCATED: 'ALLOCATED' as AllocationStatus,
+    DEALLOCATED: 'DEALLOCATED' as AllocationStatus,
+    TRANSFERED: 'TRANSFERED' as AllocationStatus,
+    RETIRED: 'RETIRED' as AllocationStatus,
+    RETURNED: 'RETURNED' as AllocationStatus
 };

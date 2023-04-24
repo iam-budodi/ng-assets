@@ -10,602 +10,585 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {Allocation} from '../model/allocation';
-import {AllocationStatus} from '../model/allocationStatus';
-import {Employee} from '../model/employee';
-import {InlineResponse200} from '../model/inlineResponse200';
-import {InlineResponse2001} from '../model/inlineResponse2001';
-import {LocalDate} from '../model/localDate';
-import {Transfer} from '../model/transfer';
+import { Allocation } from '../model/allocation';
+import { AllocationStatus } from '../model/allocationStatus';
+import { Employee } from '../model/employee';
+import { InlineResponse200 } from '../model/inlineResponse200';
+import { InlineResponse2001 } from '../model/inlineResponse2001';
+import { LocalDate } from '../model/localDate';
+import { Transfer } from '../model/transfer';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
 export class EmployeeEndpointService {
 
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  protected basePath = 'http://localhost:8802';
+    protected basePath = 'http://localhost:8802';
+    public defaultHeaders = new HttpHeaders();
+    public configuration = new Configuration();
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-    if (basePath) {
-      this.basePath = basePath;
-    }
-    if (configuration) {
-      this.configuration = configuration;
-      this.basePath = basePath || configuration.basePath || this.basePath;
-    }
-  }
-
-  /**
-   * Counts all employees in the database
-   *
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesCountGet(observe?: 'body', reportProgress?: boolean): Observable<number>;
-
-  public restEmployeesCountGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-
-  public restEmployeesCountGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-
-  public restEmployeesCountGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+        if (basePath) {
+            this.basePath = basePath;
+        }
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = basePath || configuration.basePath || this.basePath;
+        }
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<number>('get', `${this.basePath}/rest/employees/count`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Returns the scanned QR Code details
-   *
-   * @param employeeId Employee identifier
-   * @param id Transfer or Allocation identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse200>;
-
-  public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
-
-  public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
-
-  public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (employeeId === null || employeeId === undefined) {
-      throw new Error('Required parameter employeeId was null or undefined when calling restEmployeesEmployeeIdAllocatesIdGet.');
-    }
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restEmployeesEmployeeIdAllocatesIdGet.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<InlineResponse200>('get', `${this.basePath}/rest/employees/${encodeURIComponent(String(employeeId))}/allocates/${encodeURIComponent(String(id))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Previews the QR Code image
-   *
-   * @param assetId Asset Identifier
-   * @param employeeId Employee Identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe?: 'body', reportProgress?: boolean): Observable<Blob>;
-
-  public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-
-  public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-
-  public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (assetId === null || assetId === undefined) {
-      throw new Error('Required parameter assetId was null or undefined when calling restEmployeesEmployeeIdAssetsAssetIdGet.');
-    }
-
-    if (employeeId === null || employeeId === undefined) {
-      throw new Error('Required parameter employeeId was null or undefined when calling restEmployeesEmployeeIdAssetsAssetIdGet.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'image/png'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<Blob>('get', `${this.basePath}/rest/employees/${encodeURIComponent(String(employeeId))}/assets/${encodeURIComponent(String(assetId))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Retrieves all available employees from the database
-   *
-   * @param date Search date
-   * @param order Order direction
-   * @param page Page index
-   * @param prop Order property
-   * @param search Search string
-   * @param size Page size
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  // public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
-  public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
-
-  public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
-
-  public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-
-    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-    if (date !== undefined && date !== null) {
-      queryParameters = queryParameters.set('date', <any>date);
-    }
-    if (order !== undefined && order !== null) {
-      queryParameters = queryParameters.set('order', <any>order);
-    }
-    if (page !== undefined && page !== null) {
-      queryParameters = queryParameters.set('page', <any>page);
-    }
-    if (prop !== undefined && prop !== null) {
-      queryParameters = queryParameters.set('prop', <any>prop);
-    }
-    if (search !== undefined && search !== null) {
-      queryParameters = queryParameters.set('search', <any>search);
-    }
-    if (size !== undefined && size !== null) {
-      queryParameters = queryParameters.set('size', <any>size);
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<Array<Employee>>('get', `${this.basePath}/rest/employees`,
-      {
-        params: queryParameters,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Retrieves details of all allocations per employee
-   *
-   * @param id Employee Identifier
-   * @param status Parameter for querying status
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2001>;
-
-  public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2001>>;
-
-  public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2001>>;
-
-  public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restEmployeesIdAllocatesGet.');
+    /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (const consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
-    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-    if (status !== undefined && status !== null) {
-      queryParameters = queryParameters.set('status', <any>status);
+    /**
+     * Counts all employees in the database
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesCountGet(observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public restEmployeesCountGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public restEmployeesCountGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public restEmployeesCountGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<number>('get',`${this.basePath}/rest/employees/count`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Returns the scanned QR Code details
+     *
+     * @param employeeId Employee identifier
+     * @param id Transfer or Allocation identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse200>;
+    public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse200>>;
+    public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse200>>;
+    public restEmployeesEmployeeIdAllocatesIdGet(employeeId: number, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (employeeId === null || employeeId === undefined) {
+            throw new Error('Required parameter employeeId was null or undefined when calling restEmployeesEmployeeIdAllocatesIdGet.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restEmployeesEmployeeIdAllocatesIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<InlineResponse200>('get',`${this.basePath}/rest/employees/${encodeURIComponent(String(employeeId))}/allocates/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Previews the QR Code image
+     *
+     * @param assetId Asset Identifier
+     * @param employeeId Employee Identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe?: 'body', reportProgress?: boolean): Observable<Blob>;
+    public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Blob>>;
+    public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Blob>>;
+    public restEmployeesEmployeeIdAssetsAssetIdGet(assetId: number, employeeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<InlineResponse2001>('get', `${this.basePath}/rest/employees/${encodeURIComponent(String(id))}/allocates`,
-      {
-        params: queryParameters,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        if (assetId === null || assetId === undefined) {
+            throw new Error('Required parameter assetId was null or undefined when calling restEmployeesEmployeeIdAssetsAssetIdGet.');
+        }
 
-  /**
-   * Allocates an asset to employee
-   *
-   * @param body
-   * @param id Employee Identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+        if (employeeId === null || employeeId === undefined) {
+            throw new Error('Required parameter employeeId was null or undefined when calling restEmployeesEmployeeIdAssetsAssetIdGet.');
+        }
 
-  public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+        let headers = this.defaultHeaders;
 
-  public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'image/png'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
 
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restEmployeesIdAllocatesPost.');
+        return this.httpClient.request<Blob>('get',`${this.basePath}/rest/employees/${encodeURIComponent(String(employeeId))}/assets/${encodeURIComponent(String(assetId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restEmployeesIdAllocatesPost.');
+    /**
+     * Retrieves all available employees from the database
+     *
+     * @param date Search date
+     * @param order Order direction
+     * @param page Page index
+     * @param prop Order property
+     * @param search Search string
+     * @param size Page size
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    // public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Employee>>;
+    public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Employee>>>;
+    public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Employee>>>;
+    public restEmployeesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (date !== undefined && date !== null) {
+            queryParameters = queryParameters.set('date', <any>date);
+        }
+        if (order !== undefined && order !== null) {
+            queryParameters = queryParameters.set('order', <any>order);
+        }
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (prop !== undefined && prop !== null) {
+            queryParameters = queryParameters.set('prop', <any>prop);
+        }
+        if (search !== undefined && search !== null) {
+            queryParameters = queryParameters.set('search', <any>search);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<Employee>>('get',`${this.basePath}/rest/employees`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Retrieves details of all allocations per employee
+     *
+     * @param id Employee Identifier
+     * @param status Parameter for querying status
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe?: 'body', reportProgress?: boolean): Observable<InlineResponse2001>;
+    public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<InlineResponse2001>>;
+    public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<InlineResponse2001>>;
+    public restEmployeesIdAllocatesGet(id: number, status?: AllocationStatus, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restEmployeesIdAllocatesGet.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (status !== undefined && status !== null) {
+            queryParameters = queryParameters.set('status', <any>status);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<InlineResponse2001>('get',`${this.basePath}/rest/employees/${encodeURIComponent(String(id))}/allocates`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
+    /**
+     * Allocates an asset to employee
+     *
+     * @param body
+     * @param id Employee Identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public restEmployeesIdAllocatesPost(body: Allocation, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restEmployeesIdAllocatesPost.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restEmployeesIdAllocatesPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<string>('post',`${this.basePath}/rest/employees/${encodeURIComponent(String(id))}/allocates`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    return this.httpClient.request<string>('post', `${this.basePath}/rest/employees/${encodeURIComponent(String(id))}/allocates`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+    /**
+     * Deletes an existing employee
+     *
+     * @param id Employee identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public restEmployeesIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public restEmployeesIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public restEmployeesIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-  /**
-   * Deletes an existing employee
-   *
-   * @param id Employee identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restEmployeesIdDelete.');
+        }
 
-  public restEmployeesIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+        let headers = this.defaultHeaders;
 
-  public restEmployeesIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public restEmployeesIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
 
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restEmployeesIdDelete.');
+        return this.httpClient.request<any>('delete',`${this.basePath}/rest/employees/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Returns the employee for a given identifier
+     *
+     * @param id Employee Identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Employee>;
+    public restEmployeesIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Employee>>;
+    public restEmployeesIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Employee>>;
+    public restEmployeesIdGet(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restEmployeesIdGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Employee>('get',`${this.basePath}/rest/employees/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Updates an existing employee
+     *
+     * @param body
+     * @param id Employee identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesIdPut(body: Employee, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public restEmployeesIdPut(body: Employee, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public restEmployeesIdPut(body: Employee, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public restEmployeesIdPut(body: Employee, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<any>('delete', `${this.basePath}/rest/employees/${encodeURIComponent(String(id))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restEmployeesIdPut.');
+        }
 
-  /**
-   * Returns the employee for a given identifier
-   *
-   * @param id Employee Identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Employee>;
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restEmployeesIdPut.');
+        }
 
-  public restEmployeesIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Employee>>;
+        let headers = this.defaultHeaders;
 
-  public restEmployeesIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Employee>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public restEmployeesIdGet(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restEmployeesIdGet.');
+        return this.httpClient.request<any>('put',`${this.basePath}/rest/employees/${encodeURIComponent(String(id))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Transfers an asset to another employee
+     *
+     * @param body
+     * @param id Employee Identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesIdTransfersPost(body: Transfer, id: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public restEmployeesIdTransfersPost(body: Transfer, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public restEmployeesIdTransfersPost(body: Transfer, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public restEmployeesIdTransfersPost(body: Transfer, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restEmployeesIdTransfersPost.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restEmployeesIdTransfersPost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<string>('post',`${this.basePath}/rest/employees/${encodeURIComponent(String(id))}/transfers`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Creates a valid employee and stores it into the database
+     *
+     * @param body
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restEmployeesPost(body: Employee, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public restEmployeesPost(body: Employee, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public restEmployeesPost(body: Employee, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public restEmployeesPost(body: Employee, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<Employee>('get', `${this.basePath}/rest/employees/${encodeURIComponent(String(id))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restEmployeesPost.');
+        }
 
-  /**
-   * Updates an existing employee
-   *
-   * @param body
-   * @param id Employee identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesIdPut(body: Employee, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+        let headers = this.defaultHeaders;
 
-  public restEmployeesIdPut(body: Employee, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public restEmployeesIdPut(body: Employee, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-  public restEmployeesIdPut(body: Employee, id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restEmployeesIdPut.');
+        return this.httpClient.request<string>('post',`${this.basePath}/rest/employees`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restEmployeesIdPut.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<any>('put', `${this.basePath}/rest/employees/${encodeURIComponent(String(id))}`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Transfers an asset to another employee
-   *
-   * @param body
-   * @param id Employee Identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesIdTransfersPost(body: Transfer, id: number, observe?: 'body', reportProgress?: boolean): Observable<string>;
-
-  public restEmployeesIdTransfersPost(body: Transfer, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-
-  public restEmployeesIdTransfersPost(body: Transfer, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-
-  public restEmployeesIdTransfersPost(body: Transfer, id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restEmployeesIdTransfersPost.');
-    }
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restEmployeesIdTransfersPost.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<string>('post', `${this.basePath}/rest/employees/${encodeURIComponent(String(id))}/transfers`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Creates a valid employee and stores it into the database
-   *
-   * @param body
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restEmployeesPost(body: Employee, observe?: 'body', reportProgress?: boolean): Observable<string>;
-
-  public restEmployeesPost(body: Employee, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-
-  public restEmployeesPost(body: Employee, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-
-  public restEmployeesPost(body: Employee, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restEmployeesPost.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<string>('post', `${this.basePath}/rest/employees`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
-    }
-    return false;
-  }
 
 }

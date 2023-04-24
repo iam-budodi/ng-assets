@@ -9,19 +9,19 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import {Category} from './category';
-import {LocalDate} from './localDate';
-import {Status} from './status';
-import {Supplier} from './supplier';
+import { Category } from './category';
+import { LocalDate } from './localDate';
+import { Status } from './status';
+import { Supplier } from './supplier';
 
-export interface Item {
-  id?: number;
-  itemName: string;
-  qtyBought: number;
-  status?: Status;
-  datePurchased: LocalDate;
-  transferCount?: number;
-  description?: string;
-  category?: Category;
-  supplier?: Supplier;
+export interface Item { 
+    id?: number;
+    itemName: string;
+    qtyBought: number;
+    status?: Status;
+    datePurchased: LocalDate;
+    transferCount?: number;
+    description?: string;
+    category?: Category;
+    supplier?: Supplier;
 }

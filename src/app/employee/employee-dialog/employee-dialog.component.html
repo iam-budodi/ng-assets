@@ -1,63 +1,43 @@
 <div>
-  <button (click)="closeDialog()" [disabled]="isAsyncOperationRunning$ | async" class="close" mat-dialog-close="true"
-          mat-icon-button>
+  <button class="close" mat-dialog-close="true" mat-icon-button>
     <mat-icon>clear</mat-icon>
   </button>
+  <h2 mat-dialog-title>{{ title }}</h2>
 
-  <mat-progress-bar
-    *ngIf="isAsyncOperationRunning$ | async"
-    mode="indeterminate"
-  >
-  </mat-progress-bar>
-  <h2 mat-dialog-title style="margin-left: 4rem;">{{ title }}</h2>
-  <div *ngIf="title.toLocaleLowerCase().includes('remove')" class="content-margin" style="width: 75%;">
-    <mat-card appearance="outlined" style="padding: 20px 0;">
-      <div class="content-margin" style="width: 85%; margin: 0 auto;">
+  <div class="container">
+    <!--  DO NOT DELETE    <form [formGroup]="form" (ngSubmit)="onSubmit(form)" style="width: 90%; margin: 0 auto">-->
+    <form (ngSubmit)="onSubmit(form)" [formGroup]="form" style="width: 95%; margin: 0 auto">
+      <formly-form
+        *ngIf="!title.toLocaleLowerCase().includes('remove')"
+        [fields]="fields"
+        [form]="form"
+        [model]="employee">
+      </formly-form>
+
+      <div *ngIf="title.toLocaleLowerCase().includes('remove')">
         <mat-dialog-content>
           <p [innerHTML]="confirmText"></p>
         </mat-dialog-content>
-        <mat-dialog-actions style="margin-left: 20px">
-          <button
-            (click)="closeDialog()"
-            class="save"
-          >
-            Cancel
-          </button>
-          <button
-            (click)="save()"
-            class="delete"
-            type="submit"
-          >
-            Delete
-          </button>
-          <!--        </div>-->
+        <mat-dialog-actions>
+          <button class="save" mat-dialog-close="true" mat-raised-button>Cancel</button>
+          <button class="delete" mat-raised-button>{{submitLabel}}</button>
         </mat-dialog-actions>
       </div>
-    </mat-card>
-  </div>
-  <div *ngIf="!title.toLocaleLowerCase().includes('remove')" class="content-margin" style="width: 75%;">
-    <mat-card appearance="outlined" style="padding: 20px 0;">
 
-      <form [formGroup]="formGroup" style="width: 85%; margin: 0 auto">
-        <dynamic-material-form
-          [group]="formGroup"
-          [layout]="formLayout"
-          [model]="formModel"
-        ></dynamic-material-form>
+      <div *ngIf="!title.toLocaleLowerCase().includes('remove')"
+           class="button-row"
+           style="display:flex; flex-direction: row; justify-content: space-between;"
+      >
+        <button class="formly-button" mat-raised-button type="reset">Clear</button>
+        <button class="formly-button button" color="primary" mat-raised-button [disabled]="form.invalid">{{submitLabel}}</button>
+      </div>
+    </form>
 
+    <app-form-debug
+      *ngIf="!title.toLocaleLowerCase().includes('remove')"
+      [form]="form.value"
+      [model]="employee">
 
-        <button
-          (click)="save()"
-          [disabled]="formGroup.invalid"
-          class="save"
-          type="submit"
-        >
-          Save
-        </button>
-      </form>
-
-    </mat-card>
-    <!--    if needed you can put a button here outside the card -->
-<!--    <pre>{{ formGroup.value | json }}</pre>-->
+    </app-form-debug>
   </div>
 </div>

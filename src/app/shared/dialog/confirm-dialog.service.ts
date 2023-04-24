@@ -1,15 +1,15 @@
 import {Injectable, TemplateRef} from '@angular/core';
-import {ComponentType} from "@angular/cdk/overlay";
 import {MatDialog} from "@angular/material/dialog";
+import {ComponentType} from "@angular/cdk/overlay";
 import {DialogComponent} from "./dialog.component";
 import {MediumConfType} from "../models/medium-conf.dialog";
 
 @Injectable({
   providedIn: 'root'
 })
-export class DialogService {
+export class ConfirmDialogService {
   private conf = {autoFocus: true};
-  private mediumConf: MediumConfType = {height: '80%', width: '50%', ...this.conf};
+  private mediumConf: MediumConfType = {height: 'auto', width: '25%', ...this.conf};
 
   constructor(public dialog: MatDialog) {
   }
@@ -18,10 +18,5 @@ export class DialogService {
     this.mediumConf['data'] = {component, data};
     const conf: MediumConfType = this.mediumConf;
     return this.dialog.open(DialogComponent, conf);
-  }
-
-  // Alert dialog component will replace the DialogComponent
-  public error<T>(error: any) {
-    return this.dialog.open(DialogComponent, {data: error, panelClass: 'alert-panel'});
   }
 }

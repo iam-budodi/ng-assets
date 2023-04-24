@@ -9,6 +9,7 @@ mat-toolbar {
 
 .button {
   background: #002b5c;
+  width: 200px;
   color: white;
   padding: 25px 35px;
 }

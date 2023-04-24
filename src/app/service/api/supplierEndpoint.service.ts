@@ -10,324 +10,314 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
+import { Inject, Injectable, Optional }                      from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams,
+         HttpResponse, HttpEvent }                           from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
-import {Observable} from 'rxjs';
+import { Observable }                                        from 'rxjs';
 
-import {Supplier} from '../model/supplier';
+import { Supplier } from '../model/supplier';
 
-import {BASE_PATH} from '../variables';
-import {Configuration} from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
+import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
 export class SupplierEndpointService {
 
-  public defaultHeaders = new HttpHeaders();
-  public configuration = new Configuration();
-  protected basePath = 'http://localhost:8802';
+    protected basePath = 'http://localhost:8802';
+    public defaultHeaders = new HttpHeaders();
+    public configuration = new Configuration();
 
-  constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-    if (basePath) {
-      this.basePath = basePath;
-    }
-    if (configuration) {
-      this.configuration = configuration;
-      this.basePath = basePath || configuration.basePath || this.basePath;
-    }
-  }
-
-  /**
-   * Counts all suppliers available in the database
-   *
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restSuppliersCountGet(observe?: 'body', reportProgress?: boolean): Observable<number>;
-
-  public restSuppliersCountGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-
-  public restSuppliersCountGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-
-  public restSuppliersCountGet(observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+        if (basePath) {
+            this.basePath = basePath;
+        }
+        if (configuration) {
+            this.configuration = configuration;
+            this.basePath = basePath || configuration.basePath || this.basePath;
+        }
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
-
-    return this.httpClient.request<number>('get', `${this.basePath}/rest/suppliers/count`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Retrieves all available suppliers from the database
-   *
-   * @param page Page index
-   * @param size Page size
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restSuppliersGet(page?: number, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Supplier>>;
-
-  public restSuppliersGet(page?: number, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Supplier>>>;
-
-  public restSuppliersGet(page?: number, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Supplier>>>;
-
-  public restSuppliersGet(page?: number, size?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-
-    let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-    if (page !== undefined && page !== null) {
-      queryParameters = queryParameters.set('page', <any>page);
-    }
-    if (size !== undefined && size !== null) {
-      queryParameters = queryParameters.set('size', <any>size);
+    /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (const consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    let headers = this.defaultHeaders;
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    /**
+     * Counts all suppliers available in the database
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restSuppliersCountGet(observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public restSuppliersCountGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public restSuppliersCountGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public restSuppliersCountGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<number>('get',`${this.basePath}/rest/suppliers/count`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Retrieves all available suppliers from the database
+     * 
+     * @param page Page index
+     * @param size Page size
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restSuppliersGet(page?: number, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Supplier>>;
+    public restSuppliersGet(page?: number, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Supplier>>>;
+    public restSuppliersGet(page?: number, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Supplier>>>;
+    public restSuppliersGet(page?: number, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<Array<Supplier>>('get', `${this.basePath}/rest/suppliers`,
-      {
-        params: queryParameters,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
 
-  /**
-   * Deletes an existing supplier
-   *
-   * @param id Supplier identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restSuppliersIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
 
-  public restSuppliersIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (size !== undefined && size !== null) {
+            queryParameters = queryParameters.set('size', <any>size);
+        }
 
-  public restSuppliersIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+        let headers = this.defaultHeaders;
 
-  public restSuppliersIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restSuppliersIdDelete.');
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<Supplier>>('get',`${this.basePath}/rest/suppliers`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Deletes an existing supplier
+     * 
+     * @param id Supplier identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restSuppliersIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public restSuppliersIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public restSuppliersIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public restSuppliersIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restSuppliersIdDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/rest/suppliers/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Returns supplier for a given identifier
+     * 
+     * @param id Supplier identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restSuppliersIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Supplier>;
+    public restSuppliersIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Supplier>>;
+    public restSuppliersIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Supplier>>;
+    public restSuppliersIdGet(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<any>('delete', `${this.basePath}/rest/suppliers/${encodeURIComponent(String(id))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restSuppliersIdGet.');
+        }
 
-  /**
-   * Returns supplier for a given identifier
-   *
-   * @param id Supplier identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restSuppliersIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Supplier>;
+        let headers = this.defaultHeaders;
 
-  public restSuppliersIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Supplier>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public restSuppliersIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Supplier>>;
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
 
-  public restSuppliersIdGet(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restSuppliersIdGet.');
+        return this.httpClient.request<Supplier>('get',`${this.basePath}/rest/suppliers/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    let headers = this.defaultHeaders;
+    /**
+     * Updates an existing supplier
+     * 
+     * @param body 
+     * @param id Supplier identifier
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restSuppliersIdPut(body: Supplier, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public restSuppliersIdPut(body: Supplier, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public restSuppliersIdPut(body: Supplier, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public restSuppliersIdPut(body: Supplier, id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restSuppliersIdPut.');
+        }
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling restSuppliersIdPut.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('put',`${this.basePath}/rest/suppliers/${encodeURIComponent(String(id))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
 
-    // to determine the Content-Type header
-    const consumes: string[] = [];
+    /**
+     * Creates a valid supplier and stores it into the database
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restSuppliersPost(body: Supplier, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public restSuppliersPost(body: Supplier, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public restSuppliersPost(body: Supplier, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public restSuppliersPost(body: Supplier, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-    return this.httpClient.request<Supplier>('get', `${this.basePath}/rest/suppliers/${encodeURIComponent(String(id))}`,
-      {
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling restSuppliersPost.');
+        }
 
-  /**
-   * Updates an existing supplier
-   *
-   * @param body
-   * @param id Supplier identifier
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restSuppliersIdPut(body: Supplier, id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+        let headers = this.defaultHeaders;
 
-  public restSuppliersIdPut(body: Supplier, id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
 
-  public restSuppliersIdPut(body: Supplier, id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
-  public restSuppliersIdPut(body: Supplier, id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restSuppliersIdPut.');
+        return this.httpClient.request<string>('post',`${this.basePath}/rest/suppliers`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
     }
-
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling restSuppliersIdPut.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<any>('put', `${this.basePath}/rest/suppliers/${encodeURIComponent(String(id))}`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * Creates a valid supplier and stores it into the database
-   *
-   * @param body
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public restSuppliersPost(body: Supplier, observe?: 'body', reportProgress?: boolean): Observable<string>;
-
-  public restSuppliersPost(body: Supplier, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-
-  public restSuppliersPost(body: Supplier, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-
-  public restSuppliersPost(body: Supplier, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
-
-    if (body === null || body === undefined) {
-      throw new Error('Required parameter body was null or undefined when calling restSuppliersPost.');
-    }
-
-    let headers = this.defaultHeaders;
-
-    // to determine the Accept header
-    let httpHeaderAccepts: string[] = [
-      'application/json'
-    ];
-    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    if (httpHeaderAcceptSelected != undefined) {
-      headers = headers.set('Accept', httpHeaderAcceptSelected);
-    }
-
-    // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/json'
-    ];
-    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-    if (httpContentTypeSelected != undefined) {
-      headers = headers.set('Content-Type', httpContentTypeSelected);
-    }
-
-    return this.httpClient.request<string>('post', `${this.basePath}/rest/suppliers`,
-      {
-        body: body,
-        withCredentials: this.configuration.withCredentials,
-        headers: headers,
-        observe: observe,
-        reportProgress: reportProgress
-      }
-    );
-  }
-
-  /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
-    }
-    return false;
-  }
 
 }

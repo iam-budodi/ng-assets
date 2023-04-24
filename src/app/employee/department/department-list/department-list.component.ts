@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {Department, DepartmentEndpointService} from "../../../service";
-import {Query} from "../../../shared/query.model";
+import {Query} from "../../../shared/models/query.model";
 import {DialogService} from "../../../shared/dialog/dialog.service";
 import {ITableColumn} from "../../model/table-column.model";
 import {DEPARTMENT_TABLE_COLUMNS} from "../model/dept-form.config";
@@ -11,7 +11,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpResponse} from "@angular/common/http";
-import {httpGetAllHandler} from "../../../shared/utils";
+import {httpGetAllHandler} from "../../../shared/util/utils";
+import {ConfirmDialogService} from "../../../shared/dialog/confirm-dialog.service";
+import {DepartmentService} from "../department.service";
 
 @Component({
   selector: 'app-department-list',
@@ -29,31 +31,33 @@ export class DepartmentListComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
-    private departmentService: DepartmentEndpointService,
+    private confirmDialogService:  ConfirmDialogService,
+    private departmentService: DepartmentService,
   ) {
   }
 
   ngOnInit(): void {
     this.departmentTableColumns = DEPARTMENT_TABLE_COLUMNS;
     this.tableData = new PaginationDataSource<Department, Query<any>>(
-      (request: PageRequest<Department>, query: Query<any>) => this.getDepartments(request, query),//this.departmentService.page(request, query),
+      (request: PageRequest<Department>, query: Query<any>) => this.departmentService.getDepartments(request, query),//this.departmentService.page(request, query),
       {property: 'name', order: 'asc'},
       {registration: undefined, search: undefined!}
     )
+    // console.log('SELECT OPTS : ' + JSON.stringify(this.departmentService.getDepartmentSelectOptions().subscribe()));
   }
 
-  getDepartments(request: PageRequest<Department>, query: any): Observable<Page<Department>> {
-
-    (request.size === 20) ? request.size = 5 : request.size;
-
-    return this.departmentService
-      .restDepartmentsGet(request.sort?.order, request.page, request.sort?.property, query.search, request.size, 'response')
-      .pipe(map((response: HttpResponse<Array<Department>>) => {
-            return httpGetAllHandler<Department>(response);
-          }
-        )
-      );
-  }
+  // getDepartments(request: PageRequest<Department>, query: any): Observable<Page<Department>> {
+  //
+  //   (request.size === 20) ? request.size = 5 : request.size;
+  //
+  //   return this.departmentService
+  //     .restDepartmentsGet(request.sort?.order, request.page, request.sort?.property, query.search, request.size, 'response')
+  //     .pipe(map((response: HttpResponse<Array<Department>>) => {
+  //           return httpGetAllHandler<Department>(response);
+  //         }
+  //       )
+  //     );
+  // }
 
   createDepartment = () => {
     this.dialogValue = {mode: 'create'};
@@ -90,7 +94,7 @@ export class DepartmentListComponent implements OnInit {
 
   deleteDepartment = (department: Department) => {
     this.dialogValue = {mode: 'delete', dataObject: department};
-    this.openDepartmentDialog(this.dialogValue).afterClosed().subscribe(result => {
+    this.openConfirmationDialog(this.dialogValue).afterClosed().subscribe(result => {
         if (result === 'success') {
           this.reloadDataOnChanges();
           this.snackBar.open(`Successfully deleted department`, 'Close', {
@@ -111,6 +115,10 @@ export class DepartmentListComponent implements OnInit {
 
   openDepartmentDialog(dialogValue: DialogData<Department>) {
     return this.dialogService.open(DepartmentDialogComponent, dialogValue);
+  }
+
+  openConfirmationDialog(dialogValue: DialogData<Department>) {
+    return this.confirmDialogService.open(DepartmentDialogComponent, dialogValue);
   }
 
 }

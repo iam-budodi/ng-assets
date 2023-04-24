@@ -9,10 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { HealthCheckStatus } from './healthCheckStatus';
 
-export interface HealthCheckResponse { 
-    data?: any;
-    name?: string;
-    status?: HealthCheckStatus;
+export interface DepartmentSelectOptions { 
+    id: number;
+    name: string;
 }

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface PurchasePerSupplier {
-  supplierName: string;
-  purchaseCount: number;
+export interface PurchasePerSupplier { 
+    supplierName: string;
+    purchaseCount: number;
 }
