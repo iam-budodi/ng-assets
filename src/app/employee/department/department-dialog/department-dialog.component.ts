@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig} from "@ngx-formly/core";
-import {DEPARTMENT_FORM_FIELD} from "../model/dept-form.config";
+import {DepartmentFormService} from "../../../shared/util/department-form.service";
 
 
 @Component({
@@ -14,7 +14,7 @@ import {DEPARTMENT_FORM_FIELD} from "../model/dept-form.config";
 })
 export class DepartmentDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
-  fields: FormlyFieldConfig[] = DEPARTMENT_FORM_FIELD;
+  fields: FormlyFieldConfig[] = this.formlyService.getDepartmentFormFields();
   department: Department = {code: "", description: "", id: 0, location: undefined, name: ""};
   submitLabel: string = 'Create';
   operationMode!: string;
@@ -25,6 +25,7 @@ export class DepartmentDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<DepartmentDialogComponent>,
     private departmentService: DepartmentEndpointService,
+    private formlyService: DepartmentFormService
   ) {
   }
   ngOnInit(): void {

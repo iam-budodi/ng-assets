@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ITableColumn} from '../model/table-column.model';
+import {ITableColumn} from '../../shared/models/table-column.model';
 import {Employee, EmployeeEndpointService, LocalDate} from "../../service";
 import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {DialogService} from "../../shared/dialog/dialog.service";

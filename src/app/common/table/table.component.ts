@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output,} from '@angular/core';
 import {Sort} from '@angular/material/sort';
-import {ITableColumn} from '../../employee/model/table-column.model';
+import {ITableColumn} from '../../shared/models/table-column.model';
 import {PaginationDataSource} from "ngx-pagination-data-source";
 
 @Component({

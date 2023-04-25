@@ -1,4 +1,4 @@
-import {ITableColumn} from "./table-column.model";
+import {ITableColumn} from "../../shared/models/table-column.model";
 
 export const EMPLOYEE_TABLE_COLUMNS: ITableColumn[] = [
   {name: '#', dataKey: 'id', isSortable: true},

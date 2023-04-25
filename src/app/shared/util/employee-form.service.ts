@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {DepartmentService} from "../../employee/department/department.service";
 
@@ -7,11 +7,21 @@ import {DepartmentService} from "../../employee/department/department.service";
 })
 export class EmployeeFormService {
 
-  EMPLOYEE_FORM_FIELD: FormlyFieldConfig[] = [
+  constructor(private departmentService: DepartmentService) {
+  }
+
+  formlyRow = (fieldConfig: FormlyFieldConfig[]) => {
+    return {
+      fieldGroupClassName: 'display-flex',
+      fieldGroup: fieldConfig
+    };
+  };
+
+  private EMPLOYEE_FORM_FIELD: FormlyFieldConfig[] = [
     {
       key: 'id'
     },
-    formlyRow([
+    this.formlyRow([
       {
         key: 'firstName',
         type: 'input',
@@ -48,8 +58,8 @@ export class EmployeeFormService {
           maxLength: 64,
         }
       },
-    // ]),
-    // formlyRow([
+      // ]),
+      // formlyRow([
       {
         key: 'gender',
         type: 'select',
@@ -183,124 +193,9 @@ export class EmployeeFormService {
         label: 'Address'
       },
       fieldGroupClassName: 'display-flex',
-      fieldGroup: [
-        {
-          key: 'id'
-        },
-        {
-          key: 'country',
-          type: 'select',
-          className: 'flex-2',
-          props: {
-            label: 'Country',
-            // options: this.formlyService.getCountries(),
-            options: [
-              {
-                value: null,
-                label: ' -- '
-              },
-              {
-                value: 'Tanzania',
-                label: 'Tanzania'
-              }
-            ],
-            required: true,
-            minLength: 2,
-            maxLength: 32,
-          }
-        },
-        {
-          key: 'city',
-          type: 'select',
-          className: 'flex-2',
-          props: {
-            label: 'City',
-            // options: this.formlyService.getCities(),
-            options: [
-              {
-                value: null,
-                label: ' -- '
-              },
-              {
-                value: 'Dar es Salaam',
-                label: 'Dar es Salaam'
-              },
-              {
-                value: 'Iringa',
-                label: 'Mbeya'
-              },
-              {
-                value: 'Iringa',
-                label: 'Iringa'
-              }
-            ],
-            valueProp: 'value',
-            labelProp: 'label',
-            required: true,
-            minLength: 2,
-            maxLength: 32,
-          }
-        },
-        {
-          key: 'district',
-          type: 'input',
-          className: 'flex-2',
-          props: {
-            label: 'District',
-            placeholder: 'Enter district',
-            required: true,
-            minLength: 2,
-            maxLength: 32,
-          }
-        },
-
-        {
-          key: 'postalCode',
-          type: 'input',
-          className: 'flex-2',
-          props: {
-            type: 'number',
-            label: 'Postal Code',
-            required: false,
-            max: 99999,
-            min: 0,
-            pattern: '\\d{5}'
-          },
-          validation: {
-            messages: {
-              pattern: (error: any, field: FormlyFieldConfig) => `"${field.formControl?.value}" is not a valid ${field.props?.label}`,
-            }
-          }
-        },
-        {
-          key: 'ward',
-          type: 'input',
-          className: 'flex-2',
-          props: {
-            label: 'Ward',
-            placeholder: 'Enter ward',
-            required: true,
-            minLength: 2,
-            maxLength: 32,
-          }
-        },
-        {
-          key: 'street',
-          type: 'input',
-          className: 'flex-2',
-          props: {
-            label: 'Street',
-            placeholder: 'Enter street name',
-            required: true,
-            minLength: 2,
-            maxLength: 32,
-          }
-        }
-      ]
+      fieldGroup: this.addressFields()
     },
   ]
-
-  constructor(private departmentService: DepartmentService) { }
 
   getEmployeeFormFields(): FormlyFieldConfig[] {
     return this.EMPLOYEE_FORM_FIELD;
@@ -315,11 +210,128 @@ export class EmployeeFormService {
     return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
   }
 
+  addressFields(): FormlyFieldConfig[] {
+    return [
+      {
+        key: 'id'
+      },
+      {
+        key: 'country',
+        type: 'select',
+        className: 'flex-2',
+        props: {
+          label: 'Country',
+          // options: this.formlyService.getCountries(),
+          options: [
+            {
+              value: null,
+              label: ' -- '
+            },
+            {
+              value: 'Tanzania',
+              label: 'Tanzania'
+            }
+          ],
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      },
+      {
+        key: 'city',
+        type: 'select',
+        className: 'flex-2',
+        props: {
+          label: 'City',
+          // options: this.formlyService.getCities(),
+          options: [
+            {
+              value: null,
+              label: ' -- '
+            },
+            {
+              value: 'Dar es Salaam',
+              label: 'Dar es Salaam'
+            },
+            {
+              value: 'Iringa',
+              label: 'Mbeya'
+            },
+            {
+              value: 'Iringa',
+              label: 'Iringa'
+            }
+          ],
+          valueProp: 'value',
+          labelProp: 'label',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      },
+      {
+        key: 'district',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          label: 'District',
+          placeholder: 'Enter district',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      },
+
+      {
+        key: 'postalCode',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          type: 'number',
+          label: 'Postal Code',
+          required: false,
+          max: 99999,
+          min: 0,
+          pattern: '\\d{5}'
+        },
+        validation: {
+          messages: {
+            pattern: (error: any, field: FormlyFieldConfig) => `"${field.formControl?.value}" is not a valid ${field.props?.label}`,
+          }
+        }
+      },
+      {
+        key: 'ward',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          label: 'Ward',
+          placeholder: 'Enter ward',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      },
+      {
+        key: 'street',
+        type: 'input',
+        className: 'flex-2',
+        props: {
+          label: 'Street',
+          placeholder: 'Enter street name',
+          required: true,
+          minLength: 2,
+          maxLength: 32,
+        }
+      }
+    ];
+  }
+
 }
 
-const formlyRow = (fieldConfig: FormlyFieldConfig[]) => {
-  return {
-    fieldGroupClassName: 'display-flex',
-    fieldGroup: fieldConfig
-  };
-};
+// const formlyRow = (fieldConfig: FormlyFieldConfig[]) => {
+//   return {
+//     fieldGroupClassName: 'display-flex',
+//     fieldGroup: fieldConfig
+//   };
+// };
