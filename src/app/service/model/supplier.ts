@@ -16,7 +16,7 @@ import { SupplierType } from './supplierType';
 /**
  * Supplier representation
  */
-export interface Supplier { 
+export interface Supplier {
     id?: number;
     registeredAt?: LocalDate;
     updatedAt?: LocalDate;
