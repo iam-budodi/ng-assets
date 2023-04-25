@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import {FormlyFieldConfig} from "@ngx-formly/core";
-import {ITableColumn} from "../../employee/model/table-column.model";
 import {DepartmentService} from "../../employee/department/department.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class FormService {
+export class EmployeeFormService {
 
   EMPLOYEE_FORM_FIELD: FormlyFieldConfig[] = [
     {
@@ -48,13 +47,13 @@ export class FormService {
           minLength: 3,
           maxLength: 64,
         }
-      }
-    ]),
-    formlyRow([
+      },
+    // ]),
+    // formlyRow([
       {
         key: 'gender',
         type: 'select',
-        className: 'flex-1',
+        className: 'flex-2',
         props: {
           label: "Gender",
           options: [
@@ -79,12 +78,12 @@ export class FormService {
       {
         key: 'dateOfBirth',
         type: 'datepicker',
-        className: 'flex-1',
+        className: 'flex-2',
         props: {
           required: true,
           label: 'date of Birth'
-
-        }
+        },
+        parsers: [this.toDateParser]
       },
       {
         key: 'email',
@@ -101,7 +100,7 @@ export class FormService {
       {
         key: 'mobile',
         type: 'input',
-        className: 'flex-1',
+        className: 'flex-2',
         props: {
           label: 'Phone number',
           placeholder: 'Enter phone',
@@ -113,16 +112,17 @@ export class FormService {
       {
         key: 'hireDate',
         type: 'datepicker',
-        className: 'flex-1',
+        className: 'flex-2',
         props: {
           required: true,
           label: "Hired Date",
         },
+        parsers: [this.toDateParser]
       },
       {
         key: 'workId',
         type: 'input',
-        className: 'flex-1',
+        className: 'flex-2',
         props: {
           label: 'Work ID',
           placeholder: 'Enter ID',
@@ -138,7 +138,6 @@ export class FormService {
         props: {
           label: 'Job Status',
           multiple: true,
-          // options: this.formlyService.getCountries(),
           options: [
             {
               value: null,
@@ -165,7 +164,7 @@ export class FormService {
         {
           key: 'id',
           type: 'select',
-          className: 'flex-3',
+          className: 'flex-2',
           props: {
             label: 'Department Name',
             placeholder: 'Select department',
@@ -307,7 +306,14 @@ export class FormService {
     return this.EMPLOYEE_FORM_FIELD;
   }
 
+  toDateParser(value: any): string {
+    const date: Date = new Date(value);
+    const year: number = date.getFullYear();
+    const month: number = date.getMonth() + 1;
+    const day: number = date.getDate();
 
+    return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+  }
 
 }
 
@@ -317,25 +323,3 @@ const formlyRow = (fieldConfig: FormlyFieldConfig[]) => {
     fieldGroup: fieldConfig
   };
 };
-
-
-
-const EMPLOYEE_TABLE_COLUMNS: ITableColumn[] = [
-  {name: '#', dataKey: 'id', isSortable: true},
-  {name: 'Firstname', dataKey: 'firstName', isSortable: true},
-  {name: 'Middle Name', dataKey: 'middleName', isSortable: true},
-  {name: 'Lastname', dataKey: 'lastName', isSortable: true},
-  {name: 'Gender', dataKey: 'gender', isSortable: true},
-  {name: 'DoB', dataKey: 'dateOfBirth', isSortable: false},
-  {name: 'Age', dataKey: 'age', isSortable: false},
-  {name: 'Email', dataKey: 'email', isSortable: true},
-  {name: 'Phone number', dataKey: 'mobile', isSortable: true},
-  {name: 'Work ID', dataKey: 'workId', isSortable: true},
-  {name: 'Hired', dataKey: 'hireDate', isSortable: true},
-  {name: 'Job Status', dataKey: 'status', isSortable: true},
-  {name: 'YoE', dataKey: 'timeOfService', isSortable: false},
-  {name: 'Department', dataKey: 'department.name', isSortable: true},
-  {name: 'Street', dataKey: 'address.street', isSortable: false},
-  {name: 'Ward', dataKey: 'address.ward', isSortable: false},
-  {name: 'District', dataKey: 'address.district', isSortable: false},
-];

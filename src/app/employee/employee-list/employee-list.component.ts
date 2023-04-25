@@ -5,7 +5,7 @@ import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-sourc
 import {DialogService} from "../../shared/dialog/dialog.service";
 import {DialogData} from "../model/dialog-data.model";
 import {Query} from "../../shared/models/query.model";
-import {EMPLOYEE_TABLE_COLUMNS} from "../model/form-config";
+import {EMPLOYEE_TABLE_COLUMNS} from "../model/employee-table-column.config";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpResponse} from "@angular/common/http";
@@ -13,6 +13,7 @@ import {httpGetAllHandler} from "../../shared/util/utils";
 import {DatePipe} from "@angular/common";
 import {EmployeeDialogComponent} from "../employee-dialog/employee-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ConfirmDialogService} from "../../shared/dialog/confirm-dialog.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -31,24 +32,10 @@ export class EmployeeListComponent implements OnInit {
     private datePipe: DatePipe,
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
+    private confirmDialogService:  ConfirmDialogService,
     private employeeService: EmployeeEndpointService
   ) {
   }
-
-
-  // WITH RESOLVER FUNCTION ALL THE COMMENTED OUT
-  // ngOnInit(): void {
-  //   this.initColumns();
-  //   const { employees, totalCountHeader, linkHeader } = this.route.snapshot.data['employees'];
-  //   this.employees = employees as Employee[];
-  //   this.totalCount = totalCountHeader as number;
-  //   this.tableData.data = this.employees;
-  //   this.tableData.totalCounts = this.totalCount;
-  //   this.links = linkHeader;
-  //   console.log("EMPLOYEES : " + JSON.stringify(this.tableData.data));
-  //   console.log("TOTAL : " + this.tableData.totalCounts);
-  //   console.log("LINKS : " + this.links);
-  // }
 
   ngOnInit(): void {
     this.employeeTableColumns = EMPLOYEE_TABLE_COLUMNS;
@@ -105,7 +92,7 @@ export class EmployeeListComponent implements OnInit {
 
   deleteEmployee = (employee: Employee) => {
     this.dialogValue = {mode: 'delete', dataObject: employee};
-    this.openEmployeeDialog(this.dialogValue).afterClosed().subscribe(result => {
+    this.openConfirmationDialog(this.dialogValue).afterClosed().subscribe(result => {
         if (result === 'success') {
           this.reloadDataOnChanges();
           this.snackBar.open(`Successfully deleted employee`, 'Close', {
@@ -126,6 +113,10 @@ export class EmployeeListComponent implements OnInit {
 
   openEmployeeDialog(dialogValue: DialogData<Employee>) {
     return this.dialogService.open(EmployeeDialogComponent, dialogValue);
+  }
+
+  openConfirmationDialog(dialogValue: DialogData<Employee>) {
+    return this.confirmDialogService.open(EmployeeDialogComponent, dialogValue);
   }
 
 }

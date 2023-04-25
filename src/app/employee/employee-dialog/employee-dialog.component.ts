@@ -4,7 +4,7 @@ import {Employee, EmployeeEndpointService} from "../../service";
 import {HttpResponse} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig} from "@ngx-formly/core";
-import {FormService} from "../../shared/util/form.service";
+import {EmployeeFormService} from "../../shared/util/employee-form.service";
 
 
 @Component({
@@ -25,7 +25,7 @@ export class EmployeeDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<EmployeeDialogComponent>,
     private employeeService: EmployeeEndpointService,
-    private formlyService: FormService,
+    private formlyService: EmployeeFormService,
   ) {
   }
 

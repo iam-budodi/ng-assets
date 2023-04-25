@@ -43,46 +43,42 @@
   cursor: pointer;
 }
 
-.save {
-  background-color: #007bff;
+.button {
+  background: #002b5c;
   height: 50px;
   width: 150px;
-  float: right;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 16px 32px;
-  font-size: 16px;
+  color: white;
+  padding: 25px 35px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out
 }
 
-.save:hover {
+.button:hover {
   background-color: #0069d9;
 }
 
-.save:disabled {
+.button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.save.valid {
+.button.valid {
   background-color: #28a745;
 }
 
-.save.valid:hover {
+.button.valid:hover {
   background-color: #218838;
 }
 
-.save.invalid {
+.button.invalid {
   background-color: #dc3545;
 }
 
-.save.invalid:hover {
+.button.invalid:hover {
   background-color: #c82333;
 }
 
-.save:focus {
+.button:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }

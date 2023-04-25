@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
-import {Department, DepartmentEndpointService} from "../../../service";
+import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
+import {Department} from "../../../service";
 import {Query} from "../../../shared/models/query.model";
 import {DialogService} from "../../../shared/dialog/dialog.service";
 import {ITableColumn} from "../../model/table-column.model";
@@ -8,10 +8,6 @@ import {DEPARTMENT_TABLE_COLUMNS} from "../model/dept-form.config";
 import {DepartmentDialogComponent} from "../department-dialog/department-dialog.component";
 import {DialogData} from "../../model/dialog-data.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import {HttpResponse} from "@angular/common/http";
-import {httpGetAllHandler} from "../../../shared/util/utils";
 import {ConfirmDialogService} from "../../../shared/dialog/confirm-dialog.service";
 import {DepartmentService} from "../department.service";
 
