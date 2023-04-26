@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {Department, DepartmentEndpointService, DepartmentSelectOptions} from "../../service";
+import {Injectable} from '@angular/core';
+import {Department, DepartmentEndpointService, SelectOptions} from "../../service";
 import {map} from "rxjs/operators";
 import {HttpResponse} from "@angular/common/http";
 import {httpGetAllHandler} from "../../shared/util/utils";
@@ -11,7 +11,8 @@ import {Observable} from "rxjs";
 })
 export class DepartmentService {
 
-  constructor(private departmentService: DepartmentEndpointService) { }
+  constructor(private departmentService: DepartmentEndpointService) {
+  }
 
   getDepartments(request: PageRequest<Department>, query: any): Observable<Page<Department>> {
 
@@ -26,10 +27,12 @@ export class DepartmentService {
       );
   }
 
-  getDepartmentSelectOptions(): Observable<Array<DepartmentSelectOptions>> {
+  getDepartmentSelectOptions(): Observable<Array<SelectOptions>> {
     return this.departmentService.restDepartmentsSelectGet('response')
-      .pipe(map((response: HttpResponse<Array<DepartmentSelectOptions>>) => {
-        return response.body!;
-      }));
+      .pipe(map((response: HttpResponse<Array<SelectOptions>>) => {
+            return response.body!;
+          }
+        )
+      );
   }
 }

@@ -18,8 +18,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Department } from '../model/department';
-import { DepartmentSelectOptions } from '../model/departmentSelectOptions';
 import { Employee } from '../model/employee';
+import { SelectOptions } from '../model/selectOptions';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -68,8 +68,8 @@ export class DepartmentEndpointService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    // public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Department>>;
     public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Department>>>;
+    public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Department>>;
     public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Department>>>;
     public restDepartmentsGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
@@ -356,9 +356,9 @@ export class DepartmentEndpointService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restDepartmentsSelectGet(observe?: 'body', reportProgress?: boolean): Observable<Array<DepartmentSelectOptions>>;
-    public restDepartmentsSelectGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DepartmentSelectOptions>>>;
-    public restDepartmentsSelectGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DepartmentSelectOptions>>>;
+    public restDepartmentsSelectGet(observe?: 'body', reportProgress?: boolean): Observable<Array<SelectOptions>>;
+    public restDepartmentsSelectGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<SelectOptions>>>;
+    public restDepartmentsSelectGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<SelectOptions>>>;
     public restDepartmentsSelectGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -376,7 +376,7 @@ export class DepartmentEndpointService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<DepartmentSelectOptions>>('get',`${this.basePath}/rest/departments/select`,
+        return this.httpClient.request<Array<SelectOptions>>('get',`${this.basePath}/rest/departments/select`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

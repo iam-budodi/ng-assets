@@ -34,7 +34,7 @@ export class EmployeeDialogComponent implements OnInit {
     this.selectEmployeeDialogModeAndOps();
   }
 
-  onSubmit({valid, value}: { valid: boolean, value: Employee }): void {
+  onSubmit({value}: {value: Employee }): void {
     value = this.operation === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.employee : value;
     this.apiMethodsCall(value);
   }

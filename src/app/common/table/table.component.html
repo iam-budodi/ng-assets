@@ -21,8 +21,9 @@
 
     <mat-form-field class="property">
       <mat-label>Ordered by</mat-label>
-      <mat-select (selectionChange)="tableDataSource.sortBy({property: $event.value})" value="firstName">
+      <mat-select (selectionChange)="tableDataSource.sortBy({property: $event.value})" value="">
         <mat-option value="id">ID</mat-option>
+        <mat-option value="name">Name</mat-option>
         <mat-option value="firstName">First name</mat-option>
         <mat-option value="lastName">Last name</mat-option>
         <mat-option value="hiredDate">Hired date</mat-option>
@@ -62,8 +63,8 @@
 
       <!-- action column -->
       <ng-container *ngIf="actionIcons?.length" [matColumnDef]="actionIcons" stickyEnd>
-        <th *matHeaderCellDef mat-header-cell>{{ actionIcons | titlecase }}</th>
-        <td *matCellDef="let element" [id]="actionIcons" mat-cell>
+        <th *matHeaderCellDef mat-header-cell style="width: 150px;">{{ actionIcons | titlecase }}</th>
+        <td *matCellDef="let element" [id]="actionIcons" mat-cell style="width: 150px;">
           <ng-container
             *ngTemplateOutlet="previewButton; context: { row: element }"
           ></ng-container>

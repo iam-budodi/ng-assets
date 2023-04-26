@@ -1,1 +1,42 @@
-<p>supplier-dialog works!</p>
+<div>
+  <button class="close" mat-dialog-close="true" mat-icon-button>
+    <mat-icon>clear</mat-icon>
+  </button>
+  <h2 mat-dialog-title>{{ title }}</h2>
+
+  <div class="container">
+    <form (ngSubmit)="onSubmit(form)" [formGroup]="form" style="width: 95%; margin: 0 auto">
+      <formly-form
+        *ngIf="!title.toLocaleLowerCase().includes('remove')"
+        [fields]="fields"
+        [form]="form"
+        [model]="supplier">
+      </formly-form>
+
+      <div *ngIf="title.toLocaleLowerCase().includes('remove')">
+        <mat-dialog-content>
+          <p [innerHTML]="confirmText"></p>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <button class="button" mat-dialog-close="true" mat-raised-button>Cancel</button>
+          <button class="delete" mat-raised-button>{{submitLabel}}</button>
+        </mat-dialog-actions>
+      </div>
+
+      <div *ngIf="!title.toLocaleLowerCase().includes('remove')"
+           class="button-row"
+           style="display:flex; flex-direction: row; justify-content: space-between;"
+      >
+        <button class="formly-button" mat-raised-button type="reset">Clear</button>
+        <button class="formly-button button" color="primary" mat-raised-button [disabled]="form.invalid">{{submitLabel}}</button>
+      </div>
+    </form>
+
+    <app-form-debug
+      *ngIf="!title.toLocaleLowerCase().includes('remove')"
+      [form]="form.value"
+      [model]="supplier">
+
+    </app-form-debug>
+  </div>
+</div>

@@ -22,7 +22,7 @@ export interface Employee {
     id?: number;
     registeredAt?: LocalDate;
     updatedAt?: LocalDate;
-    registeredBy: string;
+    registeredBy?: string;
     updatedBy?: string;
     firstName: string;
     middleName?: string;

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-export interface DepartmentSelectOptions { 
-    id: number;
-    name: string;
+export interface SelectOptions { 
+    value: number;
+    label: string;
 }

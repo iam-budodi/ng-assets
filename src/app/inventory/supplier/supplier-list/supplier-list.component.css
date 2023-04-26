@@ -1,0 +1,38 @@
+.grid-container {
+  margin: 20px;
+}
+
+mat-toolbar {
+  margin-bottom: 9%;
+  padding: 10px;
+}
+
+.button {
+  background: #002b5c;
+  width: 200px;
+  color: white;
+  padding: 25px 35px;
+}
+
+.navigation-items {
+  list-style: none;
+  /* line-height: 5px; */
+  padding: 0;
+  margin-right: 5%;
+  cursor: pointer;
+}
+
+a {
+  transition: all 0.3s ease 0s;
+  color: gray;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ec4445;
+  text-decoration: none;
+}
+
+.label {
+  color: gray;
+}

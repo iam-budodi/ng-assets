@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { SelectOptions } from '../model/selectOptions';
 import { Supplier } from '../model/supplier';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -56,59 +57,38 @@ export class SupplierEndpointService {
 
 
     /**
-     * Counts all suppliers available in the database
-     * 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public restSuppliersCountGet(observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public restSuppliersCountGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public restSuppliersCountGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-    public restSuppliersCountGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<number>('get',`${this.basePath}/rest/suppliers/count`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Retrieves all available suppliers from the database
-     * 
+     *
+     * @param order Order direction
      * @param page Page index
+     * @param prop Order property
+     * @param search Search string
      * @param size Page size
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restSuppliersGet(page?: number, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Supplier>>;
-    public restSuppliersGet(page?: number, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Supplier>>>;
-    public restSuppliersGet(page?: number, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Supplier>>>;
-    public restSuppliersGet(page?: number, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public restSuppliersGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Supplier>>>;
+    public restSuppliersGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Supplier>>;
+    public restSuppliersGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Supplier>>>;
+    public restSuppliersGet(order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (order !== undefined && order !== null) {
+            queryParameters = queryParameters.set('order', <any>order);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (prop !== undefined && prop !== null) {
+            queryParameters = queryParameters.set('prop', <any>prop);
+        }
+        if (search !== undefined && search !== null) {
+            queryParameters = queryParameters.set('search', <any>search);
         }
         if (size !== undefined && size !== null) {
             queryParameters = queryParameters.set('size', <any>size);
@@ -142,7 +122,7 @@ export class SupplierEndpointService {
 
     /**
      * Deletes an existing supplier
-     * 
+     *
      * @param id Supplier identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -182,7 +162,7 @@ export class SupplierEndpointService {
 
     /**
      * Returns supplier for a given identifier
-     * 
+     *
      * @param id Supplier identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -223,8 +203,8 @@ export class SupplierEndpointService {
 
     /**
      * Updates an existing supplier
-     * 
-     * @param body 
+     *
+     * @param body
      * @param id Supplier identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -275,8 +255,8 @@ export class SupplierEndpointService {
 
     /**
      * Creates a valid supplier and stores it into the database
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -312,6 +292,42 @@ export class SupplierEndpointService {
         return this.httpClient.request<string>('post',`${this.basePath}/rest/suppliers`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Retrieve only suppliers ID and names for all available suppliers in the database
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restSuppliersSelectGet(observe?: 'body', reportProgress?: boolean): Observable<Array<SelectOptions>>;
+    public restSuppliersSelectGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<SelectOptions>>>;
+    public restSuppliersSelectGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<SelectOptions>>>;
+    public restSuppliersSelectGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<SelectOptions>>('get',`${this.basePath}/rest/suppliers/select`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

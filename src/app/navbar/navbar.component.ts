@@ -8,27 +8,8 @@ import {MatSidenav} from '@angular/material/sidenav';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
-  // @Input() isExpanded: boolean | undefined;
-  // @Output() toggleMenu = new EventEmitter();
-
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-
-  // routeLinks = [
-  //   { link: 'dashboard', name: 'Dashboard', icon: 'dashboard' },
-  //   { link: 'users', name: 'Users', icon: 'people' },
-  //   { link: 'assets', name: 'Assets', icon: 'store' },
-  //   { link: 'categories', name: 'Categories', icon: 'category' },
-  //   { link: 'allocate', name: 'Allocate Asset', icon: 'assignment' },
-  //   {
-  //     link: 'transfer',
-  //     name: 'Transfer Asset',
-  //     icon: 'transfer_within_a_station',
-  //   },
-  //   { link: 'employees', name: 'Employees', icon: 'group' },
-  //   { link: 'departments', name: 'Departments', icon: 'account_balance' },
-  // ];
-
   routeLinks = [
     {link: 'dashboard', name: 'Dashboard', icon: 'dashboard'},
     {link: 'user', name: 'Users', icon: 'people'},
@@ -36,6 +17,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       header: 'Asset Inventory',
       nav: [
         {link: 'assets', name: 'Assets', icon: 'store'},
+        {link: 'purchases', name: 'Purchases', icon: 'store'},
+        {link: 'suppliers', name: 'Suppliers', icon: 'store'},
         {link: 'categories', name: 'Categories', icon: 'category'},
       ],
     },
@@ -53,8 +36,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     {
       header: 'Employee',
       nav: [
-        {link: 'api/employees', name: 'Employees', icon: 'group'},
-        {link: 'api/departments', name: 'Departments', icon: 'account_balance'},
+        {link: 'employees', name: 'Employees', icon: 'group'},
+        {link: 'departments', name: 'Departments', icon: 'account_balance'},
       ],
     },
   ];
@@ -68,32 +51,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
   }
-
-  // ngAfterViewInit() {
-  //   this.observer
-  //     .observe(['(max-width: 800px)'])
-  //     .pipe(delay(1), untilDestroyed(this))
-  //     .subscribe((res: any) => {
-  //       if (res.matches) {
-  //         this.sidenav.mode = 'over';
-  //         this.sidenav.close();
-  //       } else {
-  //         this.sidenav.mode = 'side';
-  //         this.sidenav.open();
-  //       }
-  //     });
-
-  //   this.router.events
-  //     .pipe(
-  //       untilDestroyed(this),
-  //       filter((e) => e instanceof NavigationEnd)
-  //     )
-  //     .subscribe(() => {
-  //       if (this.sidenav.mode === 'over') {
-  //         this.sidenav.close();
-  //       }
-  //     });
-  // }
 
   ngAfterViewInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
