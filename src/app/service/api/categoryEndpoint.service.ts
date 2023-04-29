@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Category } from '../model/category';
+import { SelectOptions } from '../model/selectOptions';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -56,50 +57,14 @@ export class CategoryEndpointService {
 
 
     /**
-     * Counts all asset categories available in the database
-     * 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public restCategoriesCountGet(observe?: 'body', reportProgress?: boolean): Observable<number>;
-    public restCategoriesCountGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
-    public restCategoriesCountGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
-    public restCategoriesCountGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<number>('get',`${this.basePath}/rest/categories/count`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Retrieves all asset categories from the database
-     * 
+     *
      * @param name Category name query parameter
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restCategoriesGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Category>>;
     public restCategoriesGet(name?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Category>>>;
+    public restCategoriesGet(name?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Category>>;
     public restCategoriesGet(name?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Category>>>;
     public restCategoriesGet(name?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
@@ -137,7 +102,7 @@ export class CategoryEndpointService {
 
     /**
      * Deletes an existing asset category
-     * 
+     *
      * @param id Category identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -177,7 +142,7 @@ export class CategoryEndpointService {
 
     /**
      * Returns asset category for a given identifier
-     * 
+     *
      * @param id Category identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -218,8 +183,8 @@ export class CategoryEndpointService {
 
     /**
      * Updates an existing asset category
-     * 
-     * @param body 
+     *
+     * @param body
      * @param id Category identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -270,8 +235,8 @@ export class CategoryEndpointService {
 
     /**
      * Creates a valid category and stores it into the database
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -307,6 +272,42 @@ export class CategoryEndpointService {
         return this.httpClient.request<string>('post',`${this.basePath}/rest/categories`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Fetch only categories ID and name for all categories available to be used for client side selection options
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restCategoriesSelectGet(observe?: 'body', reportProgress?: boolean): Observable<Array<SelectOptions>>;
+    public restCategoriesSelectGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<SelectOptions>>>;
+    public restCategoriesSelectGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<SelectOptions>>>;
+    public restCategoriesSelectGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<SelectOptions>>('get',`${this.basePath}/rest/categories/select`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

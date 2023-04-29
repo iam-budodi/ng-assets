@@ -18,9 +18,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Asset } from '../model/asset';
-import { Computer } from '../model/computer';
+import { LocalDate } from '../model/localDate';
 import { Purchase } from '../model/purchase';
 import { PurchasePerSupplier } from '../model/purchasePerSupplier';
+import { SelectOptions } from '../model/selectOptions';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -60,7 +61,7 @@ export class PurchaseEndpointService {
 
     /**
      * Counts all purchases per each supplier in the database
-     * 
+     *
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -96,22 +97,42 @@ export class PurchaseEndpointService {
 
     /**
      * Retrieves all available purchases from the database
-     * 
+     *
+     * @param date Search date
+     * @param order Order direction
      * @param page Page index
+     * @param prop Order property
+     * @param search Search string
      * @param size Page size
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restPurchasesGet(page?: number, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Computer>>;
-    public restPurchasesGet(page?: number, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Computer>>>;
-    public restPurchasesGet(page?: number, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Computer>>>;
-    public restPurchasesGet(page?: number, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public restPurchasesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Purchase>>>;
+    public restPurchasesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Purchase>>;
+    public restPurchasesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Purchase>>>;
+    public restPurchasesGet(date?: LocalDate, order?: string, page?: number, prop?: string, search?: string, size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (date !== undefined && date !== null) {
+            queryParameters = queryParameters.set('date', <any>date);
+        }
+        if (order !== undefined && order !== null) {
+            queryParameters = queryParameters.set('order', <any>order);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (prop !== undefined && prop !== null) {
+            queryParameters = queryParameters.set('prop', <any>prop);
+        }
+        if (search !== undefined && search !== null) {
+            queryParameters = queryParameters.set('search', <any>search);
         }
         if (size !== undefined && size !== null) {
             queryParameters = queryParameters.set('size', <any>size);
@@ -132,7 +153,7 @@ export class PurchaseEndpointService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Computer>>('get',`${this.basePath}/rest/purchases`,
+        return this.httpClient.request<Array<Purchase>>('get',`${this.basePath}/rest/purchases`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -145,7 +166,7 @@ export class PurchaseEndpointService {
 
     /**
      * Deletes an existing purchase record
-     * 
+     *
      * @param id Purchase record identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -185,14 +206,14 @@ export class PurchaseEndpointService {
 
     /**
      * Returns the purchase record for a given identifier
-     * 
+     *
      * @param id Purchase identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restPurchasesIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Computer>;
-    public restPurchasesIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Computer>>;
-    public restPurchasesIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Computer>>;
+    public restPurchasesIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Purchase>;
+    public restPurchasesIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Purchase>>;
+    public restPurchasesIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Purchase>>;
     public restPurchasesIdGet(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
@@ -214,7 +235,7 @@ export class PurchaseEndpointService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Computer>('get',`${this.basePath}/rest/purchases/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<Purchase>('get',`${this.basePath}/rest/purchases/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -226,8 +247,8 @@ export class PurchaseEndpointService {
 
     /**
      * Updates an existing purchase record
-     * 
-     * @param body 
+     *
+     * @param body
      * @param id Purchase record identifier
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -278,7 +299,7 @@ export class PurchaseEndpointService {
 
     /**
      * Retrieves all available assets for particular purchase from the database
-     * 
+     *
      * @param invoice Invoice for particular purchase record
      * @param page Page index
      * @param size Page size
@@ -332,8 +353,8 @@ export class PurchaseEndpointService {
 
     /**
      * Creates a valid purchase record and stores it into the database
-     * 
-     * @param body 
+     *
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -369,6 +390,42 @@ export class PurchaseEndpointService {
         return this.httpClient.request<string>('post',`${this.basePath}/rest/purchases`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Fetch only purchase ID and name for all purchases available to be used for client side selection options
+     *
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public restPurchasesSelectGet(observe?: 'body', reportProgress?: boolean): Observable<Array<SelectOptions>>;
+    public restPurchasesSelectGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<SelectOptions>>>;
+    public restPurchasesSelectGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<SelectOptions>>>;
+    public restPurchasesSelectGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<SelectOptions>>('get',`${this.basePath}/rest/purchases/select`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

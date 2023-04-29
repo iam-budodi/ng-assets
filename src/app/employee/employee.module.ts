@@ -82,7 +82,7 @@ const sharedComponent = [
     RouterModule.forChild(employeeRoutes),
   ],
 
-  exports: [MaterialModule, ...sharedComponent],
+  exports: [MaterialModule, FormlyModule, ...sharedComponent],
   providers: [DatePipe, DepartmentService]
 })
 export class EmployeeModule {

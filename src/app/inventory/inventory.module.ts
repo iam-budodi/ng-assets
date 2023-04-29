@@ -8,18 +8,13 @@ import {ComputerDialogComponent} from './computer/computer-dialog/computer-dialo
 import {ComputerListComponent} from './computer/computer-list/computer-list.component';
 import {CategoryDialogComponent} from './category/category-dialog/category-dialog.component';
 import {CategoryListComponent} from './category/category-list/category-list.component';
-import {FormlyModule} from "@ngx-formly/core";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatIconModule} from "@angular/material/icon";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../shared/shared.module";
 import {EmployeeModule} from "../employee/employee.module";
 import {ExtendedModule, FlexModule} from "@angular/flex-layout";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatTooltipModule} from "@angular/material/tooltip";
 import {RouterLink, RouterModule} from "@angular/router";
 import {inventoryRoutes} from "./inventory.routes";
+import {MaterialModule} from "../material.module";
 
 
 @NgModule({
@@ -35,17 +30,12 @@ import {inventoryRoutes} from "./inventory.routes";
   ],
   imports: [
     CommonModule,
-    FormlyModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
     ReactiveFormsModule,
+    MaterialModule,
     SharedModule,
     EmployeeModule,
     ExtendedModule,
     FlexModule,
-    MatToolbarModule,
-    MatTooltipModule,
     RouterLink,
     RouterModule.forChild(inventoryRoutes)
   ]

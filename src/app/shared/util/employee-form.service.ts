@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {DepartmentService} from "../../employee/department/department.service";
+import {selectOptions, toDateParser} from "./utils";
+import {EmploymentStatus, Gender} from "../../service";
 
 @Injectable({
   providedIn: 'root'
@@ -66,20 +68,7 @@ export class EmployeeFormService {
         className: 'flex-2',
         props: {
           label: "Gender",
-          options: [
-            {
-              value: null,
-              label: ' -- '
-            },
-            {
-              value: 'M',
-              label: 'M'
-            },
-            {
-              value: 'F',
-              label: 'F'
-            }
-          ],
+          options: selectOptions(Gender),
           required: true,
           minLength: 1,
           maxLength: 1,
@@ -93,7 +82,7 @@ export class EmployeeFormService {
           required: true,
           label: 'date of Birth'
         },
-        parsers: [this.toDateParser]
+        parsers: [toDateParser]
       },
       {
         key: 'email',
@@ -127,7 +116,7 @@ export class EmployeeFormService {
           required: true,
           label: "Hired Date",
         },
-        parsers: [this.toDateParser]
+        parsers: [toDateParser]
       },
       {
         key: 'workId',
@@ -148,16 +137,7 @@ export class EmployeeFormService {
         props: {
           label: 'Job Status',
           multiple: true,
-          options: [
-            {
-              value: null,
-              label: ' -- '
-            },
-            {
-              value: 'CONTRACT',
-              label: 'Contract'
-            }
-          ],
+          options: selectOptions(EmploymentStatus),
           required: true,
         }
       },
@@ -201,15 +181,6 @@ export class EmployeeFormService {
     return this.EMPLOYEE_FORM_FIELD;
   }
 
-  toDateParser(value: any): string {
-    const date: Date = new Date(value);
-    const year: number = date.getFullYear();
-    const month: number = date.getMonth() + 1;
-    const day: number = date.getDate();
-
-    return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-  }
-
   addressFields(): FormlyFieldConfig[] {
     return [
       {
@@ -221,7 +192,6 @@ export class EmployeeFormService {
         className: 'flex-2',
         props: {
           label: 'Country',
-          // options: this.formlyService.getCountries(),
           options: [
             {
               value: null,
@@ -243,7 +213,6 @@ export class EmployeeFormService {
         className: 'flex-2',
         props: {
           label: 'City',
-          // options: this.formlyService.getCities(),
           options: [
             {
               value: null,

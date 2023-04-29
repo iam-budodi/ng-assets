@@ -16,7 +16,7 @@ import {SupplierDialogComponent} from "../supplier-dialog/supplier-dialog.compon
   templateUrl: './supplier-list.component.html',
   styleUrls: ['./supplier-list.component.css']
 })
-export class SupplierListComponent  implements OnInit {
+export class SupplierListComponent implements OnInit {
   supplierTableColumns!: ITableColumn[];
   dialogValue: DialogData<Supplier> = {mode: 'create'};
   initialPage: number = 0;

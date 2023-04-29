@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-export type SupplierType = 'MANUFACTURER' | 'WHOLESELLER' | 'RETAILER';
+export type SupplierType = 'MANUFACTURER' | 'WHOLESALER' | 'RETAILER';
 
 export const SupplierType = {
     MANUFACTURER: 'MANUFACTURER' as SupplierType,
-    WHOLESELLER: 'WHOLESELLER' as SupplierType,
+    WHOLESALER: 'WHOLESALER' as SupplierType,
     RETAILER: 'RETAILER' as SupplierType
 };

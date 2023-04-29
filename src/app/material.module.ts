@@ -26,6 +26,7 @@ import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/m
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatTabsModule} from "@angular/material/tabs";
+import {TableComponent} from "./common/table/table.component";
 
 
 export const sharedComponent = [

@@ -1,1 +1,29 @@
-<p>purchase-list works!</p>
+<div>
+  <mat-toolbar class="mat-elevation-z6">
+    <mat-toolbar-row>
+      <button
+        (click)="createPurchase()"
+        class="button"
+        mat-raised-button>
+        <mat-icon>person_add</mat-icon>
+        <span class="label">{{ addDeptButtonLabel }}</span>
+      </button>
+
+      <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end">
+        <ul class="alert alert-info navigation-items" fxLayout fxLayoutGap="20px">
+          <li>
+            <a routerLink="/dashboard"> <span class="link">Dashboard</span> </a>
+            <span class="label"> / {{ pageTitle }}</span>
+          </li>
+        </ul>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <br/>
+  <app-table (deleteAction)="deletePurchase($event)"
+             (updateAction)="updatePurchase($event)"
+             [tableColumns]="purchaseTableColumns"
+             [tableEntries]="tableData"
+             class="grid-container"
+  ></app-table>
+</div>
