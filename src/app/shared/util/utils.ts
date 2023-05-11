@@ -29,8 +29,6 @@ export const toDateParser = (value: any): string => {
 }
 
 export const selectOptions = (objectDefinition: any) => {
-  // console.log('Array of objects : ' + JSON.stringify(arrayObject));
-
   return Object.entries(objectDefinition).map(
     ([key, value]) => ({value: value, label: key})
   );

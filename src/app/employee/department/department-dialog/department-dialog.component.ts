@@ -33,13 +33,8 @@ export class DepartmentDialogComponent implements OnInit {
     this.selectDialogModeAndOps();
   }
 
-  onSubmit({valid, value}: { valid: boolean, value: Department }): void {
-    // if (this.operationMode === 'delete' && (value.constructor === Object && Object.keys(value).length === 0)) {
-    //   value = this.department;
-    //   console.log('CHECKED IF : ' + JSON.stringify(valid) + ' IN IF : ' + JSON.stringify(value) )
-    // }
+  onSubmit({value}: { valid: boolean, value: Department }): void {
     value = this.operationMode === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.department : value;
-    console.log('MODE : ' + this.operationMode + ' VALID: ' + JSON.stringify(valid) + ' VAL: ' + JSON.stringify(value) )
     this.apiMethodsCall(value);
   }
 

@@ -15,7 +15,6 @@ import {ProductSalesChartComponent} from './dashboard/charts/product-sales-chart
 import {TicketComponent} from './common/ticket/ticket.component';
 import {EmployeeModule} from './employee/employee.module';
 import {AssetModule} from './asset/asset.module';
-import {ProcureModule} from './procure/procure.module';
 import {ApiModule} from "./service";
 import {HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
@@ -40,7 +39,6 @@ import { CoreModule } from './core/core.module';
     EmployeeModule,
     NgChartsModule,
     AssetModule,
-    ProcureModule,
     ApiModule,
     CoreModule,
     SharedModule,
