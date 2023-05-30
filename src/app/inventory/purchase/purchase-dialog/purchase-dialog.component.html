@@ -28,7 +28,8 @@
            style="display:flex; flex-direction: row; justify-content: space-between;"
       >
         <button class="formly-button" mat-raised-button type="reset">Clear</button>
-        <button class="formly-button button" color="primary" mat-raised-button [disabled]="form.invalid">{{submitLabel}}</button>
+        <button [disabled]="form.invalid" class="formly-button button" color="primary"
+                mat-raised-button>{{submitLabel}}</button>
       </div>
     </form>
 

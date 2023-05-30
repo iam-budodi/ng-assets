@@ -40,19 +40,19 @@ export class DepartmentFormService {
       ]
     ),
     this.formlyEmployee.formlyRow([
-      {
-        key: 'description',
-        type: 'textarea',
-        className: 'flex-6',
-        props: {
-          label: 'Description',
-          placeholder: 'Enter description (Optional)',
-          required: false,
-          minLength: 1,
-          maxLength: 400,
-          rows: 2
+        {
+          key: 'description',
+          type: 'textarea',
+          className: 'flex-6',
+          props: {
+            label: 'Description',
+            placeholder: 'Enter description (Optional)',
+            required: false,
+            minLength: 1,
+            maxLength: 400,
+            rows: 2
+          }
         }
-      }
       ]
     ),
     {

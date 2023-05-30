@@ -25,10 +25,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     {
       header: 'Asset Tracking',
       nav: [
-        {link: 'allocate', name: 'Allocate Asset', icon: 'assignment'},
+        {link: 'allocates', name: 'Asset Assignment', icon: 'assignment'},
         {
           link: 'transfer',
-          name: 'Transfer Asset',
+          name: 'Asset Transfer',
           icon: 'transfer_within_a_station',
         },
       ],

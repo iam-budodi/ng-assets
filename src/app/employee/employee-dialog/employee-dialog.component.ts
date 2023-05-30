@@ -34,7 +34,7 @@ export class EmployeeDialogComponent implements OnInit {
     this.selectEmployeeDialogModeAndOps();
   }
 
-  onSubmit({value}: {value: Employee }): void {
+  onSubmit({value}: { value: Employee }): void {
     value = this.operation === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.employee : value;
     this.apiMethodsCall(value);
   }
@@ -79,7 +79,7 @@ export class EmployeeDialogComponent implements OnInit {
   }
 
   callUpdateApiService(employee: Employee) {
-    this.employeeService.restEmployeesIdPut(employee, this.employee.id!, 'response').subscribe({
+    this.employeeService.restEmployeesIdPut(this.employee.id!, employee, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
             this.dialogRef.close('success');

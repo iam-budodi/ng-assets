@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {Employee, EmployeeEndpointService} from "../../service";
 import {HttpResponse} from "@angular/common/http";
 
@@ -26,7 +26,7 @@ export class EmployeeDetailsComponent implements OnInit {
 
   getEmployee(id: number) {
     this.employeeService.restEmployeesIdGet(id, 'response').subscribe({
-      next: (response: HttpResponse<Employee>): void => {
+        next: (response: HttpResponse<Employee>): void => {
           this.employee = response.body!;
         }
       }

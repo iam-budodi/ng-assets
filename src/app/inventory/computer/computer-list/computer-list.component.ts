@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ITableColumn} from "../../../shared/models/table-column.model";
 import {DialogData} from "../../../employee/model/dialog-data.model";
-import {Computer, LocalDate} from "../../../service";
+import {Computer} from "../../../service";
 import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {Query} from "../../../shared/models/query.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -20,22 +20,22 @@ export class ComputerListComponent implements OnInit {
   computerTableColumns!: ITableColumn[];
   dialogValue: DialogData<Computer> = {mode: 'create'};
   initialPage: number = 0;
-  tableData!: PaginationDataSource<Computer, Query<LocalDate>>;
+  tableData!: PaginationDataSource<Computer, Query<Date>>;
   addButtonLabel: string = 'Add Computer';
   pageTitle: string = 'Computer Information';
 
   constructor(
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
-    private confirmDialogService:  ConfirmDialogService,
+    private confirmDialogService: ConfirmDialogService,
     private computerService: ComputerService,
   ) {
   }
 
   ngOnInit(): void {
     this.computerTableColumns = COMPUTER_TABLE_COLUMNS;
-    this.tableData = new PaginationDataSource<Computer, Query<LocalDate>>(
-      (request: PageRequest<Computer>, query: Query<LocalDate>) => this.computerService.getComputers(request, query),
+    this.tableData = new PaginationDataSource<Computer, Query<Date>>(
+      (request: PageRequest<Computer>, query: Query<Date>) => this.computerService.getComputers(request, query),
       {property: 'model', order: 'asc'},
       {search: undefined!, registration: undefined!}
     )

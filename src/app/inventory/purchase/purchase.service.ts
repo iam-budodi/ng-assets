@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {LocalDate, Purchase, PurchaseEndpointService, SelectOptions} from "../../service";
+import {Injectable} from '@angular/core';
+import {Purchase, PurchaseEndpointService, SelectOptions} from "../../service";
 import {Page, PageRequest} from "ngx-pagination-data-source";
 import {Query} from "../../shared/models/query.model";
 import {Observable} from "rxjs";
@@ -13,9 +13,10 @@ import {DatePipe} from "@angular/common";
 })
 export class PurchaseService {
 
-  constructor(private purchaseService: PurchaseEndpointService, private datePipe: DatePipe) { }
+  constructor(private purchaseService: PurchaseEndpointService, private datePipe: DatePipe) {
+  }
 
-  getPurchases(request: PageRequest<Purchase>, query: Query<LocalDate>): Observable<Page<Purchase>> {
+  getPurchases(request: PageRequest<Purchase>, query: Query<Date>): Observable<Page<Purchase>> {
     (request.size === 20) ? request.size = 5 : request.size;
     const date: string = this.datePipe.transform(query.registration, 'yyyy-MM-dd')!;
 

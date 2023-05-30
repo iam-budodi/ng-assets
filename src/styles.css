@@ -16,20 +16,20 @@ h2,
 h3,
 h4,
 p {
-    margin: 0;
+  margin: 0;
 }
 
 .chartContainer canvas {
-    max-height: 250px;
-    width: auto;
+  max-height: 250px;
+  width: auto;
 }
 
-.chartContainer{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.chartContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -43,7 +43,7 @@ p {
 }
 
 .container {
-  padding: 0 20px 20px 20px ;
+  padding: 0 20px 20px 20px;
   /*max-width: 800px;*/
 }
 

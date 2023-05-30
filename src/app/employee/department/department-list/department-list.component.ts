@@ -27,7 +27,7 @@ export class DepartmentListComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
-    private confirmDialogService:  ConfirmDialogService,
+    private confirmDialogService: ConfirmDialogService,
     private departmentService: DepartmentService,
   ) {
   }

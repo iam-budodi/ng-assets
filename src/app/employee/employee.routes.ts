@@ -13,7 +13,7 @@ export const employeeRoutes: Routes = [
   {
     path: 'employees/:id',
     component: EmployeeDetailsComponent,
-    resolve: { employee: employeeResolver },
+    resolve: {employee: employeeResolver},
   },
   {
     path: 'departments',

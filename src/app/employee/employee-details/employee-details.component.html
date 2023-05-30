@@ -11,7 +11,7 @@
             <a routerLink="/api/employees">
               <span class="link">Return to all employees</span>
             </a>
-            <span class="label" *ngIf="employee">
+            <span *ngIf="employee" class="label">
               / {{ employee.firstName | titlecase }}
               {{ employee.lastName | titlecase | possessive }} Details</span
             >

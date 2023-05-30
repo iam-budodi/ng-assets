@@ -77,7 +77,7 @@ export class ComputerDialogComponent implements OnInit {
   }
 
   callUpdateApiService(computer: Computer) {
-    this.computerService.restComputersIdPut(computer, this.computer.id!, 'response').subscribe({
+    this.computerService.restComputersIdPut(this.computer.id!, computer, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
             this.dialogRef.close('success');
@@ -97,7 +97,6 @@ export class ComputerDialogComponent implements OnInit {
       }
     );
   }
-
 
 
 }

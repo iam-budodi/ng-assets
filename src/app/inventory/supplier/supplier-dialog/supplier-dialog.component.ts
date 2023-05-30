@@ -78,7 +78,7 @@ export class SupplierDialogComponent implements OnInit {
   }
 
   callUpdateApiService(supplier: Supplier) {
-    this.supplierService.restSuppliersIdPut(supplier, this.supplier.id!, 'response').subscribe({
+    this.supplierService.restSuppliersIdPut(this.supplier.id!, supplier, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
             this.dialogRef.close('success');

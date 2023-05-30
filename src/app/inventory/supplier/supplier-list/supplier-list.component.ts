@@ -27,7 +27,7 @@ export class SupplierListComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
-    private confirmDialogService:  ConfirmDialogService,
+    private confirmDialogService: ConfirmDialogService,
     private supplierService: SupplierService,
   ) {
   }

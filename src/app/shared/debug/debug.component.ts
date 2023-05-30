@@ -7,7 +7,7 @@ import {MatTabGroup} from "@angular/material/tabs";
   templateUrl: './debug.component.html',
   styleUrls: ['./debug.component.css']
 })
-export class DebugComponent implements OnInit{
+export class DebugComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() model!: any;
 
@@ -16,9 +16,10 @@ export class DebugComponent implements OnInit{
   selectedIndex = 0;
   submittedDate = null;
 
-  @ViewChild(MatTabGroup, { static: true }) tabGroup!: MatTabGroup;
+  @ViewChild(MatTabGroup, {static: true}) tabGroup!: MatTabGroup;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
     this.isExpanded = sessionStorage.getItem("debug-expanded") === "true";

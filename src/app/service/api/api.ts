@@ -1,3 +1,5 @@
+export * from './allocationEndpoint.service';
+import { AllocationEndpointService } from './allocationEndpoint.service';
 export * from './categoryEndpoint.service';
 import { CategoryEndpointService } from './categoryEndpoint.service';
 export * from './computerEndpoint.service';
@@ -12,6 +14,10 @@ export * from './microProfileHealth.service';
 import { MicroProfileHealthService } from './microProfileHealth.service';
 export * from './purchaseEndpoint.service';
 import { PurchaseEndpointService } from './purchaseEndpoint.service';
+export * from './qRCodePreviewEndpoint.service';
+import { QRCodePreviewEndpointService } from './qRCodePreviewEndpoint.service';
 export * from './supplierEndpoint.service';
 import { SupplierEndpointService } from './supplierEndpoint.service';
-export const APIS = [CategoryEndpointService, ComputerEndpointService, DepartmentEndpointService, EmployeeEndpointService, ItemResourceService, MicroProfileHealthService, PurchaseEndpointService, SupplierEndpointService];
+export * from './transferEndpoint.service';
+import { TransferEndpointService } from './transferEndpoint.service';
+export const APIS = [AllocationEndpointService, CategoryEndpointService, ComputerEndpointService, DepartmentEndpointService, EmployeeEndpointService, ItemResourceService, MicroProfileHealthService, PurchaseEndpointService, QRCodePreviewEndpointService, SupplierEndpointService, TransferEndpointService];

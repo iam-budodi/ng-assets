@@ -28,6 +28,7 @@ export class DepartmentDialogComponent implements OnInit {
     private formlyService: DepartmentFormService
   ) {
   }
+
   ngOnInit(): void {
     this.initModeAndData();
     this.selectDialogModeAndOps();
@@ -78,7 +79,7 @@ export class DepartmentDialogComponent implements OnInit {
   }
 
   callUpdateApiService(department: Department) {
-    this.departmentService.restDepartmentsIdPut(department, this.department.id!, 'response').subscribe({
+    this.departmentService.restDepartmentsIdPut(this.department.id!, department, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
             this.dialogRef.close('success');

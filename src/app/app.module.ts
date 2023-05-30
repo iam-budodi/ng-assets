@@ -18,7 +18,9 @@ import {AssetModule} from './asset/asset.module';
 import {ApiModule} from "./service";
 import {HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
-import { CoreModule } from './core/core.module';
+import {CoreModule} from './core/core.module';
+import {AllocationModule} from "./allocation/allocation.module";
+import {InventoryModule} from "./inventory/inventory.module";
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { CoreModule } from './core/core.module';
     ApiModule,
     CoreModule,
     SharedModule,
+    InventoryModule,
+    AllocationModule,
     RouterModule.forRoot(appRoutes),
   ],
 

@@ -1,6 +1,6 @@
 <mat-expansion-panel
-  [(expanded)]="isExpanded"
   (expandedChange)="onExpandedChange($event)"
+  [(expanded)]="isExpanded"
 >
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -12,10 +12,10 @@
       <mat-tab label="Form value">
         <pre>{{ form | json }}</pre>
       </mat-tab>
-      <mat-tab label="Model" [disabled]="!model">
+      <mat-tab [disabled]="!model" label="Model">
         <pre>{{ model | json }}</pre>
       </mat-tab>
-      <mat-tab label="Submitted" [disabled]="submittedValue === null">
+      <mat-tab [disabled]="submittedValue === null" label="Submitted">
         <p>You just submitted ({{ submittedDate | date: "short" }}):</p>
         <pre>{{ submittedValue | json }}</pre>
       </mat-tab>

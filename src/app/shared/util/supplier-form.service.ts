@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {EmployeeFormService} from "./employee-form.service";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 
@@ -117,7 +117,8 @@ export class SupplierFormService {
     }
   ]
 
-    constructor(private formlyEmployee: EmployeeFormService) { }
+  constructor(private formlyEmployee: EmployeeFormService) {
+  }
 
   getDepartmentFormFields(): FormlyFieldConfig[] {
     return this.SUPPLIER_FORM_FIELD;

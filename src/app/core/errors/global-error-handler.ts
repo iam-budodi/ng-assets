@@ -7,7 +7,8 @@ export class GlobalErrorHandler implements ErrorHandler {
   constructor(
     private errorDialogService: ErrorDialogService,
     private zone: NgZone
-  ) {}
+  ) {
+  }
 
   handleError(error: any): void {
 

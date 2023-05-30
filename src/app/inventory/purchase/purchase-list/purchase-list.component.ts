@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ITableColumn} from "../../../shared/models/table-column.model";
 import {DialogData} from "../../../employee/model/dialog-data.model";
-import {LocalDate, Purchase} from "../../../service";
+import {Purchase} from "../../../service";
 import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {Query} from "../../../shared/models/query.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -20,22 +20,22 @@ export class PurchaseListComponent implements OnInit {
   purchaseTableColumns!: ITableColumn[];
   dialogValue: DialogData<Purchase> = {mode: 'create'};
   initialPage: number = 0;
-  tableData!: PaginationDataSource<Purchase, Query<LocalDate>>;
+  tableData!: PaginationDataSource<Purchase, Query<Date>>;
   addDeptButtonLabel: string = 'Add Purchase order';
   pageTitle: string = 'Purchase Information';
 
   constructor(
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
-    private confirmDialogService:  ConfirmDialogService,
+    private confirmDialogService: ConfirmDialogService,
     private purchaseService: PurchaseService,
   ) {
   }
 
   ngOnInit(): void {
     this.purchaseTableColumns = PURCHASE_TABLE_COLUMNS;
-    this.tableData = new PaginationDataSource<Purchase, Query<LocalDate>>(
-      (request: PageRequest<Purchase>, query: Query<LocalDate>) => this.purchaseService.getPurchases(request, query),
+    this.tableData = new PaginationDataSource<Purchase, Query<Date>>(
+      (request: PageRequest<Purchase>, query: Query<Date>) => this.purchaseService.getPurchases(request, query),
       {property: 'invoiceNumber', order: 'asc'},
       {search: undefined!, registration: undefined!}
     )

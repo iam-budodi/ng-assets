@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SupplierDialogComponent } from './supplier-dialog.component';
+import {SupplierDialogComponent} from './supplier-dialog.component';
 
 describe('SupplierDialogComponent', () => {
   let component: SupplierDialogComponent;
@@ -8,9 +8,9 @@ describe('SupplierDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SupplierDialogComponent ]
+      declarations: [SupplierDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SupplierDialogComponent);
     component = fixture.componentInstance;

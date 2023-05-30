@@ -78,7 +78,7 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   callUpdateApiService(purchase: Purchase) {
-    this.purchaseService.restPurchasesIdPut(purchase, this.purchase.id!, 'response').subscribe({
+    this.purchaseService.restPurchasesIdPut(this.purchase.id!, purchase, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
             this.dialogRef.close('success');

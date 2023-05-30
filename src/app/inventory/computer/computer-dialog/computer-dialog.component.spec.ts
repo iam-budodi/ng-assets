@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ComputerDialogComponent } from './computer-dialog.component';
+import {ComputerDialogComponent} from './computer-dialog.component';
 
 describe('ComputerDialogComponent', () => {
   let component: ComputerDialogComponent;
@@ -8,9 +8,9 @@ describe('ComputerDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ComputerDialogComponent ]
+      declarations: [ComputerDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ComputerDialogComponent);
     component = fixture.componentInstance;

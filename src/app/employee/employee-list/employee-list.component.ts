@@ -1,19 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ITableColumn} from '../../shared/models/table-column.model';
-import {Employee, EmployeeEndpointService, LocalDate} from "../../service";
-import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
+import {Employee} from "../../service";
+import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {DialogService} from "../../shared/dialog/dialog.service";
 import {DialogData} from "../model/dialog-data.model";
 import {Query} from "../../shared/models/query.model";
 import {EMPLOYEE_TABLE_COLUMNS} from "../model/employee-table-column.config";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import {HttpResponse} from "@angular/common/http";
-import {httpGetAllHandler} from "../../shared/util/utils";
 import {DatePipe} from "@angular/common";
 import {EmployeeDialogComponent} from "../employee-dialog/employee-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ConfirmDialogService} from "../../shared/dialog/confirm-dialog.service";
+import {EmployeeService} from "../employee.service";
 
 @Component({
   selector: 'app-employee-list',
@@ -24,7 +21,7 @@ export class EmployeeListComponent implements OnInit {
   employeeTableColumns!: ITableColumn[];
   dialogValue: DialogData<Employee> = {mode: 'create'};
   initialPage: number = 0;
-  tableData!: PaginationDataSource<Employee, Query<LocalDate>>;
+  tableData!: PaginationDataSource<Employee, Query<Date>>;
   pageSizes: number[] = [5, 10, 15, 20, 50];
   defaultSize: number = this.pageSizes[0];
 
@@ -32,32 +29,18 @@ export class EmployeeListComponent implements OnInit {
     private datePipe: DatePipe,
     private snackBar: MatSnackBar,
     private dialogService: DialogService,
-    private confirmDialogService:  ConfirmDialogService,
-    private employeeService: EmployeeEndpointService
+    private confirmDialogService: ConfirmDialogService,
+    private employeeService: EmployeeService
   ) {
   }
 
   ngOnInit(): void {
     this.employeeTableColumns = EMPLOYEE_TABLE_COLUMNS;
-    this.tableData = new PaginationDataSource<Employee, Query<LocalDate>>(
-      (request: PageRequest<Employee>, query: Query<LocalDate>) => this.getEmployees(request, query),
+    this.tableData = new PaginationDataSource<Employee, Query<Date>>(
+      (request: PageRequest<Employee>, query: Query<Date>) => this.employeeService.getEmployees(request, query),
       {property: 'firstName', order: 'asc'},
       {search: undefined!, registration: undefined!}
     )
-  }
-
-  getEmployees(request: PageRequest<Employee>, query: Query<LocalDate>): Observable<Page<Employee>> {
-
-    (request.size === 20) ? request.size = 5 : request.size;
-    const date: string = this.datePipe.transform(query.registration, 'yyyy-MM-dd')!;
-
-    return this.employeeService
-      .restEmployeesGet(date, request.sort?.order, request.page, request.sort?.property, query.search, request.size, 'response')
-      .pipe(map((response: HttpResponse<Array<Employee>>) => {
-            return httpGetAllHandler<Employee>(response);
-          }
-        )
-      );
   }
 
   createEmployee = () => {

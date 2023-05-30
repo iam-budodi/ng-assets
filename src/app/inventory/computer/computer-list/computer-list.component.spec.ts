@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ComputerListComponent } from './computer-list.component';
+import {ComputerListComponent} from './computer-list.component';
 
 describe('ComputerListComponent', () => {
   let component: ComputerListComponent;
@@ -8,9 +8,9 @@ describe('ComputerListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ComputerListComponent ]
+      declarations: [ComputerListComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ComputerListComponent);
     component = fixture.componentInstance;

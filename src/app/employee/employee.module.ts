@@ -20,6 +20,7 @@ import {PanelWrapperComponent} from "../shared/util/panel-wrapper.component";
 import {FormlyMatDatepickerModule} from "@ngx-formly/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {DepartmentService} from "./department/department.service";
+import {EmployeeService} from "./employee.service";
 
 // export function minValidationMessage(err, field: FormlyFieldConfig) {
 //   return `Please provide a value bigger than ${err.min}. You provided ${err.actual}`;
@@ -83,7 +84,7 @@ const sharedComponent = [
   ],
 
   exports: [MaterialModule, FormlyModule, ...sharedComponent],
-  providers: [DatePipe, DepartmentService]
+  providers: [DatePipe, DepartmentService, EmployeeService]
 })
 export class EmployeeModule {
 }

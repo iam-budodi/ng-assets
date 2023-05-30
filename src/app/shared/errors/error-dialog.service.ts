@@ -8,13 +8,14 @@ import {MatDialog} from "@angular/material/dialog";
 export class ErrorDialogService {
   private opened: boolean = false;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+  }
 
   openDialog(message: string, status?: number): void {
     if (!this.opened) {
       this.opened = true;
       const dialogRef = this.dialog.open(ErrorDialogComponent, {
-        data: { message, status },
+        data: {message, status},
         maxHeight: '100%',
         width: '540px',
         maxWidth: '100%',
