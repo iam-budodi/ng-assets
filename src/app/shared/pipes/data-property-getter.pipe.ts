@@ -19,5 +19,5 @@ export class DataPropertyGetterPipe implements PipeTransform {
 
   }
 
-
 }
+

@@ -1,0 +1,20 @@
+<div>
+  <button class="close" mat-dialog-close="true" mat-icon-button>
+    <mat-icon>clear</mat-icon>
+  </button>
+  <h2 mat-dialog-title>{{ title }}</h2>
+
+  <div class="container">
+    <form (ngSubmit)="onSubmit(form)" [formGroup]="form" style="width: 95%; margin: 0 auto">
+      <formly-form
+        [fields]="fields"
+        [form]="form">
+      </formly-form>
+
+      <div class="button-row" style="display:flex; flex-direction: row; justify-content: space-between;">
+        <button [disabled]="form.invalid" class="formly-button button" color="primary"
+                mat-raised-button>{{submitLabel}}</button>
+      </div>
+    </form>
+  </div>
+</div>

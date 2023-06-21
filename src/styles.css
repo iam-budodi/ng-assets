@@ -106,6 +106,7 @@ formly-field {
 .display-flex {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: -20px;
 }
 
 .flex-1 {

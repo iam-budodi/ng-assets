@@ -15,6 +15,7 @@ import {ExtendedModule, FlexModule} from "@angular/flex-layout";
 import {RouterLink, RouterModule} from "@angular/router";
 import {inventoryRoutes} from "./inventory.routes";
 import {MaterialModule} from "../material.module";
+import {CategoryService} from "./category/category.service";
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {MaterialModule} from "../material.module";
     FlexModule,
     RouterLink,
     RouterModule.forChild(inventoryRoutes)
-  ]
+  ],
+  providers: [CategoryService]
 })
 export class InventoryModule {
 }

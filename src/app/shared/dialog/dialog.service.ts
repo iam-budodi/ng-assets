@@ -9,7 +9,7 @@ import {MediumConfType} from "../models/medium-conf.dialog";
 })
 export class DialogService {
   private conf = {autoFocus: true};
-  private mediumConf: MediumConfType = {height: '80%', width: '50%', ...this.conf};
+  private mediumConf: MediumConfType = {height: 'auto', width: '40%', ...this.conf};
 
   constructor(public dialog: MatDialog) {
   }

@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {FormlyFieldConfig} from "@ngx-formly/core";
-import {toDateParser} from "./utils";
 import {ComputerService} from "../../inventory/computer/computer.service";
 import {EmployeeService} from "../../employee/employee.service";
 
@@ -80,6 +79,7 @@ export class AllocationFormService {
 
   constructor(private computerService: ComputerService, private employeeService: EmployeeService) {
   }
+
   getAllocationFormFields(): FormlyFieldConfig[] {
     return this.ALLOCATION_FORM_FIELD;
   }

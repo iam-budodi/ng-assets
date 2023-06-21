@@ -16,7 +16,7 @@ export class DepartmentDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getDepartmentFormFields();
   department: Department = {code: "", description: "", id: 0, location: undefined, name: ""};
-  submitLabel: string = 'Create';
+  submitLabel: string = 'Add';
   operationMode!: string;
   title!: string;
   confirmText!: string;

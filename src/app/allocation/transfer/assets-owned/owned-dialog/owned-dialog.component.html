@@ -1,0 +1,56 @@
+<div>
+  <button class="close" mat-dialog-close="true" mat-icon-button>
+    <mat-icon>clear</mat-icon>
+  </button>
+
+  <div class="container">
+    <h2 mat-dialog-title>Current Assets</h2>
+    <div class="content" fxLayout="row" fxLayoutAlign="center center">
+
+      <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+        <!-- Column definitions -->
+        <ng-container matColumnDef="brand">
+          <th *matHeaderCellDef mat-header-cell> Brand</th>
+          <td *matCellDef="let element" mat-cell> {{ element.asset.brand }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="model">
+          <th *matHeaderCellDef mat-header-cell> Model</th>
+          <td *matCellDef="let element" mat-cell> {{ element.asset.model }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serialNumber">
+          <th *matHeaderCellDef mat-header-cell> Serial Number</th>
+          <td *matCellDef="let element" mat-cell> {{ element.asset.serialNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th *matHeaderCellDef mat-header-cell> Category</th>
+          <td *matCellDef="let element" mat-cell> {{ element.asset.category.name }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef mat-header-cell> Status</th>
+          <td *matCellDef="let element" mat-cell> {{ element.status }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transfer">
+          <th *matHeaderCellDef mat-header-cell>Change Ownership</th>
+          <td *matCellDef="let element" mat-cell>
+            <button (click)="itemTransfer(element.asset.serialNumber)"
+                    class="button" mat-icon-button type="button">
+              <mat-icon class="icon">forward</mat-icon>
+              <span></span>
+            </button>
+          </td>
+        </ng-container>
+
+        <!--          (click)="itemTransfer()"-->
+
+        <!-- Table rows -->
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let element; columns: displayedColumns;" mat-row></tr>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,36 @@
-<p>transfer-list works!</p>
+<div>
+  <mat-toolbar class="mat-elevation-z6">
+    <mat-toolbar-row>
+      <button
+        (click)="transferItem()"
+        class="button"
+        mat-raised-button
+        type="button"
+      >
+        <mat-icon>transfer_within_a_station</mat-icon>
+        <span class="label">{{ transferButtonLabel }}</span>
+      </button>
+
+      <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end">
+        <ul class="alert alert-info navigation-items" fxLayout fxLayoutGap="20px">
+          <li>
+            <a routerLink="/dashboard">
+              <span class="link" matTooltip="Click to return to dashboard">Dashboard</span>
+            </a>
+            <span class="label"> / {{ pageTitle }}</span>
+          </li>
+        </ul>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <br/>
+  <app-table [tableColumns]="transferTableColumns"
+             [tableEntries]="tableData"
+             class="grid-container"
+  ></app-table>
+</div>
+
+
+<!--(deleteAction)="deleteAssignment($event)"-->
+<!--(updateAction)="updateAssignment($event)"-->
+<!--[tableColumns]="assignmentTableColumns"-->

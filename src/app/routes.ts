@@ -3,6 +3,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 
 export const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {
     path: '',
     loadChildren: () =>
@@ -13,5 +14,5 @@ export const appRoutes: Routes = [
     loadChildren: () =>
       import('./inventory/inventory.module')
         .then((m) => m.InventoryModule)
-  }
+  },
 ];

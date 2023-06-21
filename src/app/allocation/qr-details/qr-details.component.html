@@ -1,0 +1,89 @@
+<div class="container">
+  <h1 class="page-title">Employee Asset Allocation Details</h1>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title">Allocation Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-row">
+        <div class="detail-label">Asset Allocated At:</div>
+        <div class="detail-value">{{ allocation.allocationDate | date }}</div>
+      </div>
+      <div *ngIf="allocation.deallocationDate" class="detail-row">
+        <div class="detail-label">Asset Deallocated At:</div>
+        <div class="detail-value">{{ allocation.deallocationDate | date }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Allocation Remark:</div>
+        <div class="detail-value">{{ allocation.allocationRemark }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Status:</div>
+        <div class="detail-value">{{ allocation.status }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title">Employee Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-row">
+        <div class="detail-label">Employee Name:</div>
+        <div
+          class="detail-value">{{ allocation.employee.firstName }} {{ allocation.employee.middleName }} {{ allocation.employee.lastName }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Gender:</div>
+        <div class="detail-value">{{ allocation.employee.gender }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Work ID:</div>
+        <div class="detail-value">{{ allocation.employee.workId }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Email:</div>
+        <div class="detail-value">{{ allocation.employee.email }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Mobile:</div>
+        <div class="detail-value">{{ allocation.employee.mobile }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Department:</div>
+        <div class="detail-value">{{ allocation.employee.department?.name }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Location:</div>
+        <div class="detail-value">{{ allocation.employee.department?.location?.city }}
+          , {{ allocation.employee.department?.location?.country }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title">Asset Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-row">
+        <div class="detail-label">Brand:</div>
+        <div class="detail-value">{{ allocation.asset.brand }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Model:</div>
+        <div class="detail-value">{{ allocation.asset.model }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Serial Number:</div>
+        <div class="detail-value">{{ allocation.asset.serialNumber }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Category:</div>
+        <div class="detail-value">{{ allocation.asset.category?.name }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="left-side">
+    <mat-card>
+      <mat-card-content>
+        <form (ngSubmit)="onSubmit(form)" [formGroup]="form" style="width: 95%; margin: 0 auto">
+          <formly-form
+            [fields]="fields"
+            [form]="form"
+            [options]="options">
+          </formly-form>
+
+          <div class="button-row" style="display:flex; flex-direction: row; justify-content: space-between;">
+            <button [disabled]="form.invalid" class="formly-button button" color="primary"
+                    mat-raised-button>{{submitLabel}}</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="right-side">
+    <h2 *ngIf="!qrCodeImageUrl">QR Code Preview Area</h2>
+    <mat-card *ngIf="qrCodeImageUrl" class="right-card-top">
+      <mat-card-content>
+        <div class="center-img">
+          <img [src]="qrCodeImageUrl" alt="QR Code"/>
+        </div>
+        <div class="buttons">
+          <button (click)="printQRCode()" class="formly-button button" color="primary" mat-raised-button>Print</button>
+          <button (click)="downloadQrCode()" class="formly-button button" color="primary" mat-raised-button>Download
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

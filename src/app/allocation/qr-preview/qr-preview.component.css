@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.left-side,
+.right-side {
+  width: 50%;
+}
+
+.left-side {
+  padding-right: 10px;
+}
+
+mat-card {
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+.right-card-top {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.center-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-side {
+  /*padding-left: 5px;*/
+  height: 280px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+h2 {
+  background-color: #f1f1f1;
+  color: gray;;
+  width: 50%;
+  margin: 30% auto;
+}
+
+.button {
+  background: #002b5c;
+  color: white;
+  padding: 25px 35px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out
+}
+
+.button:hover {
+  background-color: #0069d9;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button.valid {
+  background-color: #28a745;
+}
+
+.button.valid:hover {
+  background-color: #218838;
+}
+
+.button.invalid {
+  background-color: #dc3545;
+}
+
+.button.invalid:hover {
+  background-color: #c82333;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+
+
+

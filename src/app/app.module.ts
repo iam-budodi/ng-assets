@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
@@ -21,6 +21,24 @@ import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from './core/core.module';
 import {AllocationModule} from "./allocation/allocation.module";
 import {InventoryModule} from "./inventory/inventory.module";
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+
+export function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8080',
+        realm: 'udsm-assets-management',
+        clientId: 'assets-frontend'
+        // codeChallengeMethod: 's256'
+      },
+      initOptions: {
+        onLoad: 'login-required',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      }
+    });
+}
 
 @NgModule({
   declarations: [
@@ -38,6 +56,7 @@ import {InventoryModule} from "./inventory/inventory.module";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    KeycloakAngularModule,
     EmployeeModule,
     NgChartsModule,
     AssetModule,
@@ -49,7 +68,12 @@ import {InventoryModule} from "./inventory/inventory.module";
     RouterModule.forRoot(appRoutes),
   ],
 
-  providers: [],
+  providers: [{
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService],
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {

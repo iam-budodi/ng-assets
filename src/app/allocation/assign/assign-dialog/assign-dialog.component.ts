@@ -15,7 +15,7 @@ export class AssignDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getAllocationFormFields();
   allocation: Allocation = undefined!;
-  submitLabel: string = 'Create';
+  submitLabel: string = 'Assign';
   title!: string;
   operation!: string;
   confirmText!: string;
@@ -60,8 +60,7 @@ export class AssignDialogComponent implements OnInit {
   apiMethodsCall(allocation: Allocation): void {
     if (this.operation === 'create') {
       this.callAssignApiService(allocation);
-    }
-    else if (this.operation === 'edit') {
+    } else if (this.operation === 'edit') {
       this.callUpdateApiService(allocation);
     } else if (this.operation === 'delete') {
       this.callDeleteApiService(allocation);
@@ -83,6 +82,7 @@ export class AssignDialogComponent implements OnInit {
     this.assignmentService.restAllocationsAllocationIdPut(this.allocation.id!, allocation, 'response').subscribe({
         next: (response: HttpResponse<string>): void => {
           if (response.status === 204) {
+            console.log('ASSIGN : ' + response.body);
             this.dialogRef.close('success');
           }
         },

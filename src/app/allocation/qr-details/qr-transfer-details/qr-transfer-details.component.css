@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  height: 84vh;
+}
+
+.page-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+mat-card {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  flex: 0 0 200px;
+  font-weight: bold;
+}
+
+.detail-value {
+  flex: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .detail-row {
+    flex-direction: column;
+  }
+
+  .detail-label {
+    flex: none;
+  }
+
+  .detail-value {
+    margin-left: 200px;
+  }
+}
+

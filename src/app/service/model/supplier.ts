@@ -9,27 +9,28 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SupplierType } from './supplierType';
-import { Address } from './address';
+import {SupplierType} from './supplierType';
+import {Address} from './address';
 
 
 /**
  * Supplier representation
  */
-export interface Supplier { 
-    id?: number;
-    registeredAt?: string;
-    updatedAt?: string;
-    registeredBy?: string;
-    updatedBy?: string;
-    name: string;
-    email: string;
-    phone: string;
-    website?: string;
-    supplierType: SupplierType;
-    description: string;
-    address: Address;
+export interface Supplier {
+  id?: number;
+  registeredAt?: string;
+  updatedAt?: string;
+  registeredBy?: string;
+  updatedBy?: string;
+  name: string;
+  email: string;
+  phone: string;
+  website?: string;
+  supplierType: SupplierType;
+  description: string;
+  address: Address;
 }
+
 export namespace Supplier {
 }
 

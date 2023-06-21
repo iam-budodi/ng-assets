@@ -1,0 +1,100 @@
+<div class="container">
+  <h1 class="page-title">Change Asset Ownership Details</h1>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title">Asset Transfer Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-row">
+        <div class="detail-label">Asset Transferred At:</div>
+        <div class="detail-value">{{ assetTransfer.transferDate | date }}</div>
+      </div>
+      <!--      TODO: ADD DEALLOCATION DATE-->
+      <!--      <div class="detail-row" *ngIf="assetTransfer.">-->
+      <!--        <div class="detail-label">Deallocated At:</div>-->
+      <!--        <div class="detail-value">{{ allocation.deallocationDate | date }}</div>-->
+      <!--      </div>-->
+      <div class="detail-row">
+        <div class="detail-label">Transfer Remarks:</div>
+        <div class="detail-value">{{ assetTransfer.transferRemark }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Status:</div>
+        <div class="detail-value">{{ assetTransfer.status }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title">Previous Asset Owner Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-row">
+        <div class="detail-label">Employee Name:</div>
+        <div
+          class="detail-value">{{ assetTransfer.employee.firstName }} {{ assetTransfer.employee.middleName }} {{ assetTransfer.employee.lastName }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Email:</div>
+        <div class="detail-value">{{ assetTransfer.employee.email }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Department:</div>
+        <div class="detail-value">{{ assetTransfer.employee.department?.name }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title">Asset Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-row">
+        <div class="detail-label">Asset Name:</div>
+        <div
+          class="detail-value">{{ assetTransfer.asset.brand }} {{ assetTransfer.asset.model }} {{ assetTransfer.asset.category?.name }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Serial Number:</div>
+        <div class="detail-value">{{ assetTransfer.asset.serialNumber }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title">New Asset Owner Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-row">
+        <div class="detail-label">Employee Name:</div>
+        <div
+          class="detail-value">{{ assetTransfer.newEmployee.firstName }} {{ assetTransfer.newEmployee.middleName }} {{ assetTransfer.employee.lastName }}</div>
+      </div>
+      <!--      <div class="detail-row">-->
+      <!--        <div class="detail-label">Work ID:</div>-->
+      <!--        <div class="detail-value">{{ assetTransfer.newEmployee.workId }}</div>-->
+      <!--      </div>-->
+      <div class="detail-row">
+        <div class="detail-label">Email:</div>
+        <div class="detail-value">{{ assetTransfer.newEmployee.email }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Mobile:</div>
+        <div class="detail-value">{{ assetTransfer.newEmployee.mobile }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Department:</div>
+        <div class="detail-value">{{ assetTransfer.newEmployee.department?.name }}</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Location:</div>
+        <div class="detail-value">{{ assetTransfer.newEmployee.department?.location?.city }}
+          , {{ assetTransfer.newEmployee.department?.location?.country }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
