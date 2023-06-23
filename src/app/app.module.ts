@@ -34,9 +34,13 @@ export function initializeKeycloak(keycloak: KeycloakService) {
       },
       initOptions: {
         onLoad: 'login-required',
-        silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
-      }
+        checkLoginIframe: true,
+        // flow: 'implicit',
+        silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
+      },
+      loadUserProfileAtStartUp: true,
+      enableBearerInterceptor: true,
+      bearerExcludedUrls: ['/assets']
     });
 }
 

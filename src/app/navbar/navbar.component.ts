@@ -55,20 +55,20 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.isAdmin = this.hasRole('admin');
     this.isProcure = this.hasRole('procure');
-    this.loadProfile();
-    console.log('ADMIN : ' + this.isAdmin + ' PROCURE : ' + this.isProcure + ' PROFILE : ' + this.userProfile);
+    await this.loadProfile();
+    console.log('ADMIN : ' + this.isAdmin + ' PROCURE : ' + this.isProcure + ' PROFILE : ' + JSON.stringify(this.userProfile));
   }
 
   hasRole(role: string): boolean {
     return this.keycloak.getUserRoles().includes(role);
   }
 
-  loadProfile(): Promise<KeycloakProfile> {
+  async loadProfile() {
      // this.keycloak.loadUserProfile().then((profile: KeycloakProfile ) => this.userProfile = profile);
-     return this.keycloak.loadUserProfile();
+     this.userProfile = await this.keycloak.loadUserProfile();
   }
 
   async logout(): Promise<void> {

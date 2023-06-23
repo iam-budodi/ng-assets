@@ -9,23 +9,22 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {Status} from './status';
-import {Category} from './category';
-import {Supplier} from './supplier';
+import { Status } from './status';
+import { Category } from './category';
+import { Supplier } from './supplier';
 
 
-export interface Item {
-  id?: number;
-  itemName: string;
-  qtyBought: number;
-  status?: Status;
-  datePurchased: string;
-  transferCount?: number;
-  description?: string;
-  category?: Category;
-  supplier?: Supplier;
+export interface Item { 
+    id?: number;
+    itemName: string;
+    qtyBought: number;
+    status?: Status;
+    datePurchased: string;
+    transferCount?: number;
+    description?: string;
+    category?: Category;
+    supplier?: Supplier;
 }
-
 export namespace Item {
 }
 

@@ -9,17 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {AllocationStatus} from './allocationStatus';
-import {Employee} from './employee';
-import {Asset} from './asset';
+import { AllocationStatus } from './allocationStatus';
+import { Employee } from './employee';
+import { Asset } from './asset';
 
 
-export interface EmployeeAsset {
-  asset?: Asset;
-  employee?: Employee;
-  status?: AllocationStatus;
+export interface EmployeeAsset { 
+    asset?: Asset;
+    employee?: Employee;
+    status?: AllocationStatus;
 }
-
 export namespace EmployeeAsset {
 }
 

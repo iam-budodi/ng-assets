@@ -9,23 +9,23 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {Purchase} from './purchase';
-import {QRCode} from './qRCode';
-import {Category} from './category';
+import { Purchase } from './purchase';
+import { QRCode } from './qRCode';
+import { Category } from './category';
 
 
 /**
  * Asset representation
  */
-export interface Asset {
-  id?: number;
-  brand: string;
-  model: string;
-  modelNumber: string;
-  serialNumber: string;
-  manufacturer: string;
-  category?: Category;
-  label?: QRCode;
-  purchase: Purchase;
+export interface Asset { 
+    id?: number;
+    brand: string;
+    model: string;
+    modelNumber: string;
+    serialNumber: string;
+    manufacturer: string;
+    category?: Category;
+    label?: QRCode;
+    purchase: Purchase;
 }
 

@@ -14,8 +14,8 @@
 /**
  * QRCode representation
  */
-export interface QRCode {
-  id?: number;
-  qrByteString: Blob;
+export interface QRCode { 
+    id?: number;
+    qrByteString: Blob;
 }
 

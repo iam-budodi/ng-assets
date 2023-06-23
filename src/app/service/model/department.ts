@@ -9,17 +9,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {Address} from './address';
+import { Address } from './address';
 
 
 /**
  * Department representation
  */
-export interface Department {
-  id?: number;
-  name: string;
-  code?: string;
-  description?: string;
-  location?: Address;
+export interface Department { 
+    id?: number;
+    name: string;
+    code?: string;
+    description?: string;
+    location?: Address;
 }
 

@@ -11,13 +11,13 @@
  */
 
 
-export interface Address {
-  id?: number;
-  street: string;
-  ward: string;
-  district: string;
-  city: string;
-  postalCode?: string;
-  country: string;
+export interface Address { 
+    id?: number;
+    street: string;
+    ward: string;
+    district: string;
+    city: string;
+    postalCode?: string;
+    country: string;
 }
 
