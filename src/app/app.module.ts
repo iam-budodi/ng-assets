@@ -30,16 +30,12 @@ export function initializeKeycloak(keycloak: KeycloakService) {
         url: 'http://localhost:8080',
         realm: 'udsm-assets-management',
         clientId: 'assets-frontend'
-        // codeChallengeMethod: 's256'
       },
       initOptions: {
         onLoad: 'login-required',
         checkLoginIframe: true,
-        // flow: 'implicit',
         silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
       },
-      loadUserProfileAtStartUp: true,
-      enableBearerInterceptor: true,
       bearerExcludedUrls: ['/assets']
     });
 }

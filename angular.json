@@ -64,8 +64,7 @@
               "browserTarget": "ng-assets:build:production"
             },
             "development": {
-              "browserTarget": "ng-assets:build:development",
-              "proxyConfig" :"src/proxy.conf.json"
+              "browserTarget": "ng-assets:build:development"
             }
           },
           "defaultConfiguration": "development"
