@@ -115,7 +115,6 @@
 <!--</mat-sidenav-container>-->
 
 
-
 <mat-toolbar class="mat-elevation-z8">
   <mat-toolbar-row>
     <button
@@ -146,7 +145,7 @@
           <span>Profile</span>
         </button>
         <mat-divider></mat-divider>
-        <button mat-menu-item routerLink="#" (click)="logout()">
+        <button (click)="logout()" mat-menu-item routerLink="#">
           <mat-icon>exit_to_app</mat-icon>
           Logout
         </button>
@@ -163,25 +162,27 @@
       src="https://th.bing.com/th?id=OIP.w3GGAMu693wOoV5UAp2V2AHaG7&w=258&h=241&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
     />
 
-    <h4 class="name">Admin</h4>
-    <p class="designation">IT Admin</p>
+    <h4 class="name">{{userProfile?.firstName}} {{userProfile?.lastName}}</h4>
+    <h3 class="designation">{{designation}}</h3>
 
     <mat-divider></mat-divider>
 
     <mat-nav-list>
-      <a mat-list-item routerLink="{{ route.link }}" *ngFor="let route of routeLinks.slice(0, 2)">
+      <a *ngFor="let route of routeLinks.slice(0, 2)" mat-list-item routerLink="{{ route.link }}">
         <mat-icon class="icon">{{ route.icon }}</mat-icon>
         <span class="label">{{ route.name }}</span>
       </a>
 
       <ng-container *ngFor="let route of routeLinks.slice(2)">
-<!--        <mat-expansion-panel *ngIf="(route.header !== 'Asset Inventory' || !isAdmin) || (route.header !== 'Asset Tracking' || !isProcure) || (route.header !== 'Employee' || !isProcure)">-->
-        <mat-expansion-panel *ngIf="!(route.header === 'Asset Inventory' && isAdmin) && !(route.header === 'Asset Tracking' && isProcure) && !(route.header === 'Employee' && isProcure)">
-        <mat-expansion-panel-header>
+        <!--        <mat-expansion-panel *ngIf="(route.header !== 'Asset Inventory' || !isAdmin) || (route.header !== 'Asset Tracking' || !isProcure) || (route.header !== 'Employee' || !isProcure)">-->
+        <mat-expansion-panel
+          *ngIf="!(route.header === 'Asset Inventory' && isAdmin) && !(route.header === 'Asset Tracking' && isProcure) && !(route.header === 'Employee' && isProcure)">
+          <mat-expansion-panel-header>
             {{ route.header }}
           </mat-expansion-panel-header>
           <mat-nav-list>
-            <a mat-list-item routerLink="{{ panel.link }}" *ngFor="let panel of route.nav" [class.hidden]="!hasAccess(panel)">
+            <a *ngFor="let panel of route.nav" [class.hidden]="!hasAccess(panel)" mat-list-item
+               routerLink="{{ panel.link }}">
               <mat-icon class="icon">{{ panel.icon }}</mat-icon>
               <span class="label">{{ panel.name }}</span>
             </a>

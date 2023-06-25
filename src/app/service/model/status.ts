@@ -14,11 +14,11 @@
 export type Status = 'InStock' | 'InUse' | 'Faulty' | 'Retired' | 'New' | 'Transfered';
 
 export const Status = {
-    InStock: 'InStock' as Status,
-    InUse: 'InUse' as Status,
-    Faulty: 'Faulty' as Status,
-    Retired: 'Retired' as Status,
-    New: 'New' as Status,
-    Transfered: 'Transfered' as Status
+  InStock: 'InStock' as Status,
+  InUse: 'InUse' as Status,
+  Faulty: 'Faulty' as Status,
+  Retired: 'Retired' as Status,
+  New: 'New' as Status,
+  Transfered: 'Transfered' as Status
 };
 

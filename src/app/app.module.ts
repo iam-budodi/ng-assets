@@ -22,6 +22,7 @@ import {CoreModule} from './core/core.module';
 import {AllocationModule} from "./allocation/allocation.module";
 import {InventoryModule} from "./inventory/inventory.module";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import {AuthGuard} from "./navbar/auth.guard";
 
 export function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -73,7 +74,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService],
-  }],
+  }, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {

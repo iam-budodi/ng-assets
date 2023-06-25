@@ -14,7 +14,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   sidenav!: MatSidenav;
   isAdmin: boolean = false;
   isProcure: boolean = false;
-  userProfile: KeycloakProfile = undefined!;
+  userProfile: KeycloakProfile | undefined = undefined;
+  designation!: string;
   routeLinks = [
     {link: 'dashboard', name: 'Dashboard', icon: 'dashboard'},
     {link: 'user', name: 'Users', icon: 'people'},
@@ -59,16 +60,22 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     this.isAdmin = this.hasRole('admin');
     this.isProcure = this.hasRole('procure');
     await this.loadProfile();
-    console.log('ADMIN : ' + this.isAdmin + ' PROCURE : ' + this.isProcure + ' PROFILE : ' + JSON.stringify(this.userProfile));
   }
 
   hasRole(role: string): boolean {
-    return this.keycloak.getUserRoles().includes(role);
+    const isRole: boolean = this.keycloak.getUserRoles().includes(role);
+    if (isRole) this.getDesignation(role);
+    return isRole;
   }
 
-  async loadProfile() {
-     // this.keycloak.loadUserProfile().then((profile: KeycloakProfile ) => this.userProfile = profile);
-     this.userProfile = await this.keycloak.loadUserProfile();
+  async loadProfile(): Promise<void> {
+    // this.keycloak.loadUserProfile().then((profile: KeycloakProfile ) => this.userProfile = profile);
+    this.userProfile = await this.keycloak.loadUserProfile();
+  }
+
+  getDesignation(role: string): void {
+    if (role === 'procure') this.designation = 'Procurement Officer - Administration';
+    else if (role === 'admin') this.designation = 'IT Administrator';
   }
 
   async logout(): Promise<void> {

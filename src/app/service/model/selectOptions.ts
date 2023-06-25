@@ -11,8 +11,8 @@
  */
 
 
-export interface SelectOptions { 
-    value: number;
-    label: string;
+export interface SelectOptions {
+  value: number;
+  label: string;
 }
 

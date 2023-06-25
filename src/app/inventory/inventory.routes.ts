@@ -3,11 +3,14 @@ import {SupplierListComponent} from "./supplier/supplier-list/supplier-list.comp
 import {PurchaseListComponent} from "./purchase/purchase-list/purchase-list.component";
 import {ComputerListComponent} from "./computer/computer-list/computer-list.component";
 import {CategoryListComponent} from "./category/category-list/category-list.component";
+import {AuthGuard} from "../navbar/auth.guard";
 
 export const inventoryRoutes: Routes = [
   {
     path: 'assets',
-    component: ComputerListComponent
+    component: ComputerListComponent,
+    canActivate: [AuthGuard],
+    data: {roles: ['procure']}
   },
   {
     path: 'suppliers',

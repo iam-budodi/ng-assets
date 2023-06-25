@@ -9,37 +9,38 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Department } from './department';
-import { Address } from './address';
-import { EmploymentStatus } from './employmentStatus';
-import { Gender } from './gender';
+import {Department} from './department';
+import {Address} from './address';
+import {EmploymentStatus} from './employmentStatus';
+import {Gender} from './gender';
 
 
 /**
  * Employee representation
  */
-export interface Employee { 
-    id?: number;
-    registeredAt?: string;
-    updatedAt?: string;
-    registeredBy?: string;
-    updatedBy?: string;
-    firstName: string;
-    middleName?: string;
-    lastName: string;
-    gender?: Gender;
-    mobile: string;
-    email: string;
-    workId: string;
-    dateOfBirth: string;
-    hireDate: string;
-    status: Set<EmploymentStatus>;
-    department?: Department;
-    address?: Address;
-    age?: number;
-    timeOfService?: number;
-    retireAt?: string;
+export interface Employee {
+  id?: number;
+  registeredAt?: string;
+  updatedAt?: string;
+  registeredBy?: string;
+  updatedBy?: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  gender?: Gender;
+  mobile: string;
+  email: string;
+  workId: string;
+  dateOfBirth: string;
+  hireDate: string;
+  status: Set<EmploymentStatus>;
+  department?: Department;
+  address?: Address;
+  age?: number;
+  timeOfService?: number;
+  retireAt?: string;
 }
+
 export namespace Employee {
 }
 

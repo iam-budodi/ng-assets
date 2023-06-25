@@ -9,23 +9,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AllocationStatus } from './allocationStatus';
-import { Employee } from './employee';
-import { Asset } from './asset';
+import {AllocationStatus} from './allocationStatus';
+import {Employee} from './employee';
+import {Asset} from './asset';
 
 
 /**
  * Allocation representation
  */
-export interface Allocation { 
-    id?: number;
-    allocationDate?: string;
-    deallocationDate?: string;
-    allocationRemark?: string;
-    status?: AllocationStatus;
-    employee: Employee;
-    asset: Asset;
+export interface Allocation {
+  id?: number;
+  allocationDate?: string;
+  deallocationDate?: string;
+  allocationRemark?: string;
+  status?: AllocationStatus;
+  employee: Employee;
+  asset: Asset;
 }
+
 export namespace Allocation {
 }
 
