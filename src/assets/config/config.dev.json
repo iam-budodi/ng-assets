@@ -1,0 +1,5 @@
+{
+  "KEYCLOAK_URL": "http://localhost:8080",
+  "KEYCLOAK_REALM": "udsm-assets-management",
+  "KEYCLOAK_CLIENT_ID": "assets-frontend"
+}

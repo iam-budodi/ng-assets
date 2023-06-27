@@ -115,44 +115,90 @@
 <!--</mat-sidenav-container>-->
 
 
-<mat-toolbar class="mat-elevation-z8">
-  <mat-toolbar-row>
-    <button
-      (click)="sidenav.toggle()"
-      *ngIf="sidenav.mode === 'over'"
-      mat-icon-button
-      matTooltip="Menu"
-    >
-      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
-      <mat-icon *ngIf="sidenav.opened">close</mat-icon>
-    </button>
-    <span>[Logo Placeholder]</span>
+<!--<mat-toolbar class="mat-elevation-z8">-->
+<!--  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">-->
+<!--    <button-->
+<!--      (click)="sidenav.toggle()"-->
+<!--      *ngIf="sidenav.mode === 'over'"-->
+<!--      mat-icon-button-->
+<!--      matTooltip="Menu"-->
+<!--    >-->
+<!--      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>-->
+<!--      <mat-icon *ngIf="sidenav.opened">close</mat-icon>-->
+<!--    </button>-->
+<!--    <span>[Logo Placeholder]</span>-->
 
-    <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px">
-      <button mat-icon-button matTooltip="Notifications">
-        <mat-icon>notifications</mat-icon>
-      </button>
-      <button
-        [matMenuTriggerFor]="userAccountMenu"
-        mat-icon-button
-        matTooltip="Login"
-      >
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
-        <button mat-menu-item routerLink="#">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button (click)="logout()" mat-menu-item routerLink="#">
-          <mat-icon>exit_to_app</mat-icon>
-          Logout
-        </button>
-      </mat-menu>
-    </div>
-  </mat-toolbar-row>
+<!--    <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px">-->
+<!--      <button mat-icon-button matTooltip="Notifications">-->
+<!--        <mat-icon>notifications</mat-icon>-->
+<!--      </button>-->
+<!--      <button-->
+<!--        [matMenuTriggerFor]="userAccountMenu"-->
+<!--        mat-icon-button-->
+<!--        matTooltip="Login"-->
+<!--      >-->
+<!--        <span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</span>-->
+<!--&lt;!&ndash;        <mat-icon>account_circle</mat-icon>&ndash;&gt;-->
+<!--      </button>-->
+<!--      <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">-->
+<!--        <button mat-menu-item routerLink="#">-->
+<!--          <mat-icon>person</mat-icon>-->
+<!--          <span>Profile</span>-->
+<!--        </button>-->
+<!--        <mat-divider></mat-divider>-->
+<!--        <button (click)="logout()" mat-menu-item routerLink="#">-->
+<!--          <mat-icon>exit_to_app</mat-icon>-->
+<!--          Logout-->
+<!--        </button>-->
+<!--      </mat-menu>-->
+
+<!--      <button-->
+<!--      >-->
+<!--        <mat-icon>account_circle</mat-icon>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </mat-toolbar-row>-->
+<!--</mat-toolbar>-->
+
+
+<mat-toolbar class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="space-between center">
+  <button
+    (click)="sidenav.toggle()"
+    *ngIf="sidenav.mode === 'over'"
+    mat-icon-button
+    matTooltip="Menu"
+  >
+    <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+    <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+  </button>
+  <span fxShow="false" fxShow.gt-sm>
+    <button mat-button routerLink="/">{{logo}}</button>
+  </span>
+
+
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button *ngIf="isAuthenticated" [matMenuTriggerFor]="userAccountMenu" mat-button>
+      <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+      <span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</span>
+    </button>
+    <button mat-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
+<mat-menu #userAccountMenu xPosition="before">
+
+
+  <button mat-menu-item routerLink="#">
+    <mat-icon>person</mat-icon>
+    <span>Profile</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button (click)="logout()" mat-menu-item>
+    <mat-icon>exit_to_app</mat-icon>
+    Logout
+  </button>
+</mat-menu>
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">

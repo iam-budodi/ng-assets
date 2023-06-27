@@ -16,6 +16,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   isProcure: boolean = false;
   userProfile: KeycloakProfile | undefined = undefined;
   designation!: string;
+  isAuthenticated: boolean = true;
+  logo: any = '[Logo Placeholder]';
+
   routeLinks = [
     {link: 'dashboard', name: 'Dashboard', icon: 'dashboard'},
     {link: 'user', name: 'Users', icon: 'people'},
