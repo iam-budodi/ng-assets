@@ -1,6 +1,6 @@
 /**
- * Electronic Asset Inventory API
- * We keep and organize inventory of all purchased electronic assets
+ * Electronic Asset Management APIs
+ * We manage and organize inventory of all purchased electronic assets
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: luluyshaban@gmail.com
@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {Supplier} from './supplier';
+import { Supplier } from './supplier';
 
 
 /**
  * Purchase representation
  */
-export interface Purchase {
-  id?: number;
-  purchaseDate: string;
-  purchaseQty: number;
-  purchasePrice: number;
-  invoiceNumber: string;
-  supplier?: Supplier;
-  totalPurchaseCost?: number;
+export interface Purchase { 
+    id?: number;
+    purchaseDate: string;
+    purchaseQty: number;
+    purchasePrice: number;
+    invoiceNumber: string;
+    supplier?: Supplier;
+    totalPurchaseCost?: number;
 }
 

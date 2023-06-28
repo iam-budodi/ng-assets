@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {Supplier, SupplierEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {SupplierFormService} from "../../../shared/util/supplier-form.service";
+import {resetForm} from "../../../shared/util/utils";
 
 @Component({
   selector: 'app-supplier-dialog',
@@ -14,6 +15,7 @@ import {SupplierFormService} from "../../../shared/util/supplier-form.service";
 export class SupplierDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getDepartmentFormFields();
+  options: FormlyFormOptions = {};
   supplier: Supplier = undefined!;
   submitLabel: string = 'Create';
   title!: string;
@@ -33,9 +35,10 @@ export class SupplierDialogComponent implements OnInit {
     this.selectSupplierDialogModeAndOps();
   }
 
-  onSubmit({valid, value}: { valid: boolean, value: Supplier }): void {
+  onSubmit({value}: { value: Supplier }): void {
     value = this.operation === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.supplier : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
 

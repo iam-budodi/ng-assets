@@ -1,6 +1,6 @@
 /**
- * Electronic Asset Inventory API
- * We keep and organize inventory of all purchased electronic assets
+ * Electronic Asset Management APIs
+ * We manage and organize inventory of all purchased electronic assets
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: luluyshaban@gmail.com
@@ -9,17 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {AllocationStatus} from './allocationStatus';
-import {Employee} from './employee';
-import {Asset} from './asset';
+import { AllocationStatus } from './allocationStatus';
+import { Employee } from './employee';
+import { Asset } from './asset';
 
 
-export interface EmployeeAsset {
-  asset?: Asset;
-  employee?: Employee;
-  status?: AllocationStatus;
+export interface EmployeeAsset { 
+    asset?: Asset;
+    employee?: Employee;
+    status?: AllocationStatus;
 }
-
 export namespace EmployeeAsset {
 }
 

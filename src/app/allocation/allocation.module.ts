@@ -14,7 +14,6 @@ import {RouterLink, RouterModule} from "@angular/router";
 import {allocationRoutes} from "./allocation.routes";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../shared/shared.module";
-import {AssetsOwnedComponent} from './transfer/assets-owned/assets-owned.component';
 import {OwnedDialogComponent} from './transfer/assets-owned/owned-dialog/owned-dialog.component';
 import {TransferService} from "./transfer/transfer.service";
 import {MaterialModule} from "../material.module";
@@ -30,7 +29,6 @@ import {QrTransferDetailsComponent} from './qr-details/qr-transfer-details/qr-tr
     AssignListComponent,
     TransferDialogComponent,
     TransferListComponent,
-    AssetsOwnedComponent,
     OwnedDialogComponent,
     SearchDialogComponent,
     QrPreviewComponent,

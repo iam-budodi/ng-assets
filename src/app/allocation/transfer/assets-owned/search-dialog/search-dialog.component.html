@@ -1,5 +1,5 @@
 <div>
-  <button class="close" mat-dialog-close="true" mat-icon-button>
+  <button class="close" mat-dialog-close="true" mat-icon-button (click)="options.resetModel && options.resetModel()">
     <mat-icon>clear</mat-icon>
   </button>
   <h2 mat-dialog-title>{{ title }}</h2>
@@ -8,10 +8,11 @@
     <form (ngSubmit)="onSubmit(form)" [formGroup]="form" style="width: 95%; margin: 0 auto">
       <formly-form
         [fields]="fields"
-        [form]="form">
+        [form]="form"
+      [options]="options">
       </formly-form>
 
-      <div class="button-row" style="display:flex; flex-direction: row; justify-content: space-between;">
+      <div class="button-row" style="display:flex; justify-content: flex-end;">
         <button [disabled]="form.invalid" class="formly-button button" color="primary"
                 mat-raised-button>{{submitLabel}}</button>
       </div>

@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {Allocation, AllocationEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {AllocationFormService} from "../../../shared/util/allocation-form.service";
+import {resetForm} from "../../../shared/util/utils";
 
 @Component({
   selector: 'app-assign-dialog',
@@ -14,6 +15,7 @@ import {AllocationFormService} from "../../../shared/util/allocation-form.servic
 export class AssignDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getAllocationFormFields();
+  options: FormlyFormOptions = {};
   allocation: Allocation = undefined!;
   submitLabel: string = 'Assign';
   title!: string;
@@ -38,6 +40,7 @@ export class AssignDialogComponent implements OnInit {
       ? this.allocation
       : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
   initModeAndData(): void {

@@ -37,7 +37,7 @@ export class TransferService {
   }
 
   getAllocatedAssets(workId: string, status?: AllocationStatus): Observable<Array<EmployeeAsset>> {
-    return this.allocation.restAllocationsAssetsGet(workId, status)
+    return this.allocation.restAllocationsWorkIdAssetsGet(workId, status)
       .pipe(map((response: HttpResponse<Array<EmployeeAsset>>) => {
             return response.body!;
           }

@@ -1,10 +1,11 @@
 import {Component, Inject} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {Category, CategoryEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {CategoryFormService} from "../../../shared/util/category-form.service";
+import {resetForm} from "../../../shared/util/utils";
 
 @Component({
   selector: 'app-category-dialog',
@@ -14,6 +15,7 @@ import {CategoryFormService} from "../../../shared/util/category-form.service";
 export class CategoryDialogComponent {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getCategoryFormFields();
+  options: FormlyFormOptions = {};
   category: Category = undefined!;
   submitLabel: string = 'Add';
   operationMode!: string;
@@ -36,6 +38,7 @@ export class CategoryDialogComponent {
   onSubmit({value}: { valid: boolean, value: Category }): void {
     value = this.operationMode === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.category : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
   initModeAndData(): void {

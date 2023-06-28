@@ -3,8 +3,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Employee, EmployeeEndpointService} from "../../service";
 import {HttpResponse} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {EmployeeFormService} from "../../shared/util/employee-form.service";
+import {resetForm} from "../../shared/util/utils";
 
 
 @Component({
@@ -15,6 +16,7 @@ import {EmployeeFormService} from "../../shared/util/employee-form.service";
 export class EmployeeDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getEmployeeFormFields();
+  options: FormlyFormOptions = {};
   employee: Employee = undefined!;
   submitLabel: string = 'Create';
   title!: string;
@@ -37,6 +39,7 @@ export class EmployeeDialogComponent implements OnInit {
   onSubmit({value}: { value: Employee }): void {
     value = this.operation === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.employee : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
 

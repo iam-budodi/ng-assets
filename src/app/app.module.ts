@@ -23,6 +23,7 @@ import {AllocationModule} from "./allocation/allocation.module";
 import {InventoryModule} from "./inventory/inventory.module";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {AuthGuard} from "./navbar/auth.guard";
+import {NgOptimizedImage} from "@angular/common";
 
 export function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -67,6 +68,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     InventoryModule,
     AllocationModule,
     RouterModule.forRoot(appRoutes),
+    NgOptimizedImage,
   ],
 
   providers: [{

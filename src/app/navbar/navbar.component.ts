@@ -1,4 +1,4 @@
-import {BreakpointObserver} from '@angular/cdk/layout';
+import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild,} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 import {KeycloakService} from "keycloak-angular";
@@ -10,18 +10,16 @@ import {KeycloakProfile} from "keycloak-js";
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isAdmin: boolean = false;
   isProcure: boolean = false;
   userProfile: KeycloakProfile | undefined = undefined;
   designation!: string;
-  isAuthenticated: boolean = true;
   logo: any = '[Logo Placeholder]';
 
-  routeLinks = [
-    {link: 'dashboard', name: 'Dashboard', icon: 'dashboard'},
-    {link: 'user', name: 'Users', icon: 'people'},
+  routeLink: { link: string, name: string, icon: string } = {link: 'dashboard', name: 'Dashboard', icon: 'dashboard'};
+
+  routePanel = [
     {
       header: 'Asset Inventory',
       nav: [
@@ -50,7 +48,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         {link: 'departments', name: 'Departments', icon: 'account_balance'},
       ],
     },
-  ];
+    {
+      header: 'Reports',
+      nav: [
+        {link: 'reports', name: 'Generate Reports', icon: 'file_copy'}
+      ],
+    },
+  ]
 
   constructor(
     private observer: BreakpointObserver,
@@ -86,20 +90,16 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+    this.observer.observe(['(max-width: 800px)']).subscribe((res: BreakpointState): void => {
       if (res.matches) {
         this.sidenav.mode = 'over';
-        this.sidenav.close();
+        this.sidenav?.close();
       } else {
         this.sidenav.mode = 'side';
-        this.sidenav.open();
+        this.sidenav?.open();
       }
     });
 
     this.cd.detectChanges();
-  }
-
-  hasAccess(panel: any) {
-    return true;
   }
 }

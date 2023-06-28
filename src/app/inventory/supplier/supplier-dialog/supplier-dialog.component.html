@@ -1,5 +1,5 @@
 <div>
-  <button class="close" mat-dialog-close="true" mat-icon-button>
+  <button class="close" mat-dialog-close="true" mat-icon-button (click)="options.resetModel && options.resetModel()">
     <mat-icon>clear</mat-icon>
   </button>
   <h2 mat-dialog-title>{{ title }}</h2>
@@ -10,7 +10,8 @@
         *ngIf="!title.toLocaleLowerCase().includes('remove')"
         [fields]="fields"
         [form]="form"
-        [model]="supplier">
+        [model]="supplier"
+      [options]="options">
       </formly-form>
 
       <div *ngIf="title.toLocaleLowerCase().includes('remove')">
@@ -25,19 +26,20 @@
 
       <div *ngIf="!title.toLocaleLowerCase().includes('remove')"
            class="button-row"
-           style="display:flex; flex-direction: row; justify-content: space-between;"
+           style="display:flex; justify-content: flex-end;"
       >
-        <button class="formly-button" mat-raised-button type="reset">Clear</button>
+<!--        <button class="formly-button" mat-raised-button type="reset">Clear</button>-->
         <button [disabled]="form.invalid" class="formly-button button" color="primary"
                 mat-raised-button>{{submitLabel}}</button>
       </div>
     </form>
 
-    <app-form-debug
-      *ngIf="!title.toLocaleLowerCase().includes('remove')"
-      [form]="form.value"
-      [model]="supplier">
+<!--    DO NOT DELETE-->
+<!--    <app-form-debug-->
+<!--      *ngIf="!title.toLocaleLowerCase().includes('remove')"-->
+<!--      [form]="form.value"-->
+<!--      [model]="supplier">-->
 
-    </app-form-debug>
+<!--    </app-form-debug>-->
   </div>
 </div>

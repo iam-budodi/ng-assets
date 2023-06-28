@@ -1,6 +1,6 @@
 /**
- * Electronic Asset Inventory API
- * We keep and organize inventory of all purchased electronic assets
+ * Electronic Asset Management APIs
+ * We manage and organize inventory of all purchased electronic assets
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: luluyshaban@gmail.com
@@ -14,8 +14,8 @@
 export type SupplierType = 'MANUFACTURER' | 'WHOLESALER' | 'RETAILER';
 
 export const SupplierType = {
-  Manufacturer: 'MANUFACTURER' as SupplierType,
-  Wholesaler: 'WHOLESALER' as SupplierType,
-  Retailer: 'RETAILER' as SupplierType
+    Manufacturer: 'MANUFACTURER' as SupplierType,
+    Wholesaler: 'WHOLESALER' as SupplierType,
+    Retailer: 'RETAILER' as SupplierType
 };
 

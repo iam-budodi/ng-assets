@@ -1,166 +1,3 @@
-<!--<mat-toolbar class="mat-elevation-z8">-->
-<!--  <mat-toolbar-row>-->
-<!--    <button-->
-<!--      (click)="sidenav.toggle()"-->
-<!--      *ngIf="sidenav.mode === 'over'"-->
-<!--      mat-icon-button-->
-<!--      matTooltip="Menu"-->
-<!--    >-->
-<!--      <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>-->
-<!--      <mat-icon *ngIf="sidenav.opened"> close</mat-icon>-->
-<!--    </button>-->
-<!--    <span>[Logo Placeholder]</span>-->
-<!--    &lt;!&ndash; <span class="toolbar-item-spacer"></span> &ndash;&gt;-->
-
-<!--    &lt;!&ndash;-->
-<!--  <button mat-icon-button matTooltip="Like">-->
-<!--    <mat-icon>favorite</mat-icon>-->
-<!--  </button>-->
-<!--  <button mat-icon-button matTooltip="Share">-->
-<!--    <mat-icon>share</mat-icon>-->
-<!--  </button> &ndash;&gt;-->
-
-<!--    <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px">-->
-<!--      <button mat-icon-button matTooltip="Notifications">-->
-<!--        <mat-icon>notifications</mat-icon>-->
-<!--      </button>-->
-<!--      <button-->
-<!--        [matMenuTriggerFor]="userAccountMenu"-->
-<!--        mat-icon-button-->
-<!--        matTooltip="Login"-->
-<!--      >-->
-<!--        <mat-icon>account_circle</mat-icon>-->
-<!--      </button>-->
-<!--      <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">-->
-<!--        <button mat-menu-item routerLink="#">-->
-<!--          <mat-icon>person</mat-icon>-->
-<!--          <span>Profile</span>-->
-<!--        </button>-->
-<!--        <mat-divider></mat-divider>-->
-<!--        <button mat-menu-item routerLink="#">-->
-<!--          <mat-icon>exit_to_app</mat-icon>-->
-<!--          Logout-->
-<!--        </button>-->
-<!--      </mat-menu>-->
-<!--    </div>-->
-<!--  </mat-toolbar-row>-->
-<!--</mat-toolbar>-->
-
-<!--<mat-sidenav-container>-->
-<!--  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">-->
-
-<!--    &lt;!&ndash; <img-->
-<!--      class="avatar mat-elevation-z8"-->
-<!--      src="https://source.unsplash.com/c_GmwfHBDzk/200x200"-->
-<!--    /> &ndash;&gt;-->
-
-<!--    <img-->
-<!--      class="avatar mat-elevation-z8"-->
-<!--      src="https://th.bing.com/th?id=OIP.w3GGAMu693wOoV5UAp2V2AHaG7&w=258&h=241&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"-->
-<!--    />-->
-
-<!--    <h4 class="name">Admin</h4>-->
-<!--    <p class="designation">IT Admin</p>-->
-
-<!--    <mat-divider></mat-divider>-->
-
-<!--    <mat-nav-list>-->
-<!--      <div *ngFor="let route of routeLinks.slice(0, 2)">-->
-<!--        <a mat-list-item routerLink="{{ route.link }}">-->
-<!--          <mat-icon class="icon">{{ route.icon }}</mat-icon>-->
-<!--          <span class="label">{{ route.name }}</span>-->
-<!--        </a>-->
-<!--      </div>-->
-
-<!--      <mat-expansion-panel-->
-<!--        *ngFor="let route of routeLinks.slice(2)"-->
-<!--        [class.mat-elevation-z0]="true"-->
-<!--      >-->
-<!--        <mat-expansion-panel-header>-->
-<!--          {{ route.header }}-->
-<!--        </mat-expansion-panel-header>-->
-<!--        <mat-nav-list *ngFor="let panel of route.nav">-->
-<!--          <a mat-list-item routerLink="{{ panel.link }}">-->
-<!--            <mat-icon class="icon">{{ panel.icon }}</mat-icon>-->
-<!--            <span class="label">{{ panel.name }}</span>-->
-<!--          </a>-->
-<!--        </mat-nav-list>-->
-<!--      </mat-expansion-panel>-->
-<!--    </mat-nav-list>-->
-<!--    &lt;!&ndash;-->
-<!--        <button mat-button class="menu-button" routerLink="/home">-->
-<!--          <mat-icon>home</mat-icon>-->
-<!--          <span>Home</span>-->
-<!--        </button>-->
-<!--        <button mat-button class="menu-button" routerLink="/profile">-->
-<!--          <mat-icon>person</mat-icon>-->
-<!--          <span>Profile</span>-->
-<!--        </button>-->
-<!--        <button mat-button class="menu-button" routerLink="/about">-->
-<!--          <mat-icon>info</mat-icon>-->
-<!--          <span>About</span>-->
-<!--        </button> &ndash;&gt;-->
-
-<!--    <mat-divider></mat-divider>-->
-<!--    <button class="menu-button" mat-button routerLink="/help">-->
-<!--      <mat-icon>help</mat-icon>-->
-<!--      <span>Help</span>-->
-<!--    </button>-->
-<!--  </mat-sidenav>-->
-<!--  <mat-sidenav-content>-->
-<!--    <div class="content mat-elevation-z8">-->
-<!--      <router-outlet></router-outlet>-->
-<!--    </div>-->
-<!--  </mat-sidenav-content>-->
-<!--</mat-sidenav-container>-->
-
-
-<!--<mat-toolbar class="mat-elevation-z8">-->
-<!--  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">-->
-<!--    <button-->
-<!--      (click)="sidenav.toggle()"-->
-<!--      *ngIf="sidenav.mode === 'over'"-->
-<!--      mat-icon-button-->
-<!--      matTooltip="Menu"-->
-<!--    >-->
-<!--      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>-->
-<!--      <mat-icon *ngIf="sidenav.opened">close</mat-icon>-->
-<!--    </button>-->
-<!--    <span>[Logo Placeholder]</span>-->
-
-<!--    <div fxFlex fxHide.xs fxLayout fxLayoutAlign="flex-end" fxLayoutGap="20px">-->
-<!--      <button mat-icon-button matTooltip="Notifications">-->
-<!--        <mat-icon>notifications</mat-icon>-->
-<!--      </button>-->
-<!--      <button-->
-<!--        [matMenuTriggerFor]="userAccountMenu"-->
-<!--        mat-icon-button-->
-<!--        matTooltip="Login"-->
-<!--      >-->
-<!--        <span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</span>-->
-<!--&lt;!&ndash;        <mat-icon>account_circle</mat-icon>&ndash;&gt;-->
-<!--      </button>-->
-<!--      <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">-->
-<!--        <button mat-menu-item routerLink="#">-->
-<!--          <mat-icon>person</mat-icon>-->
-<!--          <span>Profile</span>-->
-<!--        </button>-->
-<!--        <mat-divider></mat-divider>-->
-<!--        <button (click)="logout()" mat-menu-item routerLink="#">-->
-<!--          <mat-icon>exit_to_app</mat-icon>-->
-<!--          Logout-->
-<!--        </button>-->
-<!--      </mat-menu>-->
-
-<!--      <button-->
-<!--      >-->
-<!--        <mat-icon>account_circle</mat-icon>-->
-<!--      </button>-->
-<!--    </div>-->
-<!--  </mat-toolbar-row>-->
-<!--</mat-toolbar>-->
-
-
 <mat-toolbar class="mat-elevation-z8" fxLayout="row" fxLayoutAlign="space-between center">
   <button
     (click)="sidenav.toggle()"
@@ -176,8 +13,8 @@
   </span>
 
 
-  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-    <button *ngIf="isAuthenticated" [matMenuTriggerFor]="userAccountMenu" mat-button>
+  <div fxLayout="row" fxLayoutGap="20px" fxShow="false" fxShow.gt-sm>
+    <button [matMenuTriggerFor]="userAccountMenu" mat-button>
       <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
       <span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</span>
     </button>
@@ -204,8 +41,11 @@
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
 
     <img
+      alt="Avatar"
       class="avatar mat-elevation-z8"
-      src="https://th.bing.com/th?id=OIP.w3GGAMu693wOoV5UAp2V2AHaG7&w=258&h=241&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+      height="100"
+      ngSrc="https://th.bing.com/th?id=OIP.w3GGAMu693wOoV5UAp2V2AHaG7&w=258&h=241&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
+      width="100"
     />
 
     <h4 class="name">{{userProfile?.firstName}} {{userProfile?.lastName}}</h4>
@@ -214,20 +54,19 @@
     <mat-divider></mat-divider>
 
     <mat-nav-list>
-      <a *ngFor="let route of routeLinks.slice(0, 2)" mat-list-item routerLink="{{ route.link }}">
-        <mat-icon class="icon">{{ route.icon }}</mat-icon>
-        <span class="label">{{ route.name }}</span>
+      <a mat-list-item routerLink="{{ routeLink.link }}">
+        <mat-icon class="icon">{{ routeLink.icon }}</mat-icon>
+        <span class="label">{{ routeLink.name }}</span>
       </a>
 
-      <ng-container *ngFor="let route of routeLinks.slice(2)">
-        <!--        <mat-expansion-panel *ngIf="(route.header !== 'Asset Inventory' || !isAdmin) || (route.header !== 'Asset Tracking' || !isProcure) || (route.header !== 'Employee' || !isProcure)">-->
+      <ng-container *ngFor="let route of routePanel">
         <mat-expansion-panel
           *ngIf="!(route.header === 'Asset Inventory' && isAdmin) && !(route.header === 'Asset Tracking' && isProcure) && !(route.header === 'Employee' && isProcure)">
           <mat-expansion-panel-header>
             {{ route.header }}
           </mat-expansion-panel-header>
           <mat-nav-list>
-            <a *ngFor="let panel of route.nav" [class.hidden]="!hasAccess(panel)" mat-list-item
+            <a *ngFor="let panel of route.nav" mat-list-item
                routerLink="{{ panel.link }}">
               <mat-icon class="icon">{{ panel.icon }}</mat-icon>
               <span class="label">{{ panel.name }}</span>

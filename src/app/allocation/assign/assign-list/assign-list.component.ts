@@ -42,7 +42,7 @@ export class AssignListComponent implements OnInit {
   }
 
 
-  assignItem = () => {
+  assignItem = (): void => {
     this.dialogValue = {mode: 'create'};
     this.openAssignDialog(this.dialogValue).afterClosed().subscribe(result => {
         if (result === 'success') {
@@ -75,7 +75,7 @@ export class AssignListComponent implements OnInit {
     );
   };
 
-  deleteAssignment = (allocation: Allocation) => {
+  deleteAssignment = (allocation: Allocation): void => {
     this.dialogValue = {mode: 'delete', dataObject: allocation};
     this.openConfirmationDialog(this.dialogValue).afterClosed().subscribe(result => {
         if (result === 'success') {
@@ -103,5 +103,4 @@ export class AssignListComponent implements OnInit {
   openConfirmationDialog(dialogValue: DialogData<Allocation>) {
     return this.confirmDialogService.open(AssignDialogComponent, dialogValue);
   }
-
 }

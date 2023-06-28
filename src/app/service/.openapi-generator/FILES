@@ -8,7 +8,6 @@ api/categoryEndpoint.service.ts
 api/computerEndpoint.service.ts
 api/departmentEndpoint.service.ts
 api/employeeEndpoint.service.ts
-api/itemResource.service.ts
 api/microProfileHealth.service.ts
 api/purchaseEndpoint.service.ts
 api/qRCodePreviewEndpoint.service.ts
@@ -31,14 +30,12 @@ model/employmentStatus.ts
 model/gender.ts
 model/healthCheckResponse.ts
 model/healthCheckStatus.ts
-model/item.ts
 model/models.ts
 model/peripheral.ts
 model/purchase.ts
 model/purchasePerSupplier.ts
 model/qRCode.ts
 model/selectOptions.ts
-model/status.ts
 model/supplier.ts
 model/supplierType.ts
 model/transfer.ts

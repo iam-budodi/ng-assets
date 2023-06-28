@@ -3,8 +3,9 @@ import {Department, DepartmentEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {DepartmentFormService} from "../../../shared/util/department-form.service";
+import {resetForm} from "../../../shared/util/utils";
 
 
 @Component({
@@ -15,6 +16,7 @@ import {DepartmentFormService} from "../../../shared/util/department-form.servic
 export class DepartmentDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getDepartmentFormFields();
+  options: FormlyFormOptions = {};
   department: Department = {code: "", description: "", id: 0, location: undefined, name: ""};
   submitLabel: string = 'Add';
   operationMode!: string;
@@ -37,6 +39,7 @@ export class DepartmentDialogComponent implements OnInit {
   onSubmit({value}: { valid: boolean, value: Department }): void {
     value = this.operationMode === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.department : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
   initModeAndData(): void {

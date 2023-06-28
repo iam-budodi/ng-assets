@@ -1,6 +1,6 @@
 /**
- * Electronic Asset Inventory API
- * We keep and organize inventory of all purchased electronic assets
+ * Electronic Asset Management APIs
+ * We manage and organize inventory of all purchased electronic assets
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: luluyshaban@gmail.com
@@ -14,10 +14,10 @@
 export type Peripheral = 'KEYBOARD' | 'MOUSE' | 'MONITOR' | 'ADAPTER' | 'COOLING_PAD';
 
 export const Peripheral = {
-  Keyboard: 'KEYBOARD' as Peripheral,
-  Mouse: 'MOUSE' as Peripheral,
-  Monitor: 'MONITOR' as Peripheral,
-  Adapter: 'ADAPTER' as Peripheral,
-  CoolingPad: 'COOLING_PAD' as Peripheral
+    Keyboard: 'KEYBOARD' as Peripheral,
+    Mouse: 'MOUSE' as Peripheral,
+    Monitor: 'MONITOR' as Peripheral,
+    Adapter: 'ADAPTER' as Peripheral,
+    CoolingPad: 'COOLING_PAD' as Peripheral
 };
 

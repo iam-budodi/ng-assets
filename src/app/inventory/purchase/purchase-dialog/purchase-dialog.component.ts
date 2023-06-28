@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {Purchase, PurchaseEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {PurchaseFormService} from "../../../shared/util/purchase-form.service";
+import {resetForm} from "../../../shared/util/utils";
 
 @Component({
   selector: 'app-purchase-dialog',
@@ -14,6 +15,7 @@ import {PurchaseFormService} from "../../../shared/util/purchase-form.service";
 export class PurchaseDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getPurchaseFormFields();
+  options: FormlyFormOptions = {};
   purchase: Purchase = undefined!;
   submitLabel: string = 'Create';
   title!: string;
@@ -33,9 +35,10 @@ export class PurchaseDialogComponent implements OnInit {
     this.selectPurchaseDialogModeAndOps();
   }
 
-  onSubmit({valid, value}: { valid: boolean, value: Purchase }): void {
+  onSubmit({value}: { value: Purchase }): void {
     value = this.operation === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.purchase : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
 

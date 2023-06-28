@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {Computer, ComputerEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {ComputerFormService} from "../../../shared/util/computer-form.service";
+import {resetForm} from "../../../shared/util/utils";
 
 @Component({
   selector: 'app-computer-dialog',
@@ -14,6 +15,7 @@ import {ComputerFormService} from "../../../shared/util/computer-form.service";
 export class ComputerDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getComputerFormFields();
+  options: FormlyFormOptions = {}
   computer: Computer = undefined!;
   submitLabel: string = 'Create';
   title!: string;
@@ -36,6 +38,7 @@ export class ComputerDialogComponent implements OnInit {
   onSubmit({value}: { value: Computer }): void {
     value = this.operation === 'delete' && (value.constructor === Object && Object.keys(value).length === 0) ? this.computer : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
   initComputerModeAndData(): void {

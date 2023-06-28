@@ -1,6 +1,6 @@
 /**
- * Electronic Asset Inventory API
- * We keep and organize inventory of all purchased electronic assets
+ * Electronic Asset Management APIs
+ * We manage and organize inventory of all purchased electronic assets
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: luluyshaban@gmail.com
@@ -9,38 +9,37 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {Department} from './department';
-import {Address} from './address';
-import {EmploymentStatus} from './employmentStatus';
-import {Gender} from './gender';
+import { Department } from './department';
+import { Address } from './address';
+import { EmploymentStatus } from './employmentStatus';
+import { Gender } from './gender';
 
 
 /**
  * Employee representation
  */
-export interface Employee {
-  id?: number;
-  registeredAt?: string;
-  updatedAt?: string;
-  registeredBy?: string;
-  updatedBy?: string;
-  firstName: string;
-  middleName?: string;
-  lastName: string;
-  gender?: Gender;
-  mobile: string;
-  email: string;
-  workId: string;
-  dateOfBirth: string;
-  hireDate: string;
-  status: Set<EmploymentStatus>;
-  department?: Department;
-  address?: Address;
-  age?: number;
-  timeOfService?: number;
-  retireAt?: string;
+export interface Employee { 
+    id?: number;
+    registeredAt?: string;
+    updatedAt?: string;
+    registeredBy?: string;
+    updatedBy?: string;
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+    gender?: Gender;
+    mobile: string;
+    email: string;
+    workId: string;
+    dateOfBirth: string;
+    hireDate: string;
+    status: Set<EmploymentStatus>;
+    department?: Department;
+    address?: Address;
+    age?: number;
+    timeOfService?: number;
+    retireAt?: string;
 }
-
 export namespace Employee {
 }
 
