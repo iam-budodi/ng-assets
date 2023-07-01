@@ -18,7 +18,7 @@ export class EmployeeService {
   getEmployees(request: PageRequest<Employee>, query: Query<Date>): Observable<Page<Employee>> {
 
     (request.size === 20) ? request.size = 5 : request.size;
-    const date: string = this.datePipe.transform(query.registration, 'yyyy-MM-dd')!;
+    const date: string = this.datePipe.transform(query.startDate, 'yyyy-MM-dd')!;
 
     return this.employeeService
       .restEmployeesGet(date, request.sort?.order, request.page, request.sort?.property, query.search, request.size, 'response')

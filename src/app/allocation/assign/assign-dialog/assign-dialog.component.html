@@ -1,5 +1,5 @@
 <div>
-  <button class="close" mat-dialog-close="true" mat-icon-button (click)="options.resetModel && options.resetModel()">
+  <button (click)="options.resetModel && options.resetModel()" class="close" mat-dialog-close="true" mat-icon-button>
     <mat-icon>clear</mat-icon>
   </button>
   <h2 mat-dialog-title>{{ title }}</h2>
@@ -34,11 +34,11 @@
       </div>
     </form>
 
-<!--    <app-form-debug-->
-<!--      *ngIf="!title.toLocaleLowerCase().includes('remove')"-->
-<!--      [form]="form.value"-->
-<!--      [model]="allocation">-->
+    <!--    <app-form-debug-->
+    <!--      *ngIf="!title.toLocaleLowerCase().includes('remove')"-->
+    <!--      [form]="form.value"-->
+    <!--      [model]="allocation">-->
 
-<!--    </app-form-debug>-->
+    <!--    </app-form-debug>-->
   </div>
 </div>

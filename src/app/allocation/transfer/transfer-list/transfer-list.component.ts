@@ -42,7 +42,7 @@ export class TransferListComponent {
     this.tableData = new PaginationDataSource<Transfer, Query<Date>>(
       (request: PageRequest<Transfer>, query: Query<Date>) => this.transferService.getTransfers(request, query),
       {property: 'transferDate', order: 'asc'},
-      {registration: undefined!, search: undefined!}
+      {startDate: undefined!, search: undefined!}
     )
   }
 

@@ -37,7 +37,7 @@ export class CategoryListComponent {
     this.tableData = new PaginationDataSource<Category, Query<any>>(
       (request: PageRequest<Category>, query: Query<any>) => this.categoryService.getCategories(request, query),
       {property: 'name', order: 'asc'},
-      {registration: undefined!, search: undefined!}
+      {startDate: undefined!, search: undefined!}
     )
   }
 

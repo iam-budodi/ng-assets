@@ -13,7 +13,7 @@
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec, HttpContext
+         HttpResponse, HttpEvent, HttpParameterCodec, HttpContext 
         }       from '@angular/common/http';
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
@@ -225,7 +225,7 @@ export class AllocationEndpointService {
     /**
      * Updates an existing allocation
      * @param allocationId Allocation identifier
-     * @param allocation
+     * @param allocation 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -395,7 +395,7 @@ export class AllocationEndpointService {
 
     /**
      * Allocates an asset to employee for the first time
-     * @param allocation
+     * @param allocation 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -474,12 +474,12 @@ export class AllocationEndpointService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public restAllocationsWorkIdAssetsGet(workId: string, status?: AllocationStatus, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Array<EmployeeAsset>>>;
-    public restAllocationsWorkIdAssetsGet(workId: string, status?: AllocationStatus, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Array<EmployeeAsset>>;
-    public restAllocationsWorkIdAssetsGet(workId: string, status?: AllocationStatus, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Array<EmployeeAsset>>>;
-    public restAllocationsWorkIdAssetsGet(workId: string, status?: AllocationStatus, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public restAllocationsWorkIdAssetGet(workId: string, status?: AllocationStatus, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Array<EmployeeAsset>>;
+    public restAllocationsWorkIdAssetGet(workId: string, status?: AllocationStatus, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Array<EmployeeAsset>>>;
+    public restAllocationsWorkIdAssetGet(workId: string, status?: AllocationStatus, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Array<EmployeeAsset>>>;
+    public restAllocationsWorkIdAssetGet(workId: string, status?: AllocationStatus, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (workId === null || workId === undefined) {
-            throw new Error('Required parameter workId was null or undefined when calling restAllocationsWorkIdAssetsGet.');
+            throw new Error('Required parameter workId was null or undefined when calling restAllocationsWorkIdAssetGet.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});

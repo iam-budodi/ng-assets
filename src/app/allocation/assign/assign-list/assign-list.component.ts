@@ -37,7 +37,7 @@ export class AssignListComponent implements OnInit {
     this.tableData = new PaginationDataSource<Allocation, Query<Date>>(
       (request: PageRequest<Allocation>, query: Query<Date>) => this.assignmentService.getAssignments(request, query),
       {property: 'allocationDate', order: 'asc'},
-      {registration: undefined!, search: undefined!}
+      {startDate: undefined!, search: undefined!}
     )
   }
 

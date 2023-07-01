@@ -37,7 +37,7 @@ export class PurchaseListComponent implements OnInit {
     this.tableData = new PaginationDataSource<Purchase, Query<Date>>(
       (request: PageRequest<Purchase>, query: Query<Date>) => this.purchaseService.getPurchases(request, query),
       {property: 'invoiceNumber', order: 'asc'},
-      {search: undefined!, registration: undefined!}
+      {search: undefined!, startDate: undefined!}
     )
   }
 

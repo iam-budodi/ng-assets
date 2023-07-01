@@ -37,7 +37,7 @@ export class DepartmentListComponent implements OnInit {
     this.tableData = new PaginationDataSource<Department, Query<any>>(
       (request: PageRequest<Department>, query: Query<any>) => this.departmentService.getDepartments(request, query),//this.departmentService.page(request, query),
       {property: 'name', order: 'asc'},
-      {registration: undefined, search: undefined!}
+      {startDate: undefined, search: undefined!}
     )
     // console.log('SELECT OPTS : ' + JSON.stringify(this.departmentService.getDepartmentSelectOptions().subscribe()));
   }

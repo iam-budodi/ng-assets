@@ -35,7 +35,7 @@ export class SearchDialogComponent {
   }
 
   getAllEmployeeAssets(workId: string, status: AllocationStatus) {
-    return this.allocationService.restAllocationsWorkIdAssetsGet(workId, status, 'response').subscribe({
+    return this.allocationService.restAllocationsWorkIdAssetGet(workId, status, 'response').subscribe({
         next: (response: HttpResponse<Array<EmployeeAsset>>): void => {
           if (response.status === 200) {
             this.dialogRef.close(response.body);

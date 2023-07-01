@@ -19,7 +19,7 @@ export class AssignService {
   getAssignments(request: PageRequest<Allocation>, query: Query<Date>): Observable<Page<Allocation>> {
 
     (request.size === 20) ? request.size = 5 : request.size;
-    const date: string = this.datePipe.transform(query.registration, 'yyyy-MM-dd')!;
+    const date: string = this.datePipe.transform(query.startDate, 'yyyy-MM-dd')!;
 
     return this.assignmentService
       .restAllocationsGet(date, request.sort?.order, request.page, request.sort?.property, query.search, request.size, 'response')

@@ -21,6 +21,7 @@ import {FormlyMatDatepickerModule} from "@ngx-formly/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {DepartmentService} from "./department/department.service";
 import {EmployeeService} from "./employee.service";
+import {ReportTableComponent} from '../common/table/employee-report-table/report-table.component';
 
 // export function minValidationMessage(err, field: FormlyFieldConfig) {
 //   return `Please provide a value bigger than ${err.min}. You provided ${err.actual}`;
@@ -50,6 +51,7 @@ const sharedComponent = [
     EmployeeDialogComponent,
     DepartmentDialogComponent,
     DepartmentListComponent,
+    ReportTableComponent,
     ...sharedComponent,
   ],
   imports: [
@@ -83,7 +85,7 @@ const sharedComponent = [
     RouterModule.forChild(employeeRoutes),
   ],
 
-  exports: [MaterialModule, FormlyModule, ...sharedComponent],
+  exports: [MaterialModule, FormlyModule, ...sharedComponent, ReportTableComponent],
   providers: [DatePipe, DepartmentService, EmployeeService]
 })
 export class EmployeeModule {

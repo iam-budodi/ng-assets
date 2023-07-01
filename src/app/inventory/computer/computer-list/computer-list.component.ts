@@ -37,7 +37,7 @@ export class ComputerListComponent implements OnInit {
     this.tableData = new PaginationDataSource<Computer, Query<Date>>(
       (request: PageRequest<Computer>, query: Query<Date>) => this.computerService.getComputers(request, query),
       {property: 'model', order: 'asc'},
-      {search: undefined!, registration: undefined!}
+      {search: undefined!, startDate: undefined!}
     )
   }
 

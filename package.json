@@ -26,6 +26,7 @@
     "@ngx-formly/material": "^6.0.0",
     "@zxing/library": "^0.20.0",
     "chart.js": "^4.2.1",
+    "file-saver": "^2.0.5",
     "js-sha256": "^0.9.0",
     "keycloak-angular": "^14.0.0",
     "keycloak-js": "^21.1.1",
@@ -33,6 +34,7 @@
     "ngx-pagination-data-source": "^6.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.13.1"
   },
   "devDependencies": {
@@ -40,6 +42,7 @@
     "@angular/cli": "~16.1.1",
     "@angular/compiler-cli": "^16.1.2",
     "@ngx-formly/schematics": "^6.1.3",
+    "@types/file-saver": "^2.0.5",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",

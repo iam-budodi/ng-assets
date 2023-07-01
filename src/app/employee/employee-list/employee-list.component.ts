@@ -39,7 +39,7 @@ export class EmployeeListComponent implements OnInit {
     this.tableData = new PaginationDataSource<Employee, Query<Date>>(
       (request: PageRequest<Employee>, query: Query<Date>) => this.employeeService.getEmployees(request, query),
       {property: 'firstName', order: 'asc'},
-      {search: undefined!, registration: undefined!}
+      {search: undefined!, startDate: undefined!}
     )
   }
 

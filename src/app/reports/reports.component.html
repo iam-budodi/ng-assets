@@ -1,0 +1,36 @@
+<div>
+
+    <div class="container">
+      <h2 class="page-title" mat-card-title>{{ title }}</h2>
+      <form (ngSubmit)="onSubmit(form)" [formGroup]="form" style="width: 95%; margin: 0 auto">
+        <formly-form
+          [fields]="fields"
+          [form]="form"
+          [options]="options">
+        </formly-form>
+
+        <div class="button-row" style="display:flex; justify-content: flex-end;">
+          <button [disabled]="form.invalid" class="formly-button button" color="primary"
+                  mat-raised-button>{{submitLabel}}</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+<mat-card *ngIf="tableData">
+  <mat-card-content class="mat-card-content-table">
+    <div class="export-buttons">
+      <button (click)="exportToExcel()" class="formly-button export"  mat-raised-button>Export to Excel</button>
+<!--      <button (click)="exportToPdf()" color="primary" mat-raised-button>Generate PDF Report</button>-->
+    </div>
+
+
+    <report-table
+      [defaultPageSize]="defaultSize"
+      [paginationSizes]="pageSizes"
+      [tableColumns]="employeeTableColumns"
+      [tableEntries]="tableData"
+      class="grid-container mat-elevation-z8"
+    ></report-table>
+  </mat-card-content>
+</mat-card>

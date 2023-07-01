@@ -1,6 +1,6 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {NgChartsModule} from 'ng2-charts';
 import {AppComponent} from './app.component';
@@ -14,7 +14,6 @@ import {SalesTrafficChartComponent} from './dashboard/charts/sales-traffic-chart
 import {ProductSalesChartComponent} from './dashboard/charts/product-sales-chart/product-sales-chart.component';
 import {TicketComponent} from './common/ticket/ticket.component';
 import {EmployeeModule} from './employee/employee.module';
-import {AssetModule} from './asset/asset.module';
 import {ApiModule} from "./service";
 import {HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
@@ -24,6 +23,8 @@ import {InventoryModule} from "./inventory/inventory.module";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {AuthGuard} from "./navbar/auth.guard";
 import {NgOptimizedImage} from "@angular/common";
+import {ReportsComponent} from './reports/reports.component';
+import {ExportService} from "./reports/export.service";
 
 export function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -52,6 +53,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     SalesTrafficChartComponent,
     ProductSalesChartComponent,
     TicketComponent,
+    ReportsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,6 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     EmployeeModule,
     NgChartsModule,
-    AssetModule,
     ApiModule,
     CoreModule,
     SharedModule,
@@ -69,6 +70,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     AllocationModule,
     RouterModule.forRoot(appRoutes),
     NgOptimizedImage,
+    FormsModule,
   ],
 
   providers: [{
@@ -76,7 +78,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService],
-  }, AuthGuard],
+  }, AuthGuard, ExportService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

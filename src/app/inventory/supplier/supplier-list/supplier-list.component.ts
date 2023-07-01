@@ -37,7 +37,7 @@ export class SupplierListComponent implements OnInit {
     this.tableData = new PaginationDataSource<Supplier, Query<any>>(
       (request: PageRequest<Supplier>, query: Query<any>) => this.supplierService.getSuppliers(request, query),
       {property: 'name', order: 'asc'},
-      {search: undefined!, registration: undefined!}
+      {search: undefined!, startDate: undefined!}
     )
   }
 

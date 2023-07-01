@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from "./navbar/auth.guard";
+import {ReportsComponent} from "./reports/reports.component";
 
 export const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
@@ -20,4 +21,8 @@ export const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: {roles: ['procure']}
   },
+  {
+    path: 'reports',
+    component: ReportsComponent
+  }
 ];

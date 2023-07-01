@@ -9,7 +9,18 @@
     <mat-icon *ngIf="sidenav.opened">close</mat-icon>
   </button>
   <span fxShow="false" fxShow.gt-sm>
-    <button mat-button routerLink="/">{{logo}}</button>
+    <button class="logo-button" mat-button routerLink="/">
+  <div class="logo-container">
+    <img
+      alt="University Of DSM Logo"
+      class="mat-elevation-z8"
+      height="60"
+      ngSrc="/assets/images/udsm-logo.jpeg"
+      width="170"
+    />
+  </div>
+</button>
+
   </span>
 
 

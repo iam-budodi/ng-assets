@@ -1,0 +1,181 @@
+.page-title {
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+
+
+
+mat-card-content {
+  margin-top: 20px;
+  padding: 0;
+}
+
+table.mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+mat-header-row,
+mat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+mat-header-cell,
+mat-cell {
+  flex: 1;
+  padding: 10px;
+}
+
+.export-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+button.mat-raised-button {
+  margin-right: 10px;
+}
+
+/*comment this out*/
+@media (max-width: 600px) {
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  mat-card {
+    padding: 10px;
+  }
+
+  mat-card-title {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  mat-form-field {
+    margin-bottom: 10px;
+  }
+
+  button.mat-raised-button {
+    font-size: 14px;
+  }
+}
+
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+
+.mat-card-content-form {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.mat-card-content-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  .mat-card-content-form {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  margin: 5px;
+  line-height: 14px;
+  min-width: auto;
+}
+
+.close:hover {
+  background: red;
+  color: white;
+}
+
+.export {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  height: 50px;
+  width: 150px;
+  color: #e74c3c;
+  text-decoration: none;
+  text-align: center;
+  border: 2px solid #e74c3c;
+  border-radius: 4px;
+  padding: 16px 32px;
+  margin: 20px 20px 40px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.export:hover {
+  background-color: #e74c3c;
+  color: #fff;
+  cursor: pointer;
+}
+
+.button {
+  background: #002b5c;
+  height: 50px;
+  width: 150px;
+  color: white;
+  padding: 25px 30px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out
+}
+
+.button:hover {
+  background-color: #0069d9;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button.valid {
+  background-color: #28a745;
+}
+
+.button.valid:hover {
+  background-color: #218838;
+}
+
+.button.invalid {
+  background-color: #dc3545;
+}
+
+.button.invalid:hover {
+  background-color: #c82333;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+

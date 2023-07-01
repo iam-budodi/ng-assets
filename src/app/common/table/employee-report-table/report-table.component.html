@@ -1,0 +1,82 @@
+<ng-container>
+
+  <mat-spinner *ngIf="tableDataSource.loading$ | async" diameter="64" style="margin: 0 auto"></mat-spinner>
+
+  <!-- Table -->
+  <div class="table-responsive">
+    <table
+      (matSortChange)="sortTable($event)"
+      [dataSource]="tableDataSource"
+      aria-label="Elements"
+      mat-table
+      matSort
+    >
+      <!-- for routing to details view page -->
+      <ng-template #previewButton let-row="row">
+        <button
+          mat-icon-button
+          matTooltip="{{ row.firstName | possessive }} details"
+          matTooltipPosition="right"
+          routerLink="{{ row.id }}"
+        >
+          <mat-icon>preview</mat-icon>
+        </button>
+      </ng-template>
+
+
+      <ng-container
+        *ngFor="let tableColumn of tableColumns"
+        [matColumnDef]="tableColumn.name"
+      >
+        <!-- if sortable column header -->
+        <ng-container *ngIf="tableColumn.isSortable; else notSortable">
+          <th
+            *matHeaderCellDef
+            [arrowPosition]="
+              tableColumn.position === 'right' ? 'before' : 'after'
+            "
+            [mat-sort-header]="tableColumn.name"
+            mat-header-cell
+          >
+            {{ tableColumn.name }}
+          </th>
+        </ng-container>
+
+        <!-- else not sortable -->
+        <ng-template #notSortable>
+          <th
+            *matHeaderCellDef
+            [class.text-right]="tableColumn.position == 'right'"
+            mat-header-cell
+          >
+            {{ tableColumn.name }}
+          </th>
+        </ng-template>
+
+        <!-- column data -->
+        <td
+          *matCellDef="let element"
+          [class.text-right]="tableColumn.position == 'right'"
+          mat-cell
+        >
+          {{ element | dataPropertyGetter : tableColumn.dataKey }}
+        </td>
+      </ng-container>
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+    </table>
+  </div>
+  <!-- </table> -->
+
+  <!-- pagination -->
+  <mat-paginator
+    (page)="tableDataSource.fetch($event.pageIndex, $event.pageSize)"
+    *ngIf="tableDataSource.page$ | async as page"
+    [length]="page.totalElements"
+    [pageIndex]="page.number"
+    [pageSizeOptions]="paginationSizes"
+    [pageSize]="page.size"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</ng-container>
