@@ -19,10 +19,11 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br/>
-  <app-table (deleteAction)="deleteComputer($event)"
-             (updateAction)="updateComputer($event)"
-             [tableColumns]="computerTableColumns"
-             [tableEntries]="tableData"
-             class="grid-container"
-  ></app-table>
+  <search-date-table
+    (deleteAction)="deleteComputer($event)"
+    (updateAction)="updateComputer($event)"
+    [tableColumns]="computerTableColumns"
+    [tableEntries]="tableData"
+    class="grid-container"
+  ></search-date-table>
 </div>

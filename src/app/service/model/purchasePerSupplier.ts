@@ -11,8 +11,8 @@
  */
 
 
-export interface PurchasePerSupplier { 
-    supplierName: string;
-    purchaseCount: number;
+export interface PurchasePerSupplier {
+  supplierName: string;
+  purchaseCount: number;
 }
 

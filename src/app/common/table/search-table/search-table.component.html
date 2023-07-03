@@ -5,40 +5,11 @@
   <!-- Filter -->
   <ng-container [matColumnDef]="this.actionIcons">
     <div style="display:flex; justify-content: flex-end;">
-
-    <mat-button-toggle-group (change)="tableDataSource.sortBy({order: $event.value})" value="asc">
-      <mat-button-toggle value="asc">
-        <mat-icon>arrow_upward</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="desc">
-        <mat-icon>arrow_downward</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-
-      <mat-form-field class="property">
-        <mat-label>Ordered by</mat-label>
-        <mat-select (selectionChange)="tableDataSource.sortBy({property: $event.value})" value="">
-          <mat-option value="id">ID</mat-option>
-          <mat-option value="name">Name</mat-option>
-          <mat-option value="firstName">First name</mat-option>
-          <mat-option value="lastName">Last name</mat-option>
-          <mat-option value="hiredDate">Hired date</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="registration">
-        <mat-label>Filter by</mat-label>
-        <input (dateChange)="tableDataSource.queryBy({registration: $event.value! })" [matDatepicker]="picker"
-               matInput placeholder="hired date"/>
-        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
       <mat-form-field>
         <mat-icon matPrefix>search</mat-icon>
         <mat-label>Search by</mat-label>
         <input #filter (input)="tableDataSource.queryBy({search: filter.value})" matInput
-               placeholder="work ID, first & last name"
+               placeholder="name or code"
                type="text"/>
       </mat-form-field>
     </div>

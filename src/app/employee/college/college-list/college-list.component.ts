@@ -37,7 +37,7 @@ export class CollegeListComponent implements OnInit {
     this.tableData = new PaginationDataSource<College, Query<any>>(
       (request: PageRequest<College>, query: Query<any>) => this.collegeService.getColleges(request, query),//this.departmentService.page(request, query),
       {property: undefined!, order: undefined!},
-      {startDate: undefined, search: undefined!}
+      {search: undefined, startDate: undefined!}
     )
   }
 

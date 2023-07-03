@@ -11,18 +11,28 @@
  */
 
 
-export type EmploymentStatus = 'CONTRACT' | 'PERMANENT' | 'FULL_TIME' | 'VOLUNTEER' | 'PROBATION' | 'INTERN' | 'PART_TIME' | 'TERMINATED' | 'FIRED' | 'LAID_OFF';
+export type EmploymentStatus =
+  'CONTRACT'
+  | 'PERMANENT'
+  | 'FULL_TIME'
+  | 'VOLUNTEER'
+  | 'PROBATION'
+  | 'INTERN'
+  | 'PART_TIME'
+  | 'TERMINATED'
+  | 'FIRED'
+  | 'LAID_OFF';
 
 export const EmploymentStatus = {
-    Contract: 'CONTRACT' as EmploymentStatus,
-    Permanent: 'PERMANENT' as EmploymentStatus,
-    FullTime: 'FULL_TIME' as EmploymentStatus,
-    Volunteer: 'VOLUNTEER' as EmploymentStatus,
-    Probation: 'PROBATION' as EmploymentStatus,
-    Intern: 'INTERN' as EmploymentStatus,
-    PartTime: 'PART_TIME' as EmploymentStatus,
-    Terminated: 'TERMINATED' as EmploymentStatus,
-    Fired: 'FIRED' as EmploymentStatus,
-    LaidOff: 'LAID_OFF' as EmploymentStatus
+  Contract: 'CONTRACT' as EmploymentStatus,
+  Permanent: 'PERMANENT' as EmploymentStatus,
+  FullTime: 'FULL_TIME' as EmploymentStatus,
+  Volunteer: 'VOLUNTEER' as EmploymentStatus,
+  Probation: 'PROBATION' as EmploymentStatus,
+  Intern: 'INTERN' as EmploymentStatus,
+  PartTime: 'PART_TIME' as EmploymentStatus,
+  Terminated: 'TERMINATED' as EmploymentStatus,
+  Fired: 'FIRED' as EmploymentStatus,
+  LaidOff: 'LAID_OFF' as EmploymentStatus
 };
 

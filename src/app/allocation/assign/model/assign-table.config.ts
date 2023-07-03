@@ -10,7 +10,7 @@ export const ASSIGNMENT_TABLE_COLUMNS: ITableColumn[] = [
   {name: 'Work ID', dataKey: 'employee.workId', isSortable: true},
   {name: 'Email', dataKey: 'employee.email', isSortable: true},
   {name: 'Phone Number', dataKey: 'employee.mobile', isSortable: true},
-  {name: 'Department', dataKey: 'employee.department.name', isSortable: true},
+  {name: 'Department', dataKey: 'employee.department.departmentName', isSortable: true},
   {name: 'Date Assigned', dataKey: 'allocationDate', isSortable: true},
   {name: 'Status', dataKey: 'status', isSortable: true},
   {name: 'Remarks', dataKey: 'allocationRemark', isSortable: true}

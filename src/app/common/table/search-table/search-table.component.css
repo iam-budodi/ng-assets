@@ -1,0 +1,51 @@
+table {
+  width: 100%;
+  margin-left: 10px;
+}
+
+/* for horizontally scrollable table */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.mat-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  display: table;
+  border-collapse: collapse;
+}
+
+.mat-row,
+.mat-header-row {
+  display: table-row;
+}
+
+.mat-cell,
+.mat-header-cell {
+  word-wrap: initial;
+  display: table-cell;
+  padding: 0 2px;
+  line-break: unset;
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+th,
+td {
+  /*margin: 0 1000px !important;*/
+  padding: 2px !important;
+}
+
+mat-form-field {
+  width: 20%;
+  margin-right: 20px;
+}
+
+.text-right {
+  text-align: right !important;
+}

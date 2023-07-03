@@ -24,10 +24,10 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br/>
-  <app-table (deleteAction)="deleteDepartment($event)"
-             (updateAction)="updateDepartment($event)"
-             [tableColumns]="departmentTableColumns"
-             [tableEntries]="tableData"
-             class="grid-container"
-  ></app-table>
+  <search-table (deleteAction)="deleteDepartment($event)"
+                (updateAction)="updateDepartment($event)"
+                [tableColumns]="departmentTableColumns"
+                [tableEntries]="tableData"
+                class="grid-container"
+  ></search-table>
 </div>

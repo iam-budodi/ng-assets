@@ -22,10 +22,11 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br/>
-  <app-table (deleteAction)="deleteSupplier($event)"
-             (updateAction)="updateSupplier($event)"
-             [tableColumns]="supplierTableColumns"
-             [tableEntries]="tableData"
-             class="grid-container"
-  ></app-table>
+  <search-table
+    (deleteAction)="deleteSupplier($event)"
+    (updateAction)="updateSupplier($event)"
+    [tableColumns]="supplierTableColumns"
+    [tableEntries]="tableData"
+    class="grid-container"
+  ></search-table>
 </div>

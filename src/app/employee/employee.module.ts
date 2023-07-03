@@ -21,9 +21,11 @@ import {FormlyMatDatepickerModule} from "@ngx-formly/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {DepartmentService} from "./department/department.service";
 import {EmployeeService} from "./employee.service";
-import {ReportTableComponent} from '../common/table/employee-report-table/report-table.component';
+import {ReportTableComponent} from '../common/table/report-table/report-table.component';
 import {CollegeDialogComponent} from "./college/college-dialog/college-dialog.component";
 import {CollegeListComponent} from "./college/college-list/college-list.component";
+import {SearchTableComponent} from '../common/table/search-table/search-table.component';
+import {SearchDateTableComponent} from '../common/table/search-date-table/search-date-table.component';
 
 // export function minValidationMessage(err, field: FormlyFieldConfig) {
 //   return `Please provide a value bigger than ${err.min}. You provided ${err.actual}`;
@@ -40,6 +42,8 @@ export function maxLengthValidationMessage(err: any, field: FormlyFieldConfig) {
 
 const sharedComponent = [
   TableComponent,
+  SearchTableComponent,
+  SearchDateTableComponent,
   PossessivePipe,
   DataPropertyGetterPipe,
   CardComponent,

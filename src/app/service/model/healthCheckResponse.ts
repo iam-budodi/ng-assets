@@ -9,14 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { HealthCheckStatus } from './healthCheckStatus';
+import {HealthCheckStatus} from './healthCheckStatus';
 
 
-export interface HealthCheckResponse { 
-    data?: object | null;
-    name?: string;
-    status?: HealthCheckStatus;
+export interface HealthCheckResponse {
+  data?: object | null;
+  name?: string;
+  status?: HealthCheckStatus;
 }
+
 export namespace HealthCheckResponse {
 }
 

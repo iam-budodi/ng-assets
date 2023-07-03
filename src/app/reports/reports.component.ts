@@ -8,7 +8,9 @@ import {
   Computer,
   ComputerEndpointService,
   Employee,
-  EmployeeEndpointService, Transfer, TransferEndpointService
+  EmployeeEndpointService,
+  Transfer,
+  TransferEndpointService
 } from "../service";
 import {EmployeeService} from "../employee/employee.service";
 import {ITableColumn} from "../shared/models/table-column.model";

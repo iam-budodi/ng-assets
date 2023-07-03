@@ -19,10 +19,11 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br/>
-  <app-table (deleteAction)="deleteCategory($event)"
-             (updateAction)="updateCategory($event)"
-             [tableColumns]="categoryTableColumns"
-             [tableEntries]="tableData"
-             class="grid-container"
-  ></app-table>
+  <search-table
+    (deleteAction)="deleteCategory($event)"
+    (updateAction)="updateCategory($event)"
+    [tableColumns]="categoryTableColumns"
+    [tableEntries]="tableData"
+    class="grid-container"
+  ></search-table>
 </div>

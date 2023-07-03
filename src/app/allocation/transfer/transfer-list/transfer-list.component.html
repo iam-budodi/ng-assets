@@ -24,13 +24,10 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <br/>
-  <app-table [tableColumns]="transferTableColumns"
-             [tableEntries]="tableData"
-             class="grid-container"
-  ></app-table>
+  <search-date-table
+    [tableColumns]="transferTableColumns"
+    [tableEntries]="tableData"
+    class="grid-container"
+  ></search-date-table>
 </div>
 
-
-<!--(deleteAction)="deleteAssignment($event)"-->
-<!--(updateAction)="updateAssignment($event)"-->
-<!--[tableColumns]="assignmentTableColumns"-->
