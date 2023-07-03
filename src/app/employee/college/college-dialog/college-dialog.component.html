@@ -5,13 +5,12 @@
   <h2 mat-dialog-title>{{ title }}</h2>
 
   <div class="container">
-    <!--  DO NOT DELETE    <form [formGroup]="form" (ngSubmit)="onSubmit(form)" style="width: 90%; margin: 0 auto">-->
     <form (ngSubmit)="onSubmit(form)" [formGroup]="form" style="width: 95%; margin: 0 auto">
       <formly-form
         *ngIf="!title.toLocaleLowerCase().includes('remove')"
         [fields]="fields"
         [form]="form"
-        [model]="transfer"
+        [model]="college"
         [options]="options">
       </formly-form>
 
@@ -25,21 +24,21 @@
         </mat-dialog-actions>
       </div>
 
+      <!--           style="display:flex; flex-direction: row; justify-content: space-between;"-->
       <div *ngIf="!title.toLocaleLowerCase().includes('remove')"
            class="button-row"
            style="display:flex; justify-content: flex-end;"
       >
-        <!--        <button class="formly-button" mat-raised-button type="reset">Clear</button>-->
         <button [disabled]="form.invalid" class="formly-button button" color="primary"
                 mat-raised-button>{{submitLabel}}</button>
       </div>
     </form>
 
+    <!--    DO NOT DELETE-->
     <!--    <app-form-debug-->
     <!--      *ngIf="!title.toLocaleLowerCase().includes('remove')"-->
     <!--      [form]="form.value"-->
-    <!--      [model]="transfer">-->
-
+    <!--      [model]="department">-->
     <!--    </app-form-debug>-->
   </div>
 </div>

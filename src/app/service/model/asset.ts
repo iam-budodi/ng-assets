@@ -27,5 +27,9 @@ export interface Asset {
     category?: Category;
     label?: QRCode;
     purchase: Purchase;
+    createdAt?: string;
+    createdBy?: string;
+    updatedAt?: string;
+    updatedBy?: string;
 }
 

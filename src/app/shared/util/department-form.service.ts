@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {EmployeeFormService} from "./employee-form.service";
 import {FormlyFieldConfig} from "@ngx-formly/core";
+import {CollegeService} from "../../employee/college/college.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,31 @@ export class DepartmentFormService {
     {
       key: 'id'
     },
+    {
+      key: 'college',
+      wrappers: ['panel'],
+      props: {
+        label: 'College'
+      },
+      fieldGroupClassName: 'display-flex',
+      fieldGroup: [
+        {
+          key: 'id',
+          type: 'select',
+          className: 'flex-2',
+          props: {
+            label: 'College Name',
+            placeholder: 'Select college',
+            options: this.collegeService.getCollegeSelectOptions(),
+            required: true,
+          }
+        },
+      ]
+    },
     this.formlyEmployee.formlyRow(
       [
         {
-          key: 'name',
+          key: 'departmentName',
           type: 'input',
           className: 'flex-3',
           props: {
@@ -26,7 +48,7 @@ export class DepartmentFormService {
           }
         },
         {
-          key: 'code',
+          key: 'departmentCode',
           type: 'input',
           className: 'flex-3',
           props: {
@@ -55,18 +77,9 @@ export class DepartmentFormService {
         }
       ]
     ),
-    {
-      key: 'location',
-      wrappers: ['panel'],
-      props: {
-        label: 'Address'
-      },
-      fieldGroupClassName: 'display-flex',
-      fieldGroup: this.formlyEmployee.addressFields()
-    }
   ]
 
-  constructor(private formlyEmployee: EmployeeFormService) {
+  constructor(private formlyEmployee: EmployeeFormService, private collegeService: CollegeService) {
   }
 
   getDepartmentFormFields(): FormlyFieldConfig[] {

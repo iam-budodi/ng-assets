@@ -17,7 +17,7 @@ export class DepartmentDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getDepartmentFormFields();
   options: FormlyFormOptions = {};
-  department: Department = {code: "", description: "", id: 0, location: undefined, name: ""};
+  department: Department = {departmentCode: "", description: "", id: 0, college: undefined!, departmentName: ""};
   submitLabel: string = 'Add';
   operationMode!: string;
   title!: string;
@@ -56,7 +56,7 @@ export class DepartmentDialogComponent implements OnInit {
     } else if (this.operationMode === 'delete') {
       console.log('DELETE VAL : ' + JSON.stringify(this.department));
       this.submitLabel = 'Delete';
-      this.confirmText = `Are you sure you want to delete the <em><strong>${this.department.name}</strong></em> department?`;
+      this.confirmText = `Are you sure you want to delete the <em><strong>${this.department.departmentName}</strong></em> department?`;
     }
   }
 

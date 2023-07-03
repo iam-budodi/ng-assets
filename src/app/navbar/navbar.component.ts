@@ -44,8 +44,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     {
       header: 'Employee',
       nav: [
-        {link: 'employees', name: 'Employees', icon: 'group'},
+        {link: 'college', name: 'College', icon: 'school'},
         {link: 'departments', name: 'Departments', icon: 'account_balance'},
+        {link: 'employees', name: 'Employees', icon: 'group'},
       ],
     },
     {

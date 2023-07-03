@@ -42,7 +42,7 @@
       </div>
       <div class="detail-row">
         <div class="detail-label">Department:</div>
-        <div class="detail-value">{{ assetTransfer.employee.department?.name }}</div>
+        <div class="detail-value">{{ assetTransfer.employee.department?.departmentName }}</div>
       </div>
     </mat-card-content>
   </mat-card>
@@ -88,12 +88,12 @@
       </div>
       <div class="detail-row">
         <div class="detail-label">Department:</div>
-        <div class="detail-value">{{ assetTransfer.newEmployee.department?.name }}</div>
+        <div class="detail-value">{{ assetTransfer.newEmployee.department?.departmentName }}</div>
       </div>
       <div class="detail-row">
         <div class="detail-label">Location:</div>
-        <div class="detail-value">{{ assetTransfer.newEmployee.department?.location?.city }}
-          , {{ assetTransfer.newEmployee.department?.location?.country }}</div>
+        <div class="detail-value">{{ assetTransfer.newEmployee.department?.college?.location?.city }}
+          , {{ assetTransfer.newEmployee.department?.college?.location?.country }}</div>
       </div>
     </mat-card-content>
   </mat-card>

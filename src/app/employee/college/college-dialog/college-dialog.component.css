@@ -1,0 +1,101 @@
+.dialog {
+  background: #fff;
+  padding: 5px 5px 30px 50px;
+  /*width: 500px;*/
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  margin: 5px;
+  line-height: 14px;
+  min-width: auto;
+}
+
+.close:hover {
+  background: red;
+  color: white;
+}
+
+.delete {
+  background-color: transparent;
+  height: 50px;
+  width: 150px;
+  color: #e74c3c;
+  margin-left: 20px;
+  text-decoration: none;
+  text-align: center;
+  border: 2px solid #e74c3c;
+  border-radius: 4px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delete:hover {
+  background-color: #e74c3c;
+  color: #fff;
+  cursor: pointer;
+}
+
+.button {
+  background: #002b5c;
+  height: 50px;
+  width: 150px;
+  color: white;
+  padding: 25px 35px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out
+}
+
+/*.save {*/
+/*  background-color: #007bff;*/
+/*  height: 50px;*/
+/*  width: 150px;*/
+/*  float: right;*/
+/*  color: #fff;*/
+/*  border: none;*/
+/*  border-radius: 4px;*/
+/*  padding: 16px 32px;*/
+/*  font-size: 16px;*/
+/*  cursor: pointer;*/
+/*  transition: background-color 0.2s ease-in-out;*/
+/*}*/
+
+.button:hover {
+  background-color: #0069d9;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button.valid {
+  background-color: #28a745;
+}
+
+.button.valid:hover {
+  background-color: #218838;
+}
+
+.button.invalid {
+  background-color: #dc3545;
+}
+
+.button.invalid:hover {
+  background-color: #c82333;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+

@@ -3,6 +3,7 @@ export * from './allocation';
 export * from './allocationStatus';
 export * from './asset';
 export * from './category';
+export * from './college';
 export * from './computer';
 export * from './department';
 export * from './employee';

@@ -22,6 +22,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {DepartmentService} from "./department/department.service";
 import {EmployeeService} from "./employee.service";
 import {ReportTableComponent} from '../common/table/employee-report-table/report-table.component';
+import {CollegeDialogComponent} from "./college/college-dialog/college-dialog.component";
+import {CollegeListComponent} from "./college/college-list/college-list.component";
 
 // export function minValidationMessage(err, field: FormlyFieldConfig) {
 //   return `Please provide a value bigger than ${err.min}. You provided ${err.actual}`;
@@ -51,6 +53,8 @@ const sharedComponent = [
     EmployeeDialogComponent,
     DepartmentDialogComponent,
     DepartmentListComponent,
+    CollegeDialogComponent,
+    CollegeListComponent,
     ReportTableComponent,
     ...sharedComponent,
   ],

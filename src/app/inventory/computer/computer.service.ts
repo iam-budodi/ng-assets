@@ -29,8 +29,17 @@ export class ComputerService {
       );
   }
 
-  getComputerSelectOptions(): Observable<Array<SelectOptions>> {
-    return this.computerService.restComputersSelectGet('response')
+  getAllocationSelectOptions(): Observable<Array<SelectOptions>> {
+    return this.computerService.restComputersSelectAllocationGet('response')
+      .pipe(map((response: HttpResponse<Array<SelectOptions>>) => {
+            return response.body!;
+          }
+        )
+      );
+  }
+
+  getTransferSelectOptions(): Observable<Array<SelectOptions>> {
+    return this.computerService.restComputersSelectTransferGet('response')
       .pipe(map((response: HttpResponse<Array<SelectOptions>>) => {
             return response.body!;
           }

@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
+import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {Transfer, TransferEndpointService} from "../../../service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {HttpResponse} from "@angular/common/http";
 import {TransferFormService} from "../../../shared/util/transfer-form.service";
+import {resetForm} from "../../../shared/util/utils";
 
 @Component({
   selector: 'app-transfer-dialog',
@@ -14,6 +15,7 @@ import {TransferFormService} from "../../../shared/util/transfer-form.service";
 export class TransferDialogComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   fields: FormlyFieldConfig[] = this.formlyService.getTransferFormFields();
+  options: FormlyFormOptions = {};
   transfer: Transfer = undefined!;
   submitLabel: string = 'Change';
   title!: string;
@@ -38,6 +40,7 @@ export class TransferDialogComponent implements OnInit {
       ? this.transfer
       : value;
     this.apiMethodsCall(value);
+    resetForm(this.options);
   }
 
   initModeAndData(): void {

@@ -43,7 +43,6 @@ export class EmployeeFormService {
         props: {
           label: 'Middle name',
           placeholder: 'Enter middle name',
-          required: true,
           minLength: 3,
           maxLength: 64,
         }
@@ -126,7 +125,7 @@ export class EmployeeFormService {
           label: 'Work ID',
           placeholder: 'Enter ID',
           required: true,
-          minLength: 9,
+          minLength: 3,
           maxLength: 13
         }
       },
@@ -160,8 +159,6 @@ export class EmployeeFormService {
             placeholder: 'Select department',
             options: this.departmentService.getDepartmentSelectOptions(),
             required: true,
-            minLength: 2,
-            maxLength: 64
           }
         },
       ]

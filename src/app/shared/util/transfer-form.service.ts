@@ -72,7 +72,7 @@ export class TransferFormService {
           props: {
             label: 'Item Name',
             placeholder: 'Select item',
-            options: this.computerService.getComputerSelectOptions(),
+            options: this.computerService.getTransferSelectOptions(),
             required: true,
           }
         },

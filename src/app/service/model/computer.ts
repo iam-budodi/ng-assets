@@ -28,6 +28,10 @@ export interface Computer {
     category?: Category;
     label?: QRCode;
     purchase: Purchase;
+    createdAt?: string;
+    createdBy?: string;
+    updatedAt?: string;
+    updatedBy?: string;
     processor: string;
     memory: number;
     storage: number;

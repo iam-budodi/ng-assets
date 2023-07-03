@@ -25,6 +25,8 @@ export interface Transfer {
     employee: Employee;
     newEmployee: Employee;
     asset: Asset;
+    transferedBy?: string;
+    updatedBy?: string;
 }
 export namespace Transfer {
 }

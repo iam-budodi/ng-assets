@@ -1,8 +1,15 @@
 import {Component} from '@angular/core';
 import {ExportService} from "./export.service";
 import {ExcelJson} from "./model/excel-json.model";
-import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
-import {Employee, EmployeeEndpointService} from "../service";
+import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
+import {
+  Allocation,
+  AllocationEndpointService,
+  Computer,
+  ComputerEndpointService,
+  Employee,
+  EmployeeEndpointService, Transfer, TransferEndpointService
+} from "../service";
 import {EmployeeService} from "../employee/employee.service";
 import {ITableColumn} from "../shared/models/table-column.model";
 import {EMPLOYEE_TABLE_COLUMNS} from "../employee/model/employee-table-column.config";
@@ -12,7 +19,16 @@ import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import {resetForm} from "../shared/util/utils";
 import {ReportFormService} from "../shared/util/report-form.service";
-import {AUDIT_TABLE_COLUMNS} from "../shared/util/audit-table";
+import {
+  allocationExcelHeader,
+  computerExcelHeader,
+  employeeExcelHeader,
+  transferExcelHeader
+} from "./utils/headers.report";
+import {allocationExcelData, computerExcelData, employeeExcelData, transferExcelData} from "./utils/values.report";
+import {ASSIGNMENT_TABLE_COLUMNS} from "../allocation/assign/model/assign-table.config";
+import {COMPUTER_TABLE_COLUMNS} from "../inventory/computer/model/computer-table.config";
+import {TRANSFER_TABLE_COLUMNS} from "../allocation/transfer/model/transfer-table";
 
 @Component({
   selector: 'app-reports',
@@ -23,25 +39,32 @@ export class ReportsComponent {
   form: FormGroup = new FormGroup({});
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = this.formlyService.getReportFormFields();
-  employeeTableColumns!: ITableColumn[];
-  tableData!: PaginationDataSource<Employee, Query<Date>>;
+  tableColumns!: ITableColumn[];
+  tableData!: PaginationDataSource<any, Query<Date>>;
   pageSizes: number[] = [5, 10, 15, 20, 50];
   defaultSize: number = this.pageSizes[0];
   employees!: Employee[];
+  computers!: Computer[];
+  allocations!: Allocation[];
+  transfers!: Transfer[];
   submitLabel: string = 'Load data';
   title: string = 'Generate Reports';
+  reportType!: string;
 
 
   constructor(
     private exportService: ExportService,
     private employeeService: EmployeeService,
     private employeeEndpointService: EmployeeEndpointService,
+    private computerEndpointService: ComputerEndpointService,
+    private allocationEndpointService: AllocationEndpointService,
+    private transferEndpointService: TransferEndpointService,
     private formlyService: ReportFormService
   ) {
   }
 
   ngOnInit(): void {
-    this.employeeTableColumns = EMPLOYEE_TABLE_COLUMNS;
+    // this.employeeTableColumns = EMPLOYEE_TABLE_COLUMNS;
 
     // this.tableData.page$.subscribe({
     //   next: (page: Page<Employee>): void => {
@@ -52,73 +75,98 @@ export class ReportsComponent {
 
   onSubmit({value}: any): void {
     const {reportType, startDate, endDate} = value;
+    this.reportType = reportType;
     console.log('TYPE: ' + reportType + ' START: ' + startDate + ' END: ' + endDate)
-    this.employeeReport(startDate, endDate);
+    // this.employeeReport(startDate, endDate);
+    this.switchReports(reportType, startDate, endDate)
     resetForm(this.options);
   }
 
+  switchReports(reportType: string, startDate: string, endDate: string) {
+    if (reportType === 'employee') {
+      this.tableColumns = EMPLOYEE_TABLE_COLUMNS;
+      this.employeeReport(startDate, endDate);
+    }
+    if (reportType === 'asset') {
+      this.tableColumns = COMPUTER_TABLE_COLUMNS;
+      this.assetReport(startDate, endDate);
+    }
+    if (reportType === 'allocation') {
+      this.tableColumns = ASSIGNMENT_TABLE_COLUMNS;
+      this.allocationReport(startDate, endDate);
+    }
+    if (reportType === 'transfer') {
+      this.tableColumns = TRANSFER_TABLE_COLUMNS;
+      this.transferReport(startDate, endDate);
+    }
+  }
+
   exportToExcel(): void {
+    // const udt: ExcelJson = this.sheetHeader(employeeExcelHeader());
+    // employeeExcelData(this.employees, udt);
+    let reportTitle: string = '';
+    let udt: ExcelJson = undefined!;
+
+    if (this.reportType === 'employee') {
+      reportTitle = 'Employees Report';
+      udt = this.employeeExcelJson();
+    }
+
+    if (this.reportType === 'asset') {
+      reportTitle = 'Computers Report';
+      udt = this.computerExcelJson();
+    }
+
+    if (this.reportType === 'allocation') {
+      reportTitle = 'Allocation Report';
+      udt = this.allocationExcelJson();
+    }
+
+    if (this.reportType === 'transfer') {
+      reportTitle = 'Transfer Report';
+      udt = this.transferExcelJson();
+    }
+
+
+    this.exportService.exportJsonToExcel(this.excelSheet(udt), reportTitle);
+  }
+
+  excelSheet(udt: ExcelJson): Array<ExcelJson> {
     const excelData: Array<ExcelJson> = [];
-    const [sn, firstName, middleName, lastName, gender, dateOfBirth, age, email, mobile, workId, hireDate, status, timeOfService, departmentName, addressStreet, addressWard, addressDistrict] = EMPLOYEE_TABLE_COLUMNS.map(column => column.name);
-    const [reqisteredBy, registeredAt, updatedBy, updatedAt] = AUDIT_TABLE_COLUMNS.map(column => column.name);
-    const udt: ExcelJson = {
-      data: [
-        // {A: 'User Data'}, // title
-        {
-          A: sn,
-          B: firstName,
-          C: middleName,
-          D: lastName,
-          E: gender,
-          F: dateOfBirth,
-          G: age,
-          H: email,
-          I: mobile,
-          J: workId,
-          K: hireDate,
-          L: status,
-          M: timeOfService,
-          N: departmentName,
-          O: addressStreet,
-          P: addressWard,
-          Q: addressDistrict,
-          R: reqisteredBy,
-          S: registeredAt,
-          T: updatedBy,
-          U: updatedAt
-        }, // table header
-      ],
+    excelData.push(udt);
+    return excelData;
+
+  }
+
+  sheetHeader(sheetHeader: any): ExcelJson {
+    return {
+      data: [sheetHeader],
       skipHeader: true
     };
-    this.employees.forEach((employee: Employee): void => {
-      udt.data.push({
-        A: employee.id,
-        B: employee.firstName,
-        C: employee.middleName,
-        D: employee.lastName,
-        E: employee.gender,
-        F: employee.dateOfBirth,
-        G: employee.age,
-        H: employee.email,
-        I: employee.mobile,
-        J: employee.workId,
-        K: employee.hireDate,
-        L: employee.status,
-        M: employee.timeOfService,
-        N: employee.department?.name,
-        O: employee.address?.street,
-        P: employee.address?.ward,
-        Q: employee.address?.district,
-        R: employee.registeredBy,
-        S: employee.registeredAt,
-        T: employee.updatedBy,
-        U: employee.updatedAt
-      });
-    });
-    excelData.push(udt);
+  }
 
+  employeeExcelJson(): ExcelJson {
+    const udt: ExcelJson = this.sheetHeader(employeeExcelHeader());
+    employeeExcelData(this.employees, udt);
+    return udt;
+  }
 
-    this.exportService.exportJsonToExcel(excelData, 'Employees Report');
+  computerExcelJson(): ExcelJson {
+    const udt: ExcelJson = this.sheetHeader(computerExcelHeader());
+    computerExcelData(this.computers, udt);
+    return udt;
+  }
+
+  allocationExcelJson(): ExcelJson {
+    const udt: ExcelJson = this.sheetHeader(allocationExcelHeader());
+    allocationExcelData(this.allocations, udt);
+    return udt;
+  }
+
+  transferExcelJson(): ExcelJson {
+    const udt: ExcelJson = this.sheetHeader(transferExcelHeader());
+    transferExcelData(this.transfers, udt);
+    return udt;
   }
 
   paginatedDataSource = () => {
@@ -135,6 +183,48 @@ export class ReportsComponent {
           if (response.status === 200) {
             this.tableData = this.paginatedDataSource();
             this.employees = response.body!;
+          } else if (response.status === 204) {
+            console.log('DIALOG PROMPT FOR NO DATA')
+          }
+        }
+      }
+    );
+  }
+
+  assetReport(startDate: string, endDate: string) {
+    return this.computerEndpointService.restComputersReportGet(endDate, startDate, 'response').subscribe({
+        next: (response: HttpResponse<Array<Computer>>): void => {
+          if (response.status === 200) {
+            this.tableData = this.paginatedDataSource();
+            this.computers = response.body!;
+          } else if (response.status === 204) {
+            console.log('DIALOG PROMPT FOR NO DATA')
+          }
+        }
+      }
+    );
+  }
+
+  allocationReport(startDate: string, endDate: string) {
+    return this.allocationEndpointService.restAllocationsReportGet(endDate, startDate, 'response').subscribe({
+        next: (response: HttpResponse<Array<Allocation>>): void => {
+          if (response.status === 200) {
+            this.tableData = this.paginatedDataSource();
+            this.allocations = response.body!;
+          } else if (response.status === 204) {
+            console.log('DIALOG PROMPT FOR NO DATA')
+          }
+        }
+      }
+    );
+  }
+
+  transferReport(startDate: string, endDate: string) {
+    return this.transferEndpointService.restTransfersReportGet(endDate, startDate, 'response').subscribe({
+        next: (response: HttpResponse<Array<Transfer>>): void => {
+          if (response.status === 200) {
+            this.tableData = this.paginatedDataSource();
+            this.transfers = response.body!;
           } else if (response.status === 204) {
             console.log('DIALOG PROMPT FOR NO DATA')
           }

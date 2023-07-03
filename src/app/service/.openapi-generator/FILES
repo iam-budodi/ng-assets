@@ -5,6 +5,7 @@ api.module.ts
 api/allocationEndpoint.service.ts
 api/api.ts
 api/categoryEndpoint.service.ts
+api/collegeEndpoint.service.ts
 api/computerEndpoint.service.ts
 api/departmentEndpoint.service.ts
 api/employeeEndpoint.service.ts
@@ -22,6 +23,7 @@ model/allocation.ts
 model/allocationStatus.ts
 model/asset.ts
 model/category.ts
+model/college.ts
 model/computer.ts
 model/department.ts
 model/employee.ts

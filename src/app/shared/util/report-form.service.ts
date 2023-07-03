@@ -18,10 +18,6 @@ export class ReportFormService {
             label: 'Report Type',
             options: [
               {
-                value: undefined,
-                label: ' -- '
-              },
-              {
                 value: 'employee',
                 label: 'Employee Report'
               },

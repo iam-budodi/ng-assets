@@ -29,7 +29,7 @@ export class AllocationFormService {
           className: 'flex-6',
           props: {
             label: 'Custodian Name',
-            placeholder: 'Select item',
+            placeholder: 'Select custodian',
             options: this.employeeService.getEmployeesSelectOptions(),
             required: true,
           }
@@ -51,7 +51,7 @@ export class AllocationFormService {
           props: {
             label: 'Item Name',
             placeholder: 'Select item',
-            options: this.computerService.getComputerSelectOptions(),
+            options: this.computerService.getAllocationSelectOptions(),
             required: true,
           }
         },

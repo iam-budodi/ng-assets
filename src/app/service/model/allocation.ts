@@ -25,6 +25,8 @@ export interface Allocation {
     status?: AllocationStatus;
     employee: Employee;
     asset: Asset;
+    allocatedBy?: string;
+    updatedBy?: string;
 }
 export namespace Allocation {
 }
