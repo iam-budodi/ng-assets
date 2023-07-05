@@ -14,8 +14,8 @@
 export type SupplierType = 'MANUFACTURER' | 'WHOLESALER' | 'RETAILER';
 
 export const SupplierType = {
-  Manufacturer: 'MANUFACTURER' as SupplierType,
-  Wholesaler: 'WHOLESALER' as SupplierType,
-  Retailer: 'RETAILER' as SupplierType
+    Manufacturer: 'MANUFACTURER' as SupplierType,
+    Wholesaler: 'WHOLESALER' as SupplierType,
+    Retailer: 'RETAILER' as SupplierType
 };
 

@@ -9,19 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {Supplier} from './supplier';
+import { Supplier } from './supplier';
 
 
 /**
  * Purchase representation
  */
-export interface Purchase {
-  id?: number;
-  purchaseDate: string;
-  purchaseQty: number;
-  purchasePrice: number;
-  invoiceNumber: string;
-  supplier?: Supplier;
-  totalPurchaseCost?: number;
+export interface Purchase { 
+    id?: number;
+    purchaseDate: string;
+    purchaseQty: number;
+    purchasePrice: number;
+    invoiceNumber: string;
+    supplier?: Supplier;
+    totalPurchaseCost?: number;
 }
 

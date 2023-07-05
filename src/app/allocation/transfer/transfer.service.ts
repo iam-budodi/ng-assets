@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Page, PageRequest} from "ngx-pagination-data-source";
 import {
+  Allocation,
   AllocationEndpointService,
   AllocationStatus,
   EmployeeAsset,
@@ -44,4 +45,22 @@ export class TransferService {
         )
       );
   }
+
+  dataForReports(request: PageRequest<Transfer>, query: Query<Date>): Observable<Page<Transfer>> {
+
+    (request.size === 20) ? request.size = 5 : request.size;
+    const startDate: string = this.datePipe.transform(query.startDate, 'yyyy-MM-dd')!;
+    const endDate: string = this.datePipe.transform(query.endDate, 'yyyy-MM-dd')!;
+
+    console.log('START: ' + startDate + ' AND ' + 'END : ' + endDate);
+
+    return this.transferService.restTransfersReportGet(endDate, startDate, 'response').pipe(
+      map((response: HttpResponse<Array<Transfer>>) => {
+          return httpGetAllHandler<Transfer>(response);
+        }
+      )
+    );
+
+  }
+
 }

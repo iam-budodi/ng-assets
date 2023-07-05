@@ -37,4 +37,21 @@ export class EmployeeService {
         )
       );
   }
+
+  dataForReports(request: PageRequest<Employee>, query: Query<Date>): Observable<Page<Employee>> {
+
+    (request.size === 20) ? request.size = 5 : request.size;
+    const startDate: string = this.datePipe.transform(query.startDate, 'yyyy-MM-dd')!;
+    const endDate: string = this.datePipe.transform(query.endDate, 'yyyy-MM-dd')!;
+
+    console.log('START: ' + startDate + ' AND ' + 'END : ' + endDate);
+
+    return this.employeeService.restEmployeesReportGet(endDate, startDate, 'response').pipe(
+      map((response: HttpResponse<Array<Employee>>) => {
+          return httpGetAllHandler<Employee>(response);
+        }
+      )
+    );
+
+  }
 }

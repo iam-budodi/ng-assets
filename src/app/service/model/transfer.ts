@@ -9,26 +9,25 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {AllocationStatus} from './allocationStatus';
-import {Employee} from './employee';
-import {Asset} from './asset';
+import { AllocationStatus } from './allocationStatus';
+import { Employee } from './employee';
+import { Asset } from './asset';
 
 
 /**
  * Transfer representation
  */
-export interface Transfer {
-  id?: number;
-  transferDate?: string;
-  transferRemark?: string;
-  status?: AllocationStatus;
-  employee: Employee;
-  newEmployee: Employee;
-  asset: Asset;
-  transferedBy?: string;
-  updatedBy?: string;
+export interface Transfer { 
+    id?: number;
+    transferDate?: string;
+    transferRemark?: string;
+    status?: AllocationStatus;
+    employee: Employee;
+    newEmployee: Employee;
+    asset: Asset;
+    transferedBy?: string;
+    updatedBy?: string;
 }
-
 export namespace Transfer {
 }
 

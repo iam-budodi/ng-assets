@@ -2,6 +2,24 @@
 
   <mat-spinner *ngIf="tableDataSource.loading$ | async" diameter="64" style="margin: 0 auto"></mat-spinner>
 
+  <!-- Filter -->
+  <ng-container>
+    <div style="display:flex; justify-content: flex-end;">
+      <mat-form-field class="registration">
+
+        <mat-label>Report Period</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input (dateChange)="tableDataSource.queryBy({startDate: $event.value! })" matStartDate placeholder="From Date"/>
+          <input (dateChange)="tableDataSource.queryBy({endDate: $event.value! })" matEndDate placeholder="To Date"/>
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+      </mat-form-field>
+    </div>
+  </ng-container>
+
   <!-- Table -->
   <div class="table-responsive">
     <table

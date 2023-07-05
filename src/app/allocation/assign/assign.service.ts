@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Page, PageRequest} from "ngx-pagination-data-source";
-import {Allocation, AllocationEndpointService} from "../../service";
+import {Allocation, AllocationEndpointService, Computer} from "../../service";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpResponse} from "@angular/common/http";
@@ -28,6 +28,23 @@ export class AssignService {
           }
         )
       );
+  }
+
+  dataForReports(request: PageRequest<Allocation>, query: Query<Date>): Observable<Page<Allocation>> {
+
+    (request.size === 20) ? request.size = 5 : request.size;
+    const startDate: string = this.datePipe.transform(query.startDate, 'yyyy-MM-dd')!;
+    const endDate: string = this.datePipe.transform(query.endDate, 'yyyy-MM-dd')!;
+
+    console.log('START: ' + startDate + ' AND ' + 'END : ' + endDate);
+
+    return this.assignmentService.restAllocationsReportGet(endDate, startDate, 'response').pipe(
+      map((response: HttpResponse<Array<Allocation>>) => {
+          return httpGetAllHandler<Allocation>(response);
+        }
+      )
+    );
+
   }
 
 }

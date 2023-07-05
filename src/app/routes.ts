@@ -1,10 +1,14 @@
 import {Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from "./navbar/auth.guard";
-import {ReportsComponent} from "./reports/reports.component";
+import {EmployeesReportComponent} from "./reports/employees-report/employees-report.component";
+import {AssetsReportComponent} from "./reports/assets-report/assets-report.component";
+import {AllocationsReportComponent} from "./reports/allocations-report/allocations-report.component";
+import {TransfersReportComponent} from "./reports/transfers-report/transfers-report.component";
 
 export const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
+  // {path: 'dashboard', component: DashboardPageComponent},
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {
     path: '',
@@ -22,7 +26,19 @@ export const appRoutes: Routes = [
     data: {roles: ['procure']}
   },
   {
-    path: 'reports',
-    component: ReportsComponent
+    path: 'employee-report',
+    component: EmployeesReportComponent
+  },
+  {
+    path: 'asset-report',
+    component: AssetsReportComponent
+  },
+  {
+    path: 'allocation-report',
+    component: AllocationsReportComponent
+  },
+  {
+    path: 'transfer-report',
+    component: TransfersReportComponent
   }
 ];

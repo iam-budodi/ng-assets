@@ -46,6 +46,11 @@ mat-form-field {
   margin-right: 20px;
 }
 
+mat-button-toggle-group {
+  margin-right: 20px;
+  height: 40px;
+}
+
 .text-right {
   text-align: right !important;
 }

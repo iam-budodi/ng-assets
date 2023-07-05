@@ -1,0 +1,24 @@
+<div>
+  <div class="container">
+    <div
+      class="button-row  export-buttons"
+      style="display:flex; flex-direction: row; justify-content: space-between;"
+    >
+      <h2 class="page-title" mat-card-title>{{ title }}</h2>
+      <button *ngIf="allocations" (click)="exportToExcel()" class="formly-button export page-title" mat-raised-button>Export to Excel</button>
+    </div>
+  </div>
+</div>
+
+
+<mat-card *ngIf="tableData">
+  <mat-card-content class="mat-card-content-table">
+    <report-table
+      [defaultPageSize]="defaultSize"
+      [paginationSizes]="pageSizes"
+      [tableColumns]="tableColumns"
+      [tableEntries]="tableData"
+      class="grid-container mat-elevation-z8"
+    ></report-table>
+  </mat-card-content>
+</mat-card>

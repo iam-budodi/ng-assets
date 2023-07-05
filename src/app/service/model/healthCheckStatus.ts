@@ -14,7 +14,7 @@
 export type HealthCheckStatus = 'DOWN' | 'UP';
 
 export const HealthCheckStatus = {
-  Down: 'DOWN' as HealthCheckStatus,
-  Up: 'UP' as HealthCheckStatus
+    Down: 'DOWN' as HealthCheckStatus,
+    Up: 'UP' as HealthCheckStatus
 };
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Computer, ComputerEndpointService, SelectOptions} from "../../service";
+import {Computer, ComputerEndpointService, Employee, SelectOptions} from "../../service";
 import {DatePipe} from "@angular/common";
 import {Observable} from "rxjs";
 import {Page, PageRequest} from "ngx-pagination-data-source";
@@ -46,4 +46,22 @@ export class ComputerService {
         )
       );
   }
+
+  dataForReports(request: PageRequest<Computer>, query: Query<Date>): Observable<Page<Computer>> {
+
+    (request.size === 20) ? request.size = 5 : request.size;
+    const startDate: string = this.datePipe.transform(query.startDate, 'yyyy-MM-dd')!;
+    const endDate: string = this.datePipe.transform(query.endDate, 'yyyy-MM-dd')!;
+
+    console.log('START: ' + startDate + ' AND ' + 'END : ' + endDate);
+
+    return this.computerService.restComputersReportGet(endDate, startDate, 'response').pipe(
+      map((response: HttpResponse<Array<Computer>>) => {
+          return httpGetAllHandler<Computer>(response);
+        }
+      )
+    );
+
+  }
+
 }

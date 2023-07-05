@@ -25,6 +25,15 @@ import {AuthGuard} from "./navbar/auth.guard";
 import {NgOptimizedImage} from "@angular/common";
 import {ReportsComponent} from './reports/reports.component';
 import {ExportService} from "./reports/export.service";
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { EmployeesReportComponent } from './reports/employees-report/employees-report.component';
+import { AssetsReportComponent } from './reports/assets-report/assets-report.component';
+import { AllocationsReportComponent } from './reports/allocations-report/allocations-report.component';
+import { TransfersReportComponent } from './reports/transfers-report/transfers-report.component';
 
 export function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -54,6 +63,10 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     ProductSalesChartComponent,
     TicketComponent,
     ReportsComponent,
+    EmployeesReportComponent,
+    AssetsReportComponent,
+    AllocationsReportComponent,
+    TransfersReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +84,11 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     RouterModule.forRoot(appRoutes),
     NgOptimizedImage,
     FormsModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
   ],
 
   providers: [{

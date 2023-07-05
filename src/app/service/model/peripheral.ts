@@ -14,10 +14,10 @@
 export type Peripheral = 'KEYBOARD' | 'MOUSE' | 'MONITOR' | 'ADAPTER' | 'COOLING_PAD';
 
 export const Peripheral = {
-  Keyboard: 'KEYBOARD' as Peripheral,
-  Mouse: 'MOUSE' as Peripheral,
-  Monitor: 'MONITOR' as Peripheral,
-  Adapter: 'ADAPTER' as Peripheral,
-  CoolingPad: 'COOLING_PAD' as Peripheral
+    Keyboard: 'KEYBOARD' as Peripheral,
+    Mouse: 'MOUSE' as Peripheral,
+    Monitor: 'MONITOR' as Peripheral,
+    Adapter: 'ADAPTER' as Peripheral,
+    CoolingPad: 'COOLING_PAD' as Peripheral
 };
 

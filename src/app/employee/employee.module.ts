@@ -26,6 +26,8 @@ import {CollegeDialogComponent} from "./college/college-dialog/college-dialog.co
 import {CollegeListComponent} from "./college/college-list/college-list.component";
 import {SearchTableComponent} from '../common/table/search-table/search-table.component';
 import {SearchDateTableComponent} from '../common/table/search-date-table/search-date-table.component';
+import { HodListComponent } from './hod/hod-list/hod-list.component';
+import { HodDialogComponent } from './hod/hod-dialog/hod-dialog.component';
 
 // export function minValidationMessage(err, field: FormlyFieldConfig) {
 //   return `Please provide a value bigger than ${err.min}. You provided ${err.actual}`;
@@ -61,6 +63,8 @@ const sharedComponent = [
     CollegeListComponent,
     ReportTableComponent,
     ...sharedComponent,
+    HodListComponent,
+    HodDialogComponent,
   ],
   imports: [
     CommonModule,

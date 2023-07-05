@@ -52,7 +52,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     {
       header: 'Reports',
       nav: [
-        {link: 'reports', name: 'Generate Reports', icon: 'file_copy'}
+        {link: 'employee-report', name: 'Employee Reports', icon: 'file_copy'},
+        {link: 'asset-report', name: 'Asset Reports', icon: 'file_copy'},
+        {link: 'allocation-report', name: 'Allocation Reports', icon: 'file_copy'},
+        {link: 'transfer-report', name: 'Change Custodianship Reports', icon: 'file_copy'},
+        // {link: 'reports', name: 'Generate Reports', icon: 'file_copy'}
       ],
     },
   ]

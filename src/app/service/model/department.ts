@@ -9,17 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import {College} from './college';
+import { College } from './college';
+import { HeadOfDepartment } from './headOfDepartment';
 
 
 /**
  * Department representation
  */
-export interface Department {
-  id?: number;
-  departmentName: string;
-  departmentCode?: string;
-  description?: string;
-  college: College;
+export interface Department { 
+    id?: number;
+    departmentName: string;
+    departmentCode?: string;
+    description?: string;
+    college: College;
+    headOfDepartment?: HeadOfDepartment;
 }
 

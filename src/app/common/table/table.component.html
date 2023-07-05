@@ -28,7 +28,7 @@
 
       <mat-form-field class="registration">
         <mat-label>Filter by</mat-label>
-        <input (dateChange)="tableDataSource.queryBy({registration: $event.value! })" [matDatepicker]="picker"
+        <input (dateChange)="tableDataSource.queryBy({startDate: $event.value! })" [matDatepicker]="picker"
                matInput placeholder="hired date"/>
         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>

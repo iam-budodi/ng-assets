@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ExportService} from "./export.service";
 import {ExcelJson} from "./model/excel-json.model";
-import {PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
+import {Page, PageRequest, PaginationDataSource} from "ngx-pagination-data-source";
 import {
   Allocation,
   AllocationEndpointService,
@@ -57,7 +57,7 @@ export class ReportsComponent {
   constructor(
     private exportService: ExportService,
     private employeeService: EmployeeService,
-    private employeeEndpointService: EmployeeEndpointService,
+    // private employeeEndpointService: EmployeeEndpointService,
     private computerEndpointService: ComputerEndpointService,
     private allocationEndpointService: AllocationEndpointService,
     private transferEndpointService: TransferEndpointService,
@@ -66,13 +66,16 @@ export class ReportsComponent {
   }
 
   ngOnInit(): void {
-    // this.employeeTableColumns = EMPLOYEE_TABLE_COLUMNS;
+    this.tableColumns = EMPLOYEE_TABLE_COLUMNS;
+    this.tableData = this.employeeDataSource();
 
-    // this.tableData.page$.subscribe({
-    //   next: (page: Page<Employee>): void => {
-    //     this.employees = page.content;
-    //   }
-    // });
+    this.tableData.page$.subscribe({
+      next: (page: Page<Employee>): void => {
+        this.employees = page.content;
+        // console.log('EMP 1: ' + JSON.stringify(this.employees))
+      }
+    });
+
   }
 
   onSubmit({value}: any): void {
@@ -87,7 +90,8 @@ export class ReportsComponent {
   switchReports(reportType: string, startDate: string, endDate: string) {
     if (reportType === 'employee') {
       this.tableColumns = EMPLOYEE_TABLE_COLUMNS;
-      this.employeeReport(startDate, endDate);
+      // this.employeeReport(startDate, endDate);
+      this.employeeReport();
     }
     if (reportType === 'asset') {
       this.tableColumns = COMPUTER_TABLE_COLUMNS;
@@ -170,34 +174,52 @@ export class ReportsComponent {
     transferExcelData(this.transfers, udt);
     return udt;
   }
+  // ORIGINAL :::: REVERT HERE IN CASE OF FAILURE
+  // paginatedDataSource = () => {
+  //   return new PaginationDataSource<Employee, Query<Date>>(
+  //     (request: PageRequest<Employee>, query: Query<Date>) => this.employeeService.getEmployees(request, query),
+  //     {property: 'firstName', order: 'asc'},
+  //     {startDate: undefined!, endDate: undefined!}
+  //   )
+  // }
 
-  paginatedDataSource = () => {
+  employeeDataSource = () => {
     return new PaginationDataSource<Employee, Query<Date>>(
-      (request: PageRequest<Employee>, query: Query<Date>) => this.employeeService.getEmployees(request, query),
+      (request: PageRequest<Employee>, query: Query<Date>) => this.employeeService.dataForReports(request, query),
       {property: 'firstName', order: 'asc'},
       {startDate: undefined!, endDate: undefined!}
     )
   }
 
-  employeeReport(startDate: string, endDate: string) {
-    return this.employeeEndpointService.restEmployeesReportGet(endDate, startDate, 'response').subscribe({
-        next: (response: HttpResponse<Array<Employee>>): void => {
-          if (response.status === 200) {
-            this.tableData = this.paginatedDataSource();
-            this.employees = response.body!;
-          } else if (response.status === 204) {
-            console.log('DIALOG PROMPT FOR NO DATA')
-          }
-        }
+  // employeeReport(startDate: string, endDate: string) {
+  //   return this.employeeEndpointService.restEmployeesReportGet(endDate, startDate, 'response').subscribe({
+  //       next: (response: HttpResponse<Array<Employee>>): void => {
+  //         if (response.status === 200) {
+  //           // this.tableData = this.paginatedDataSource();
+  //           this.tableData = this.employeeDataSource();
+  //           this.employees = response.body!;
+  //         } else if (response.status === 204) {
+  //           console.log('DIALOG PROMPT FOR NO DATA')
+  //         }
+  //       }
+  //     }
+  //   );
+  // }
+
+  employeeReport() {
+            this.tableData = this.employeeDataSource();
+    this.tableData.page$.subscribe({
+      next: (page: Page<Employee>): void => {
+        this.employees = page.content;
       }
-    );
+    });
   }
 
   assetReport(startDate: string, endDate: string) {
     return this.computerEndpointService.restComputersReportGet(endDate, startDate, 'response').subscribe({
         next: (response: HttpResponse<Array<Computer>>): void => {
           if (response.status === 200) {
-            this.tableData = this.paginatedDataSource();
+            // this.tableData = this.paginatedDataSource();
             this.computers = response.body!;
           } else if (response.status === 204) {
             console.log('DIALOG PROMPT FOR NO DATA')
@@ -211,7 +233,7 @@ export class ReportsComponent {
     return this.allocationEndpointService.restAllocationsReportGet(endDate, startDate, 'response').subscribe({
         next: (response: HttpResponse<Array<Allocation>>): void => {
           if (response.status === 200) {
-            this.tableData = this.paginatedDataSource();
+            // this.tableData = this.paginatedDataSource();
             this.allocations = response.body!;
           } else if (response.status === 204) {
             console.log('DIALOG PROMPT FOR NO DATA')
@@ -225,7 +247,7 @@ export class ReportsComponent {
     return this.transferEndpointService.restTransfersReportGet(endDate, startDate, 'response').subscribe({
         next: (response: HttpResponse<Array<Transfer>>): void => {
           if (response.status === 200) {
-            this.tableData = this.paginatedDataSource();
+            // this.tableData = this.paginatedDataSource();
             this.transfers = response.body!;
           } else if (response.status === 204) {
             console.log('DIALOG PROMPT FOR NO DATA')
